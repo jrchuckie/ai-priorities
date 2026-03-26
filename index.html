@@ -12,7 +12,6 @@
   }
   .header { text-align: center; margin-bottom: 28px; }
   .header h1 { font-size: 28px; font-weight: 700; color: #1a1a2e; letter-spacing: 1px; }
-  .header p  { margin-top: 8px; font-size: 14px; color: #666; }
 
   /* ── 筛选器 ── */
   .filter-bar {
@@ -55,6 +54,14 @@
   .category-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
   .category-tag { background: #1a1a2e; color: white; padding: 4px 14px; border-radius: 20px; font-size: 14px; font-weight: 600; }
   .category-line { flex: 1; height: 1px; background: #dde1e7; }
+  .cat-stats { display: flex; gap: 6px; align-items: center; }
+  .cat-stat-chip {
+    font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px;
+  }
+  .cat-stat-chip.p0 { background: #eafaf1; color: #27ae60; }
+  .cat-stat-chip.p1 { background: #fef3e2; color: #e67e22; }
+  .cat-stat-chip.p2 { background: #e8f4fd; color: #3498db; }
+  .cat-stat-total { font-size: 12px; color: #999; font-weight: 600; }
 
   /* ── 卡片 ── */
   .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 14px; }
@@ -110,8 +117,7 @@
 <body>
 
 <div class="header">
-  <h1>🤖 AI 专项 Priorities 总览</h1>
-  <p>向老板汇报 · 各优先级事项一览</p>
+  <h1>🤖 快消AI专项项目 Priorities 总览</h1>
 </div>
 
 <!-- ── 筛选器 ── -->
@@ -150,7 +156,7 @@
 
 <!-- ── 内容 ── -->
 <div class="category-section" data-cat="内容">
-  <div class="category-header"><span class="category-tag">📝 内容</span><div class="category-line"></div></div>
+  <div class="category-header"><span class="category-tag">📝 内容</span><div class="category-line"></div><div class="cat-stats" data-stats="内容"></div></div>
   <div class="cards-grid">
 
     <div class="item-card p0" data-p="p0" data-cat="内容" data-owner="strategy">
@@ -208,7 +214,7 @@
 
 <!-- ── 分析/复盘 ── -->
 <div class="category-section" data-cat="分析复盘">
-  <div class="category-header"><span class="category-tag">📊 分析/复盘</span><div class="category-line"></div></div>
+  <div class="category-header"><span class="category-tag">📊 分析/复盘</span><div class="category-line"></div><div class="cat-stats" data-stats="分析复盘"></div></div>
   <div class="cards-grid">
 
     <div class="item-card p0" data-p="p0" data-cat="分析复盘" data-owner="strategy">
@@ -296,7 +302,7 @@
 
 <!-- ── 搜索 ── -->
 <div class="category-section" data-cat="搜索">
-  <div class="category-header"><span class="category-tag">🔍 搜索</span><div class="category-line"></div></div>
+  <div class="category-header"><span class="category-tag">🔍 搜索</span><div class="category-line"></div><div class="cat-stats" data-stats="搜索"></div></div>
   <div class="cards-grid">
 
     <div class="item-card p1" data-p="p1" data-cat="搜索" data-owner="product">
@@ -336,7 +342,7 @@
 
 <!-- ── 月报/周报 ── -->
 <div class="category-section" data-cat="月报周报">
-  <div class="category-header"><span class="category-tag">📅 月报/周报</span><div class="category-line"></div></div>
+  <div class="category-header"><span class="category-tag">📅 月报/周报</span><div class="category-line"></div><div class="cat-stats" data-stats="月报周报"></div></div>
   <div class="cards-grid">
 
     <div class="item-card p0" data-p="p0" data-cat="月报周报" data-owner="strategy">
@@ -391,7 +397,7 @@
 
 <!-- ── 洞察类 ── -->
 <div class="category-section" data-cat="洞察">
-  <div class="category-header"><span class="category-tag">💡 洞察类</span><div class="category-line"></div></div>
+  <div class="category-header"><span class="category-tag">💡 洞察类</span><div class="category-line"></div><div class="cat-stats" data-stats="洞察"></div></div>
   <div class="cards-grid">
 
     <div class="item-card p0" data-p="p0" data-cat="洞察" data-owner="strategy">
@@ -477,21 +483,32 @@
       const catMatch = activeCat === 'all' || sec.dataset.cat === activeCat;
       if (!catMatch) { sec.classList.add('hidden'); return; }
 
-      let sectionHasVisible = false;
+      let catTotal = 0, catP0 = 0, catP1 = 0, catP2 = 0;
+
       sec.querySelectorAll('.item-card').forEach(card => {
         const pMatch     = activeP     === 'all' || card.dataset.p     === activeP;
         const ownerMatch = activeOwner === 'all' || card.dataset.owner === activeOwner;
         const show = pMatch && ownerMatch;
         card.classList.toggle('hidden', !show);
         if (show) {
-          sectionHasVisible = true;
-          total++;
-          if (card.dataset.p === 'p0') p0++;
-          if (card.dataset.p === 'p1') p1++;
-          if (card.dataset.p === 'p2') p2++;
+          catTotal++; total++;
+          if (card.dataset.p === 'p0') { catP0++; p0++; }
+          if (card.dataset.p === 'p1') { catP1++; p1++; }
+          if (card.dataset.p === 'p2') { catP2++; p2++; }
         }
       });
-      sec.classList.toggle('hidden', !sectionHasVisible);
+
+      sec.classList.toggle('hidden', catTotal === 0);
+
+      // 更新该大类的小统计
+      const statsEl = sec.querySelector('.cat-stats');
+      if (statsEl) {
+        let html = `<span class="cat-stat-total">共 ${catTotal} 项</span>`;
+        if (catP0) html += `<span class="cat-stat-chip p0">P0 × ${catP0}</span>`;
+        if (catP1) html += `<span class="cat-stat-chip p1">P1 × ${catP1}</span>`;
+        if (catP2) html += `<span class="cat-stat-chip p2">P2 × ${catP2}</span>`;
+        statsEl.innerHTML = html;
+      }
     });
 
     document.getElementById('cnt-total').textContent = total;
@@ -500,6 +517,9 @@
     document.getElementById('cnt-p2').textContent    = p2;
     document.getElementById('empty-state').classList.toggle('visible', total === 0);
   }
+
+  // 初始化统计
+  applyFilters();
 
   // 优先级
   document.querySelectorAll('button[data-p]').forEach(btn => {
