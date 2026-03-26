@@ -34,6 +34,15 @@ body {
 .active-cat     { background:#1a1a2e!important; color:white!important; border-color:#1a1a2e!important; }
 .active-owner-product  { background:#8e44ad!important; color:white!important; border-color:#8e44ad!important; }
 .active-owner-strategy { background:#16a085!important; color:white!important; border-color:#16a085!important; }
+.active-status-doing   { background:#e67e22!important; color:white!important; border-color:#e67e22!important; }
+.active-status-pending { background:#95a5a6!important; color:white!important; border-color:#95a5a6!important; }
+.active-status-done    { background:#27ae60!important; color:white!important; border-color:#27ae60!important; }
+
+/* 状态标签 */
+.status-badge { display:inline-flex; align-items:center; gap:4px; font-size:11px; font-weight:700; padding:2px 9px; border-radius:20px; }
+.status-badge.doing   { background:#fef3e2; color:#e67e22; }
+.status-badge.pending { background:#f0f0f0; color:#95a5a6; }
+.status-badge.done    { background:#eafaf1; color:#27ae60; }
 
 /* ── 统计卡 ── */
 .summary-row { display:flex; gap:16px; margin-bottom:32px; justify-content:center; flex-wrap:wrap; }
@@ -250,6 +259,13 @@ footer { text-align:center; margin-top:40px; font-size:12px; color:#bbb; }
     <button class="filter-btn" data-owner="strategy">🏗 行策自建</button>
     <button class="filter-btn" data-owner="product">🤝 产品共建</button>
   </div>
+  <div class="filter-row">
+    <span class="filter-label">状态</span>
+    <button class="filter-btn active-all" data-status="all">全部</button>
+    <button class="filter-btn" data-status="doing">🔄 推进中</button>
+    <button class="filter-btn" data-status="pending">⏳ 待开启</button>
+    <button class="filter-btn" data-status="done">✅ 已完成</button>
+  </div>
 </div>
 
 <!-- 统计卡 -->
@@ -380,6 +396,14 @@ footer { text-align:center; margin-top:40px; font-size:12px; color:#bbb; }
       <input type="text" id="f-owner-name" placeholder="例：灵犀产品：娜赛">
     </div>
     <div class="form-group">
+      <label>项目状态</label>
+      <select id="f-status">
+        <option value="pending">⏳ 待开启</option>
+        <option value="doing">🔄 推进中</option>
+        <option value="done">✅ 已完成</option>
+      </select>
+    </div>
+    <div class="form-group">
       <label>备注说明</label>
       <textarea id="f-note" placeholder="可选，补充说明"></textarea>
     </div>
@@ -404,27 +428,27 @@ const CATS = [
 
 const DEFAULT_DATA = [
   // 内容
-  { id:'c1', name:'AIGC笔记生产【大健康+食饮攻坚】', p:'p0', cat:'内容', impact:'high', difficulty:'high', owner:'strategy', ownerName:'悟天 / 聚光 / 千帆 / 审核 / 行策', cap:'partial', role:'客户', freq:'每天', time:'2-3小时/人天', note:'' },
-  { id:'c2', name:'内容分析：【母婴赛道攻坚】',       p:'p0', cat:'内容', impact:'high', difficulty:'low',  owner:'product',  ownerName:'灵犀产品：周鹃、娜赛', cap:'partial', role:'运营', freq:'每周', time:'半天/人天', note:'内容打标需求推进中，需行业知识图谱（母婴-爱妮），产品用claw做' },
-  { id:'c3', name:'内容分析：【大健康赛道攻坚】',     p:'p0', cat:'内容', impact:'high', difficulty:'low',  owner:'strategy', ownerName:'行策', cap:'partial', role:'运营', freq:'每周', time:'半天/人天', note:'内容打标需求推进中，需行业知识图谱（大健康-西泽），产品用claw做' },
+  { id:'c1', name:'AIGC笔记生产【大健康+食饮攻坚】', p:'p0', cat:'内容', impact:'high', difficulty:'high', owner:'strategy', ownerName:'悟天 / 聚光 / 千帆 / 审核 / 行策', cap:'partial', role:'客户', freq:'每天', time:'2-3小时/人天', note:'', status:'doing' },
+  { id:'c2', name:'内容分析：【母婴赛道攻坚】',       p:'p0', cat:'内容', impact:'high', difficulty:'low',  owner:'product',  ownerName:'灵犀产品：周鹃、娜赛', cap:'partial', role:'运营', freq:'每周', time:'半天/人天', note:'内容打标需求推进中，需行业知识图谱（母婴-爱妮），产品用claw做', status:'doing' },
+  { id:'c3', name:'内容分析：【大健康赛道攻坚】',     p:'p0', cat:'内容', impact:'high', difficulty:'low',  owner:'strategy', ownerName:'行策', cap:'partial', role:'运营', freq:'每周', time:'半天/人天', note:'内容打标需求推进中，需行业知识图谱（大健康-西泽），产品用claw做', status:'doing' },
   // 分析/复盘
-  { id:'a1', name:'品牌形象分析',    p:'p0', cat:'分析复盘', impact:'high', difficulty:'mid', owner:'strategy', ownerName:'行策 + 营销实验室（柃子）', cap:'none',    role:'销售/策划/运营',   freq:'每周', time:'1-2天/人天', note:'' },
-  { id:'a2', name:'情绪浓度分析',    p:'p0', cat:'分析复盘', impact:'high', difficulty:'mid', owner:'strategy', ownerName:'行策 + 营销实验室（巴库）', cap:'none',    role:'销售/策划/运营',   freq:'每周', time:'1-2天/人天', note:'' },
-  { id:'a3', name:'品牌营销复盘助手 - AURA', p:'p2', cat:'分析复盘', impact:'low', difficulty:'mid', owner:'strategy', ownerName:'营销中心', cap:'partial', role:'平台专家/IP策划', freq:'每月', time:'2-3天/人天', note:'' },
-  { id:'a4', name:'一方工具升级',    p:'p2', cat:'分析复盘', impact:'high', difficulty:'mid', owner:'product',  ownerName:'一方产品：白州、叶言', cap:'has',     role:'运营', freq:'每季度', time:'1-2天/人天', note:'' },
-  { id:'a5', name:'投放复盘',        p:'p2', cat:'分析复盘', impact:'mid',  difficulty:'mid', owner:'strategy', ownerName:'行策', cap:'has', role:'运营', freq:'每周', time:'1-2天/人天', note:'' },
+  { id:'a1', name:'品牌形象分析',    p:'p0', cat:'分析复盘', impact:'high', difficulty:'mid', owner:'strategy', ownerName:'行策 + 营销实验室（柃子）', cap:'none',    role:'销售/策划/运营',   freq:'每周', time:'1-2天/人天', note:'', status:'pending' },
+  { id:'a2', name:'情绪浓度分析',    p:'p0', cat:'分析复盘', impact:'high', difficulty:'mid', owner:'strategy', ownerName:'行策 + 营销实验室（巴库）', cap:'none',    role:'销售/策划/运营',   freq:'每周', time:'1-2天/人天', note:'', status:'pending' },
+  { id:'a3', name:'品牌营销复盘助手 - AURA', p:'p2', cat:'分析复盘', impact:'low', difficulty:'mid', owner:'strategy', ownerName:'营销中心', cap:'partial', role:'平台专家/IP策划', freq:'每月', time:'2-3天/人天', note:'', status:'pending' },
+  { id:'a4', name:'一方工具升级',    p:'p2', cat:'分析复盘', impact:'high', difficulty:'mid', owner:'product',  ownerName:'一方产品：白州、叶言', cap:'has',     role:'运营', freq:'每季度', time:'1-2天/人天', note:'', status:'pending' },
+  { id:'a5', name:'投放复盘',        p:'p2', cat:'分析复盘', impact:'mid',  difficulty:'mid', owner:'strategy', ownerName:'行策', cap:'has', role:'运营', freq:'每周', time:'1-2天/人天', note:'', status:'pending' },
   // 搜索
-  { id:'s1', name:'搜索推词工具',         p:'p1', cat:'搜索', impact:'mid', difficulty:'mid', owner:'product',  ownerName:'建议和搜索产品共建', cap:'none', role:'运营', freq:'每周', time:'1-2天/人天', note:'' },
-  { id:'s2', name:'拆分为搜索词打标+取数', p:'p1', cat:'搜索', impact:'mid', difficulty:'mid', owner:'product',  ownerName:'灵犀产品：宁姚', cap:'none', role:'运营', freq:'每周', time:'1-2天/人天', note:'' },
+  { id:'s1', name:'搜索推词工具',         p:'p1', cat:'搜索', impact:'mid', difficulty:'mid', owner:'product',  ownerName:'建议和搜索产品共建', cap:'none', role:'运营', freq:'每周', time:'1-2天/人天', note:'', status:'pending' },
+  { id:'s2', name:'拆分为搜索词打标+取数', p:'p1', cat:'搜索', impact:'mid', difficulty:'mid', owner:'product',  ownerName:'灵犀产品：宁姚', cap:'none', role:'运营', freq:'每周', time:'1-2天/人天', note:'', status:'pending' },
   // 月报/周报
-  { id:'r1', name:'行业周报 one page 自动生成（对客）', p:'p0', cat:'月报周报', impact:'high', difficulty:'mid', owner:'strategy', ownerName:'行策', cap:'has',  role:'销售/策划/运营', freq:'每周', time:'1-2天/人天', note:'' },
-  { id:'r2', name:'行业周报 one page 自动生成（对内）', p:'p0', cat:'月报周报', impact:'high', difficulty:'mid', owner:'strategy', ownerName:'行策 + insight', cap:'none', role:'', freq:'每周', time:'', note:'' },
-  { id:'r3', name:'头客月报', p:'p1', cat:'月报周报', impact:'high', difficulty:'mid', owner:'product', ownerName:'灵犀产品：娜赛', cap:'partial', role:'销售/策划/运营', freq:'每月', time:'1-2天/人天', note:'优先尝试通过灵犀已有人群能力来提效' },
+  { id:'r1', name:'行业周报 one page 自动生成（对客）', p:'p0', cat:'月报周报', impact:'high', difficulty:'mid', owner:'strategy', ownerName:'行策', cap:'has',  role:'销售/策划/运营', freq:'每周', time:'1-2天/人天', note:'', status:'doing' },
+  { id:'r2', name:'行业周报 one page 自动生成（对内）', p:'p0', cat:'月报周报', impact:'high', difficulty:'mid', owner:'strategy', ownerName:'行策 + insight', cap:'none', role:'', freq:'每周', time:'', note:'', status:'pending' },
+  { id:'r3', name:'头客月报', p:'p1', cat:'月报周报', impact:'high', difficulty:'mid', owner:'product', ownerName:'灵犀产品：娜赛', cap:'partial', role:'销售/策划/运营', freq:'每月', time:'1-2天/人天', note:'优先尝试通过灵犀已有人群能力来提效', status:'pending' },
   // 洞察
-  { id:'i1', name:'站内舆情风险提示',          p:'p0', cat:'洞察', impact:'high', difficulty:'mid', owner:'strategy', ownerName:'行策 + 灵犀（榴莲）', cap:'none', role:'销售/运营', freq:'每天', time:'1-2小时/人天', note:'' },
-  { id:'i2', name:'行业 & 竞品洞察',           p:'p1', cat:'洞察', impact:'mid',  difficulty:'mid', owner:'strategy', ownerName:'行策', cap:'partial', role:'销售/策划', freq:'每周', time:'2-3小时/人天', note:'' },
-  { id:'i3', name:'Campaign Idea',             p:'p2', cat:'洞察', impact:'mid',  difficulty:'mid', owner:'strategy', ownerName:'行策', cap:'none', role:'销售/运营', freq:'每周', time:'2-3小时/人天', note:'' },
-  { id:'i4', name:'潮玩IP维度分析（如宝可梦IP热度）', p:'p2', cat:'洞察', impact:'low', difficulty:'mid', owner:'product', ownerName:'灵犀产品：娜赛', cap:'none', role:'销售/策划', freq:'每季?', time:'1-2天?/人天', note:'受限于基建，建议轻量工具实现主题词打标与简单统计，暂无法支持数据生产' },
+  { id:'i1', name:'站内舆情风险提示',          p:'p0', cat:'洞察', impact:'high', difficulty:'mid', owner:'strategy', ownerName:'行策 + 灵犀（榴莲）', cap:'none', role:'销售/运营', freq:'每天', time:'1-2小时/人天', note:'', status:'pending' },
+  { id:'i2', name:'行业 & 竞品洞察',           p:'p1', cat:'洞察', impact:'mid',  difficulty:'mid', owner:'strategy', ownerName:'行策', cap:'partial', role:'销售/策划', freq:'每周', time:'2-3小时/人天', note:'', status:'pending' },
+  { id:'i3', name:'Campaign Idea',             p:'p2', cat:'洞察', impact:'mid',  difficulty:'mid', owner:'strategy', ownerName:'行策', cap:'none', role:'销售/运营', freq:'每周', time:'2-3小时/人天', note:'', status:'pending' },
+  { id:'i4', name:'潮玩IP维度分析（如宝可梦IP热度）', p:'p2', cat:'洞察', impact:'low', difficulty:'mid', owner:'product', ownerName:'灵犀产品：娜赛', cap:'none', role:'销售/策划', freq:'每季?', time:'1-2天?/人天', note:'受限于基建，建议轻量工具实现主题词打标与简单统计，暂无法支持数据生产', status:'pending' },
 ];
 
 function loadData() {
@@ -444,11 +468,18 @@ const levelLabel = { high:'高', mid:'中', low:'低' };
 const ownerMeta  = { strategy:{ label:'🏗 行策自建', cls:'strategy' }, product:{ label:'🤝 产品共建', cls:'product' } };
 const pLabel = { p0:'P0', p1:'P1', p2:'P2' };
 
+const statusMeta = {
+  doing:   { label:'🔄 推进中', cls:'doing'   },
+  pending: { label:'⏳ 待开启', cls:'pending' },
+  done:    { label:'✅ 已完成', cls:'done'    },
+};
+
 function buildCard(item) {
   const om = ownerMeta[item.owner] || ownerMeta.strategy;
+  const sm = statusMeta[item.status] || statusMeta.pending;
   const capCls = item.cap;
   return `
-  <div class="item-card ${item.p}" data-id="${item.id}" data-p="${item.p}" data-cat="${item.cat}" data-owner="${item.owner}">
+  <div class="item-card ${item.p}" data-id="${item.id}" data-p="${item.p}" data-cat="${item.cat}" data-owner="${item.owner}" data-status="${item.status||'pending'}">
     <div class="card-actions">
       <button class="btn-edit"   onclick="openEdit('${item.id}')">✏️ 编辑</button>
       <button class="btn-delete" onclick="deleteItem('${item.id}')">✕ 删除</button>
@@ -460,6 +491,7 @@ function buildCard(item) {
     <div class="owner-row">
       <span class="owner-badge ${om.cls}">${om.label}</span>
       ${item.ownerName ? `<span class="owner-name">${item.ownerName}</span>` : ''}
+      <span class="status-badge ${sm.cls}">${sm.label}</span>
     </div>
     <div class="meta-row">
       ${item.role ? `<span class="meta-chip">👥 ${item.role}</span>` : ''}
@@ -500,7 +532,7 @@ function render() {
 // ═══════════════════════════════════════════════════════
 // 筛选
 // ═══════════════════════════════════════════════════════
-let activeP = 'all', activeCat = 'all', activeOwner = 'all';
+let activeP = 'all', activeCat = 'all', activeOwner = 'all', activeStatus = 'all';
 
 function applyFilters() {
   let total = 0, p0 = 0, p1 = 0, p2 = 0;
@@ -514,7 +546,8 @@ function applyFilters() {
     sec.querySelectorAll('.item-card').forEach(card => {
       const pMatch = activeP === 'all' || card.dataset.p === activeP;
       const oMatch = activeOwner === 'all' || card.dataset.owner === activeOwner;
-      const show = pMatch && oMatch;
+      const sMatch = activeStatus === 'all' || card.dataset.status === activeStatus;
+      const show = pMatch && oMatch && sMatch;
       card.classList.toggle('hidden', !show);
       if (show) {
         visibleIds.add(card.dataset.id);
@@ -691,6 +724,7 @@ function openAdd(cat) {
   document.getElementById('f-freq').value = '';
   document.getElementById('f-time').value = '';
   document.getElementById('f-owner-name').value = '';
+  document.getElementById('f-status').value = 'pending';
   document.getElementById('f-note').value = '';
   document.getElementById('modal').classList.add('open');
 }
@@ -711,6 +745,7 @@ function openEdit(id) {
   document.getElementById('f-freq').value       = item.freq || '';
   document.getElementById('f-time').value       = item.time || '';
   document.getElementById('f-owner-name').value = item.ownerName || '';
+  document.getElementById('f-status').value     = item.status || 'pending';
   document.getElementById('f-note').value       = item.note || '';
   document.getElementById('modal').classList.add('open');
 }
@@ -741,6 +776,7 @@ document.getElementById('modal-save').addEventListener('click', () => {
     freq:       document.getElementById('f-freq').value.trim(),
     time:       document.getElementById('f-time').value.trim(),
     ownerName:  document.getElementById('f-owner-name').value.trim(),
+    status:     document.getElementById('f-status').value,
     note:       document.getElementById('f-note').value.trim(),
   };
 
@@ -762,6 +798,21 @@ function deleteItem(id) {
   saveData();
   render();
 }
+
+// 状态筛选
+document.querySelectorAll('button[data-status]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    activeStatus = btn.dataset.status;
+    document.querySelectorAll('button[data-status]').forEach(b => {
+      b.className = 'filter-btn';
+      if (b.dataset.status === activeStatus) {
+        if (activeStatus === 'all') b.classList.add('active-all');
+        else b.classList.add(`active-status-${activeStatus}`);
+      }
+    });
+    applyFilters();
+  });
+});
 
 // 初始化
 render();
