@@ -572,11 +572,11 @@
     document.getElementById('empty-state').classList.toggle('visible', total === 0);
   }
 
-  // 优先级按钮
-  document.querySelectorAll('[data-p]').forEach(btn => {
+  // 优先级按钮（只选 button，避免选到卡片上的 data-p）
+  document.querySelectorAll('button[data-p]').forEach(btn => {
     btn.addEventListener('click', () => {
       activeP = btn.dataset.p;
-      document.querySelectorAll('[data-p]').forEach(b => {
+      document.querySelectorAll('button[data-p]').forEach(b => {
         b.className = 'filter-btn';
         if (b.dataset.p === activeP)
           b.classList.add(activeP === 'all' ? 'active-all' : `active-${activeP}`);
@@ -585,11 +585,11 @@
     });
   });
 
-  // 大类按钮
-  document.querySelectorAll('[data-cat]').forEach(btn => {
+  // 大类按钮（只选 button，避免选到 section 上的 data-cat）
+  document.querySelectorAll('button[data-cat]').forEach(btn => {
     btn.addEventListener('click', () => {
       activeCat = btn.dataset.cat;
-      document.querySelectorAll('[data-cat]').forEach(b => {
+      document.querySelectorAll('button[data-cat]').forEach(b => {
         b.className = 'filter-btn';
         if (b.dataset.cat === activeCat)
           b.classList.add(activeCat === 'all' ? 'active-all' : 'active-cat');
