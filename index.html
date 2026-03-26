@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>快消 AI 专项</title>
 <style>
-/* ── 全局重置 ── */
 * { margin:0; padding:0; box-sizing:border-box; }
 html, body { height:100%; }
 body {
@@ -13,7 +12,7 @@ body {
   background:#f0f2f5; display:flex; flex-direction:column; min-height:100vh;
 }
 
-/* ── Top Nav ── */
+/* ── Global Nav ── */
 .global-nav {
   background:#1a1a2e; height:50px; display:flex; align-items:center;
   padding:0 28px; gap:0; flex-shrink:0;
@@ -34,11 +33,11 @@ body {
 .nav-tab:hover { color:rgba(255,255,255,.85); }
 .nav-tab.active { color:white; border-bottom-color:#5dade2; background:rgba(255,255,255,.07); }
 
-/* ── Tab 内容面板 ── */
+/* ── Tab panels ── */
 .tab-panel { display:none; flex:1; }
 .tab-panel.active { display:block; }
 
-/* ══ Priorities 样式 ══ */
+/* ══ Priorities styles ══ */
 
 * { margin:0; padding:0; box-sizing:border-box; }
 body {
@@ -264,116 +263,118 @@ body {
 footer { text-align:center; margin-top:40px; font-size:12px; color:#bbb; }
 
 
-/* ══ Workflow 样式（部分 class 名相同需隔离）══ */
-#tab-workflow .filter-bar { flex-direction:row; flex-wrap:wrap; gap:10px; padding:14px 20px; }
-#tab-workflow .filter-label { min-width:unset; }
+/* ══ Workflow styles ══ */
 
 * { margin:0; padding:0; box-sizing:border-box; }
 body {
   font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
-  background: #f0f2f5; color: #1a1a2e; padding: 32px;
+  background:#f0f2f5; color:#1a1a2e; padding:32px;
 }
 
-/* ── Header ── */
-.header { text-align:center; margin-bottom:36px; }
+.header { text-align:center; margin-bottom:28px; }
 .header h1 { font-size:26px; font-weight:800; color:#1a1a2e; }
 .header p  { margin-top:8px; font-size:14px; color:#888; }
 
 /* ── 筛选器 ── */
 .filter-bar {
-  display:flex; align-items:center; gap:10px; flex-wrap:wrap;
-  background:white; border-radius:12px; padding:14px 20px;
+  background:white; border-radius:14px; padding:16px 24px;
   box-shadow:0 2px 10px rgba(0,0,0,0.07); margin-bottom:28px;
+  display:flex; flex-direction:column; gap:12px;
 }
-.filter-label { font-size:13px; font-weight:600; color:#888; }
+.filter-row { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.filter-label { font-size:13px; font-weight:600; color:#888; min-width:52px; }
 .ftab {
   cursor:pointer; border:1.5px solid #dde1e7; background:white;
-  border-radius:20px; padding:5px 16px; font-size:13px; font-weight:600;
-  color:#555; transition:all 0.15s;
+  border-radius:20px; padding:5px 14px; font-size:13px; font-weight:600;
+  color:#555; transition:all 0.15s; white-space:nowrap;
 }
 .ftab:hover { border-color:#aaa; }
-.ftab.on { color:white; border-color:transparent; }
-.ftab[data-role="all"].on   { background:#1a1a2e; }
-.ftab[data-role="sales"].on { background:#e74c3c; }
-.ftab[data-role="ops"].on   { background:#2980b9; }
-.ftab[data-role="planner"].on { background:#8e44ad; }
-.ftab[data-ai="all"].on     { background:#1a1a2e; }
-.ftab[data-ai="high"].on    { background:#e74c3c; }
-.ftab[data-ai="mid"].on     { background:#f39c12; }
-.ftab[data-ai="low"].on     { background:#27ae60; }
+.ftab.on { color:white!important; border-color:transparent!important; }
+.ftab[data-role="all"].on    { background:#1a1a2e; }
+.ftab[data-role="sales"].on  { background:#e74c3c; }
+.ftab[data-role="ops"].on    { background:#2980b9; }
+.ftab[data-role="planner"].on{ background:#8e44ad; }
+.ftab[data-ai="all"].on  { background:#1a1a2e; }
+.ftab[data-ai="high"].on { background:#e74c3c; }
+.ftab[data-ai="mid"].on  { background:#f39c12; }
+.ftab[data-ai="low"].on  { background:#27ae60; }
+.ftab[data-wcat].on      { background:#1a1a2e; }
 
-.filter-divider { width:1px; height:24px; background:#eee; }
+/* ── 图例 ── */
+.legend {
+  display:flex; gap:16px; flex-wrap:wrap; margin-bottom:24px;
+  padding:10px 16px; background:white; border-radius:10px;
+  font-size:12px; align-items:center; box-shadow:0 1px 6px rgba(0,0,0,0.05);
+}
+.legend-item { display:flex; align-items:center; gap:5px; color:#555; }
+.ldot { width:9px; height:9px; border-radius:50%; }
 
-/* ── 角色 Header ── */
-.role-sections { display:flex; flex-direction:column; gap:28px; }
+/* ── 角色块 ── */
+.role-sections { display:flex; flex-direction:column; gap:24px; }
 .role-block { background:white; border-radius:16px; box-shadow:0 2px 12px rgba(0,0,0,0.07); overflow:hidden; }
 .role-block.hidden { display:none; }
 
 .role-header {
   display:flex; align-items:center; gap:14px;
-  padding:20px 28px; color:white;
+  padding:18px 28px; color:white;
 }
 .role-header.sales   { background:linear-gradient(135deg,#e74c3c,#c0392b); }
 .role-header.ops     { background:linear-gradient(135deg,#2980b9,#1a5276); }
 .role-header.planner { background:linear-gradient(135deg,#8e44ad,#6c3483); }
 
-.role-icon { font-size:32px; }
-.role-info h2 { font-size:18px; font-weight:800; }
-.role-info p  { font-size:13px; opacity:0.85; margin-top:3px; }
-.role-stats { margin-left:auto; display:flex; gap:16px; }
+.role-icon { font-size:28px; }
+.role-info h2 { font-size:17px; font-weight:800; }
+.role-info p  { font-size:12px; opacity:.85; margin-top:2px; }
+.role-stats { margin-left:auto; display:flex; gap:14px; }
 .role-stat { text-align:center; }
-.role-stat .n  { font-size:22px; font-weight:800; }
-.role-stat .lb { font-size:11px; opacity:0.8; }
+.role-stat .n  { font-size:20px; font-weight:800; }
+.role-stat .lb { font-size:10px; opacity:.8; }
 
-/* ── 任务列表 ── */
-.tasks-wrap { padding:20px 28px; }
-.tasks-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(300px,1fr)); gap:12px; }
-
-.task-card {
-  border-radius:10px; padding:14px 16px;
-  border:1.5px solid #eef0f3; background:#fafbfc;
-  transition:transform 0.15s, box-shadow 0.15s;
-  position:relative; cursor:default;
+/* ── 工作类别分组 ── */
+.role-body { padding:20px 24px; }
+.wcat-section { margin-bottom:20px; }
+.wcat-section.hidden { display:none; }
+.wcat-header {
+  display:flex; align-items:center; gap:8px; margin-bottom:10px;
 }
-.task-card:hover { transform:translateY(-2px); box-shadow:0 4px 16px rgba(0,0,0,0.1); }
+.wcat-tag {
+  font-size:12px; font-weight:700; padding:3px 12px; border-radius:20px;
+  background:#f0f2f5; color:#555;
+}
+.wcat-line { flex:1; height:1px; background:#eef0f3; }
+.wcat-count { font-size:11px; color:#aaa; font-weight:600; }
+
+/* ── 任务卡片 ── */
+.tasks-grid {
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:10px;
+}
+.task-card {
+  border-radius:10px; padding:13px 14px;
+  border:1.5px solid #eef0f3; background:#fafbfc;
+  transition:transform .15s, box-shadow .15s;
+}
+.task-card:hover { transform:translateY(-2px); box-shadow:0 4px 14px rgba(0,0,0,0.09); }
 .task-card.hidden { display:none; }
 
-.task-top { display:flex; align-items:flex-start; justify-content:space-between; gap:8px; margin-bottom:8px; }
-.task-name { font-size:14px; font-weight:700; color:#1a1a2e; line-height:1.4; flex:1; }
-
-/* AI 提效标签 */
-.ai-badge {
-  font-size:10px; font-weight:700; padding:2px 8px; border-radius:10px;
-  white-space:nowrap; flex-shrink:0;
-}
+.task-top { display:flex; align-items:flex-start; justify-content:space-between; gap:8px; margin-bottom:7px; }
+.task-name { font-size:13.5px; font-weight:700; color:#1a1a2e; line-height:1.4; flex:1; }
+.ai-badge { font-size:10px; font-weight:700; padding:2px 7px; border-radius:10px; white-space:nowrap; flex-shrink:0; }
 .ai-badge.high { background:#fdecea; color:#e74c3c; }
 .ai-badge.mid  { background:#fef9e7; color:#f39c12; }
 .ai-badge.low  { background:#eafaf1; color:#27ae60; }
 
-.task-meta { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px; }
-.tag {
-  font-size:11px; padding:2px 8px; border-radius:6px;
-  background:#f0f2f5; color:#666;
-}
-.tag.freq  { background:#e8f4fd; color:#2980b9; }
-.tag.time  { background:#fef9e7; color:#e67e22; }
-.tag.pain  { background:#fdecea; color:#e74c3c; }
+.task-meta { display:flex; flex-wrap:wrap; gap:5px; margin-bottom:7px; }
+.tag { font-size:11px; padding:2px 7px; border-radius:6px; background:#f0f2f5; color:#666; }
+.tag.freq { background:#e8f4fd; color:#2980b9; }
+.tag.time { background:#fef9e7; color:#e67e22; }
+.tag.pain { background:#fdecea; color:#e74c3c; }
 
 .task-ai-desc {
-  font-size:12px; color:#555; background:#f5f0ff;
-  border-radius:6px; padding:7px 10px; line-height:1.5;
+  font-size:11.5px; color:#555; background:#f5f0ff;
+  border-radius:6px; padding:6px 9px; line-height:1.5;
   border-left:3px solid #8e44ad;
 }
 .task-ai-desc::before { content:'🤖 '; }
-
-/* ── 图例 ── */
-.legend {
-  display:flex; gap:16px; flex-wrap:wrap; margin-bottom:20px;
-  padding:12px 16px; background:#f8f9fa; border-radius:8px;
-  font-size:12px; align-items:center;
-}
-.legend-item { display:flex; align-items:center; gap:5px; }
-.legend-dot { width:10px; height:10px; border-radius:50%; }
 
 footer { text-align:center; margin-top:40px; font-size:12px; color:#bbb; }
 
@@ -1095,530 +1096,334 @@ render();
 
 <div class="header">
   <h1>🗺️ 小红书广告团队 AI 提效地图</h1>
-  <p>销售 · 运营 · 策划 — 每日工作梳理 × AI 可提效空间识别</p>
+  <p>销售 · 运营 · 策划 — 工作类别拆解 × AI 可提效空间</p>
 </div>
 
 <!-- 筛选器 -->
 <div class="filter-bar">
-  <span class="filter-label">角色</span>
-  <button class="ftab on" data-role="all">全部</button>
-  <button class="ftab" data-role="sales">🔴 销售</button>
-  <button class="ftab" data-role="ops">🔵 运营</button>
-  <button class="ftab" data-role="planner">🟣 策划</button>
-  <div class="filter-divider"></div>
-  <span class="filter-label">AI提效空间</span>
-  <button class="ftab on" data-ai="all">全部</button>
-  <button class="ftab" data-ai="high">🔴 高</button>
-  <button class="ftab" data-ai="mid">🟠 中</button>
-  <button class="ftab" data-ai="low">🟢 低</button>
+  <div class="filter-row">
+    <span class="filter-label">角色</span>
+    <button class="ftab on" data-role="all">全部</button>
+    <button class="ftab" data-role="sales">💼 销售</button>
+    <button class="ftab" data-role="ops">📊 运营</button>
+    <button class="ftab" data-role="planner">💡 策划</button>
+  </div>
+  <div class="filter-row">
+    <span class="filter-label">工作类别</span>
+    <button class="ftab on" data-wcat="all">全部</button>
+    <button class="ftab" data-wcat="洞察研究">🔍 洞察研究</button>
+    <button class="ftab" data-wcat="客情管理">🤝 客情管理</button>
+    <button class="ftab" data-wcat="提案材料">📄 提案材料</button>
+    <button class="ftab" data-wcat="数据分析">📈 数据分析</button>
+    <button class="ftab" data-wcat="内容生产">✍️ 内容生产</button>
+    <button class="ftab" data-wcat="复盘报告">📋 复盘报告</button>
+    <button class="ftab" data-wcat="内部协作">🔗 内部协作</button>
+  </div>
+  <div class="filter-row">
+    <span class="filter-label">AI提效</span>
+    <button class="ftab on" data-ai="all">全部</button>
+    <button class="ftab" data-ai="high">🔴 高</button>
+    <button class="ftab" data-ai="mid">🟠 中</button>
+    <button class="ftab" data-ai="low">🟢 低</button>
+  </div>
 </div>
 
 <div class="legend">
-  <strong>AI提效空间：</strong>
-  <div class="legend-item"><div class="legend-dot" style="background:#e74c3c"></div>高 — 重复度高、规则强、AI可直接替代或大幅加速</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#f39c12"></div>中 — AI可辅助提速，仍需人工判断</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#27ae60"></div>低 — 强依赖关系/创意/决策，AI辅助有限</div>
+  <strong style="color:#888">AI提效：</strong>
+  <div class="legend-item"><div class="ldot" style="background:#e74c3c"></div>高 — 重复度高、规则强，AI可大幅替代</div>
+  <div class="legend-item"><div class="ldot" style="background:#f39c12"></div>中 — AI辅助提速，仍需人工判断</div>
+  <div class="legend-item"><div class="ldot" style="background:#27ae60"></div>低 — 强依赖关系/创意/决策，AI辅助有限</div>
 </div>
 
-<div class="role-sections" id="sections">
-
-  <!-- ══════════════ 销售 ══════════════ -->
-  <div class="role-block" data-role="sales">
-    <div class="role-header sales">
-      <div class="role-icon">💼</div>
-      <div class="role-info">
-        <h2>广告销售</h2>
-        <p>客户建联 · Leads转化 · 需求梳理 · 方案对齐 · 续签维护</p>
-      </div>
-      <div class="role-stats">
-        <div class="role-stat"><div class="n" id="sales-high">0</div><div class="lb">高提效</div></div>
-        <div class="role-stat"><div class="n" id="sales-mid">0</div><div class="lb">中提效</div></div>
-        <div class="role-stat"><div class="n" id="sales-low">0</div><div class="lb">低提效</div></div>
-      </div>
-    </div>
-    <div class="tasks-wrap">
-      <div class="tasks-grid" id="sales-grid">
-
-        <div class="task-card" data-role="sales" data-ai="high">
-          <div class="task-top">
-            <div class="task-name">客户背景调研 & 行业梳理</div>
-            <span class="ai-badge high">🔴 AI提效 高</span>
-          </div>
-          <div class="task-meta">
-            <span class="tag freq">每次见客前</span>
-            <span class="tag time">⏱ 1-3小时</span>
-            <span class="tag pain">🔥 最耗时</span>
-          </div>
-          <div class="task-ai-desc">自动抓取客户官网/财报/小红书笔记，生成品牌一页纸摘要；关联行业趋势数据，10分钟出报告</div>
-        </div>
-
-        <div class="task-card" data-role="sales" data-ai="high">
-          <div class="task-top">
-            <div class="task-name">竞品投放分析</div>
-            <span class="ai-badge high">🔴 AI提效 高</span>
-          </div>
-          <div class="task-meta">
-            <span class="tag freq">每周</span>
-            <span class="tag time">⏱ 2-4小时</span>
-            <span class="tag pain">🔥 高重复</span>
-          </div>
-          <div class="task-ai-desc">自动抓取竞品在小红书的内容声量、投放关键词、爆文风格，结构化输出竞品对比表</div>
-        </div>
-
-        <div class="task-card" data-role="sales" data-ai="high">
-          <div class="task-top">
-            <div class="task-name">拜访前资料准备（PPT/One Pager）</div>
-            <span class="ai-badge high">🔴 AI提效 高</span>
-          </div>
-          <div class="task-meta">
-            <span class="tag freq">每次拜访</span>
-            <span class="tag time">⏱ 2-4小时</span>
-            <span class="tag pain">🔥 最耗时</span>
-          </div>
-          <div class="task-ai-desc">基于客户背景+行业数据自动生成拜访材料草稿，销售只需微调，节省80%制作时间</div>
-        </div>
-
-        <div class="task-card" data-role="sales" data-ai="high">
-          <div class="task-top">
-            <div class="task-name">会后跟进邮件 / 微信总结</div>
-            <span class="ai-badge high">🔴 AI提效 高</span>
-          </div>
-          <div class="task-meta">
-            <span class="tag freq">每次会议后</span>
-            <span class="tag time">⏱ 30-60分钟</span>
-            <span class="tag pain">🔥 高重复</span>
-          </div>
-          <div class="task-ai-desc">基于会议纪要自动生成跟进邮件/微信消息，包含核心共识、待办事项、下次沟通节点</div>
-        </div>
-
-        <div class="task-card" data-role="sales" data-ai="high">
-          <div class="task-top">
-            <div class="task-name">客户需求整理 & 转化内部Brief</div>
-            <span class="ai-badge high">🔴 AI提效 高</span>
-          </div>
-          <div class="task-meta">
-            <span class="tag freq">每次需求对接</span>
-            <span class="tag time">⏱ 1-2小时</span>
-            <span class="tag pain">🔥 高重复</span>
-          </div>
-          <div class="task-ai-desc">客户口头需求 → 结构化Brief（目标人群/预算/KPI/时间节点），自动同步给策划和运营</div>
-        </div>
-
-        <div class="task-card" data-role="sales" data-ai="high">
-          <div class="task-top">
-            <div class="task-name">行业 / 品牌舆情监控</div>
-            <span class="ai-badge high">🔴 AI提效 高</span>
-          </div>
-          <div class="task-meta">
-            <span class="tag freq">每天</span>
-            <span class="tag time">⏱ 30-60分钟</span>
-            <span class="tag pain">🔥 高频</span>
-          </div>
-          <div class="task-ai-desc">自动监控客户品牌在小红书的舆情变化、风险信号，日报推送，销售第一时间掌握客户动态</div>
-        </div>
-
-        <div class="task-card" data-role="sales" data-ai="mid">
-          <div class="task-top">
-            <div class="task-name">Leads 优先级判断 & 分配</div>
-            <span class="ai-badge mid">🟠 AI提效 中</span>
-          </div>
-          <div class="task-meta">
-            <span class="tag freq">每天</span>
-            <span class="tag time">⏱ 30分钟</span>
-          </div>
-          <div class="task-ai-desc">基于历史转化数据给 Leads 打分排序，推荐优先跟进顺序；但最终决策仍需销售判断</div>
-        </div>
-
-        <div class="task-card" data-role="sales" data-ai="mid">
-          <div class="task-top">
-            <div class="task-name">合同 / 排期表填写</div>
-            <span class="ai-badge mid">🟠 AI提效 中</span>
-          </div>
-          <div class="task-meta">
-            <span class="tag freq">成单时</span>
-            <span class="tag time">⏱ 30-60分钟</span>
-            <span class="tag pain">🔥 容易出错</span>
-          </div>
-          <div class="task-ai-desc">自动从 Brief 提取关键信息填入合同/排期模板，减少手动录入和漏项风险</div>
-        </div>
-
-        <div class="task-card" data-role="sales" data-ai="mid">
-          <div class="task-top">
-            <div class="task-name">季度复盘 & KPI 追踪</div>
-            <span class="ai-badge mid">🟠 AI提效 中</span>
-          </div>
-          <div class="task-meta">
-            <span class="tag freq">每周/每月</span>
-            <span class="tag time">⏱ 1-2小时</span>
-          </div>
-          <div class="task-ai-desc">自动汇总各客户跟进状态、转化漏斗数据，生成销售个人 Dashboard；分析停滞原因</div>
-        </div>
-
-        <div class="task-card" data-role="sales" data-ai="low">
-          <div class="task-top">
-            <div class="task-name">客情关系维护（饭局/微信维系）</div>
-            <span class="ai-badge low">🟢 AI提效 低</span>
-          </div>
-          <div class="task-meta">
-            <span class="tag freq">持续</span>
-          </div>
-          <div class="task-ai-desc">AI可提示"客户生日/重要节点发关怀"，但核心是人际信任，AI辅助有限</div>
-        </div>
-
-        <div class="task-card" data-role="sales" data-ai="low">
-          <div class="task-top">
-            <div class="task-name">内部协作 & 资源争取</div>
-            <span class="ai-badge low">🟢 AI提效 低</span>
-          </div>
-          <div class="task-meta">
-            <span class="tag freq">持续</span>
-          </div>
-          <div class="task-ai-desc">跨部门协调、资源申请依赖关系网络和话语权，AI无法替代</div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <!-- ══════════════ 运营 ══════════════ -->
-  <div class="role-block" data-role="ops">
-    <div class="role-header ops">
-      <div class="role-icon">📊</div>
-      <div class="role-info">
-        <h2>广告运营</h2>
-        <p>数据分析 · 投放复盘 · 优化建议 · 客户月报 · 行业周报</p>
-      </div>
-      <div class="role-stats">
-        <div class="role-stat"><div class="n" id="ops-high">0</div><div class="lb">高提效</div></div>
-        <div class="role-stat"><div class="n" id="ops-mid">0</div><div class="lb">中提效</div></div>
-        <div class="role-stat"><div class="n" id="ops-low">0</div><div class="lb">低提效</div></div>
-      </div>
-    </div>
-    <div class="tasks-wrap">
-      <div class="tasks-grid" id="ops-grid">
-
-        <div class="task-card" data-role="ops" data-ai="high">
-          <div class="task-top">
-            <div class="task-name">每日数据拉取 & 报表制作</div>
-            <span class="ai-badge high">🔴 AI提效 高</span>
-          </div>
-          <div class="task-meta">
-            <span class="tag freq">每天</span>
-            <span class="tag time">⏱ 1-2小时</span>
-            <span class="tag pain">🔥 最重复</span>
-          </div>
-          <div class="task-ai-desc">自动从 BI/灵犀/聚光 拉取数据，生成标准报表，异常数据自动标红预警</div>
-        </div>
-
-        <div class="task-card" data-role="ops" data-ai="high">
-          <div class="task-top">
-            <div class="task-name">客户月报 / 周报撰写</div>
-            <span class="ai-badge high">🔴 AI提效 高</span>
-          </div>
-          <div class="task-meta">
-            <span class="tag freq">每月/每周</span>
-            <span class="tag time">⏱ 1-2天</span>
-            <span class="tag pain">🔥 最耗时</span>
-          </div>
-          <div class="task-ai-desc">基于数据自动生成报告框架+图表解读，运营只需审核结论和补充背景，节省70%时间</div>
-        </div>
-
-        <div class="task-card" data-role="ops" data-ai="high">
-          <div class="task-top">
-            <div class="task-name">投放复盘报告</div>
-            <span class="ai-badge high">🔴 AI提效 高</span>
-          </div>
-          <div class="task-meta">
-            <span class="tag freq">每周/每Campaign</span>
-            <span class="tag time">⏱ 半天-1天</span>
-            <span class="tag pain">🔥 高重复</span>
-          </div>
-          <div class="task-ai-desc">自动对比实际vs目标，识别超/低效素材，生成优化建议列表，结构化输出复盘结论</div>
-        </div>
-
-        <div class="task-card" data-role="ops" data-ai="high">
-          <div class="task-top">
-            <div class="task-name">行业周报（对客/对内）</div>
-            <span class="ai-badge high">🔴 AI提效 高</span>
-          </div>
-          <div class="task-meta">
-            <span class="tag freq">每周</span>
-            <span class="tag time">⏱ 1-2天</span>
-            <span class="tag pain">🔥 最耗时</span>
-          </div>
-          <div class="task-ai-desc">自动抓取行业数据+热点+竞品动态，生成 one-page 行业周报，运营只需最终审核</div>
-        </div>
-
-        <div class="task-card" data-role="ops" data-ai="high">
-          <div class="task-top">
-            <div class="task-name">内容打标 & 分类</div>
-            <span class="ai-badge high">🔴 AI提效 高</span>
-          </div>
-          <div class="task-meta">
-            <span class="tag freq">持续</span>
-            <span class="tag time">⏱ 数小时/批次</span>
-            <span class="tag pain">🔥 最重复</span>
-          </div>
-          <div class="task-ai-desc">AI批量对笔记/素材进行行业/场景/情绪/卖点多维打标，人工只需抽检验收</div>
-        </div>
-
-        <div class="task-card" data-role="ops" data-ai="high">
-          <div class="task-top">
-            <div class="task-name">搜索词分析 & 推词</div>
-            <span class="ai-badge high">🔴 AI提效 高</span>
-          </div>
-          <div class="task-meta">
-            <span class="tag freq">每周</span>
-            <span class="tag time">⏱ 半天-1天</span>
-            <span class="tag pain">🔥 高重复</span>
-          </div>
-          <div class="task-ai-desc">自动分析搜索词热度/竞争度/转化率，生成推词建议列表，减少人工逐条分析</div>
-        </div>
-
-        <div class="task-card" data-role="ops" data-ai="mid">
-          <div class="task-top">
-            <div class="task-name">投放策略调整 & 出价优化</div>
-            <span class="ai-badge mid">🟠 AI提效 中</span>
-          </div>
-          <div class="task-meta">
-            <span class="tag freq">每天</span>
-            <span class="tag time">⏱ 1-2小时</span>
-          </div>
-          <div class="task-ai-desc">AI推荐出价区间和定向调整方案，但最终策略决策需运营结合客户目标判断</div>
-        </div>
-
-        <div class="task-card" data-role="ops" data-ai="mid">
-          <div class="task-top">
-            <div class="task-name">品牌情感 / 舆情分析</div>
-            <span class="ai-badge mid">🟠 AI提效 中</span>
-          </div>
-          <div class="task-meta">
-            <span class="tag freq">每月/专项</span>
-            <span class="tag time">⏱ 半天</span>
-          </div>
-          <div class="task-ai-desc">AI自动对评论/笔记进行情感分类、关键词提取，识别风险舆情；但结论解读需人工</div>
-        </div>
-
-        <div class="task-card" data-role="ops" data-ai="mid">
-          <div class="task-top">
-            <div class="task-name">跨平台数据整合</div>
-            <span class="ai-badge mid">🟠 AI提效 中</span>
-          </div>
-          <div class="task-meta">
-            <span class="tag freq">每月</span>
-            <span class="tag time">⏱ 1天</span>
-          </div>
-          <div class="task-ai-desc">自动汇总小红书+抖音+天猫等多平台数据，生成统一视图；口径对齐仍需人工确认</div>
-        </div>
-
-        <div class="task-card" data-role="ops" data-ai="low">
-          <div class="task-top">
-            <div class="task-name">客户需求深度沟通</div>
-            <span class="ai-badge low">🟢 AI提效 低</span>
-          </div>
-          <div class="task-meta">
-            <span class="tag freq">持续</span>
-          </div>
-          <div class="task-ai-desc">理解客户真实诉求需要大量上下文和信任关系，AI可记录整理，但不能替代沟通本身</div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <!-- ══════════════ 策划 ══════════════ -->
-  <div class="role-block" data-role="planner">
-    <div class="role-header planner">
-      <div class="role-icon">💡</div>
-      <div class="role-info">
-        <h2>营销策划</h2>
-        <p>行业洞察 · 营销提案 · Campaign创意 · 内容策略 · 竞品研究</p>
-      </div>
-      <div class="role-stats">
-        <div class="role-stat"><div class="n" id="planner-high">0</div><div class="lb">高提效</div></div>
-        <div class="role-stat"><div class="n" id="planner-mid">0</div><div class="lb">中提效</div></div>
-        <div class="role-stat"><div class="n" id="planner-low">0</div><div class="lb">低提效</div></div>
-      </div>
-    </div>
-    <div class="tasks-wrap">
-      <div class="tasks-grid" id="planner-grid">
-
-        <div class="task-card" data-role="planner" data-ai="high">
-          <div class="task-top">
-            <div class="task-name">行业洞察报告撰写</div>
-            <span class="ai-badge high">🔴 AI提效 高</span>
-          </div>
-          <div class="task-meta">
-            <span class="tag freq">每月/专项</span>
-            <span class="tag time">⏱ 2-3天</span>
-            <span class="tag pain">🔥 最耗时</span>
-          </div>
-          <div class="task-ai-desc">自动整合灵犀数据+行业报告+小红书趋势，生成行业洞察框架；策划专注于解读和创意延伸</div>
-        </div>
-
-        <div class="task-card" data-role="planner" data-ai="high">
-          <div class="task-top">
-            <div class="task-name">竞品内容策略分析</div>
-            <span class="ai-badge high">🔴 AI提效 高</span>
-          </div>
-          <div class="task-meta">
-            <span class="tag freq">每次提案前</span>
-            <span class="tag time">⏱ 半天-1天</span>
-            <span class="tag pain">🔥 高重复</span>
-          </div>
-          <div class="task-ai-desc">自动抓取竞品爆文规律、内容公式、达人矩阵，输出竞品内容地图，供策划快速参考</div>
-        </div>
-
-        <div class="task-card" data-role="planner" data-ai="high">
-          <div class="task-top">
-            <div class="task-name">提案 PPT 数据填充</div>
-            <span class="ai-badge high">🔴 AI提效 高</span>
-          </div>
-          <div class="task-meta">
-            <span class="tag freq">每次提案</span>
-            <span class="tag time">⏱ 半天</span>
-            <span class="tag pain">🔥 高重复</span>
-          </div>
-          <div class="task-ai-desc">自动从灵犀/BI拉取行业数据填入PPT模板（人群规模/声量趋势/行业增速），10分钟完成</div>
-        </div>
-
-        <div class="task-card" data-role="planner" data-ai="high">
-          <div class="task-top">
-            <div class="task-name">人群画像 & 消费者洞察</div>
-            <span class="ai-badge high">🔴 AI提效 高</span>
-          </div>
-          <div class="task-meta">
-            <span class="tag freq">每次提案</span>
-            <span class="tag time">⏱ 1天</span>
-            <span class="tag pain">🔥 数据量大</span>
-          </div>
-          <div class="task-ai-desc">基于灵犀人群数据自动生成目标人群画像（兴趣/场景/消费习惯），替代人工逐条分析</div>
-        </div>
-
-        <div class="task-card" data-role="planner" data-ai="high">
-          <div class="task-top">
-            <div class="task-name">爆文 / 内容公式拆解</div>
-            <span class="ai-badge high">🔴 AI提效 高</span>
-          </div>
-          <div class="task-meta">
-            <span class="tag freq">每次内容策略</span>
-            <span class="tag time">⏱ 半天</span>
-            <span class="tag pain">🔥 高重复</span>
-          </div>
-          <div class="task-ai-desc">自动分析行业 Top 爆文的标题公式、封面规律、内容结构，生成可复用的内容模板</div>
-        </div>
-
-        <div class="task-card" data-role="planner" data-ai="high">
-          <div class="task-top">
-            <div class="task-name">品牌形象 & 情绪浓度分析</div>
-            <span class="ai-badge high">🔴 AI提效 高</span>
-          </div>
-          <div class="task-meta">
-            <span class="tag freq">每次提案/复盘</span>
-            <span class="tag time">⏱ 1-2天</span>
-            <span class="tag pain">🔥 最耗时</span>
-          </div>
-          <div class="task-ai-desc">AI批量分析品牌相关笔记的情感倾向、核心词云、用户评价聚类，替代人工阅读数千条内容</div>
-        </div>
-
-        <div class="task-card" data-role="planner" data-ai="mid">
-          <div class="task-top">
-            <div class="task-name">Campaign 方向 & 主题策划</div>
-            <span class="ai-badge mid">🟠 AI提效 中</span>
-          </div>
-          <div class="task-meta">
-            <span class="tag freq">每次Campaign</span>
-            <span class="tag time">⏱ 1-2天</span>
-          </div>
-          <div class="task-ai-desc">AI可基于趋势数据生成多个Campaign方向备选，但核心创意洞察和差异化仍依赖策划判断</div>
-        </div>
-
-        <div class="task-card" data-role="planner" data-ai="mid">
-          <div class="task-top">
-            <div class="task-name">达人 / KOL 推荐筛选</div>
-            <span class="ai-badge mid">🟠 AI提效 中</span>
-          </div>
-          <div class="task-meta">
-            <span class="tag freq">每次合作前</span>
-            <span class="tag time">⏱ 半天</span>
-          </div>
-          <div class="task-ai-desc">AI按受众重合度/内容风格/历史数据筛选候选达人名单，策划确认调性匹配后决策</div>
-        </div>
-
-        <div class="task-card" data-role="planner" data-ai="mid">
-          <div class="task-top">
-            <div class="task-name">AIGC 笔记内容生产</div>
-            <span class="ai-badge mid">🟠 AI提效 中</span>
-          </div>
-          <div class="task-meta">
-            <span class="tag freq">持续</span>
-            <span class="tag time">⏱ 数小时/批次</span>
-          </div>
-          <div class="task-ai-desc">AI基于内容公式批量生成笔记初稿，策划审核品牌调性和合规性后输出，提速60-80%</div>
-        </div>
-
-        <div class="task-card" data-role="planner" data-ai="low">
-          <div class="task-top">
-            <div class="task-name">大创意 / Big Idea 发想</div>
-            <span class="ai-badge low">🟢 AI提效 低</span>
-          </div>
-          <div class="task-meta">
-            <span class="tag freq">每次大Campaign</span>
-          </div>
-          <div class="task-ai-desc">AI可提供发散参考，但打动人的核心创意洞察源于对人性和文化的深刻理解，不可替代</div>
-        </div>
-
-        <div class="task-card" data-role="planner" data-ai="low">
-          <div class="task-top">
-            <div class="task-name">客户提案现场演讲</div>
-            <span class="ai-badge low">🟢 AI提效 低</span>
-          </div>
-          <div class="task-meta">
-            <span class="tag freq">每次提案</span>
-          </div>
-          <div class="task-ai-desc">现场临机应变、读懂客户反应、建立信任感是核心，AI无法替代</div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-</div>
+<div class="role-sections" id="role-sections"></div>
 
 <footer>小红书广告团队 AI 提效地图 · 2026-03</footer>
 
 <script>
-let activeRole = 'all';
-let activeAI   = 'all';
+// ═══════════════════════════════════════
+// 数据
+// ═══════════════════════════════════════
+const ROLES = [
+  { key:'sales',   icon:'💼', label:'广告销售',   sub:'客户建联 · Leads转化 · 需求梳理 · 提案配合 · 续签维护', cls:'sales' },
+  { key:'ops',     icon:'📊', label:'广告运营',   sub:'数据分析 · 投放复盘 · 报表制作 · 行业周报 · 内容打标', cls:'ops' },
+  { key:'planner', icon:'💡', label:'营销策划',   sub:'行业洞察 · 营销提案 · Campaign创意 · 内容策略 · 竞品研究', cls:'planner' },
+];
 
-function updateStats() {
-  ['sales','ops','planner'].forEach(role => {
-    ['high','mid','low'].forEach(ai => {
-      const cards = document.querySelectorAll(`.task-card[data-role="${role}"][data-ai="${ai}"]`);
-      const visible = [...cards].filter(c => !c.classList.contains('hidden')).length;
-      // just count all for the stat (not filtered)
-      const total = cards.length;
-      document.getElementById(`${role}-${ai}`).textContent = total;
+const TASKS = [
+
+  // ══════════ 销售 ══════════
+
+  // 洞察研究
+  { role:'sales', wcat:'洞察研究', ai:'high',
+    name:'客户背景调研 & 行业梳理',
+    freq:'每次见客前', time:'1-3小时', pain:true,
+    desc:'自动抓取客户官网/财报/小红书笔记，生成品牌一页纸摘要；关联行业趋势数据，10分钟出报告' },
+  { role:'sales', wcat:'洞察研究', ai:'high',
+    name:'竞品投放分析',
+    freq:'每周', time:'2-4小时', pain:true,
+    desc:'自动抓取竞品在小红书的内容声量、投放关键词、爆文风格，结构化输出竞品对比表' },
+  { role:'sales', wcat:'洞察研究', ai:'high',
+    name:'行业 / 品牌舆情监控',
+    freq:'每天', time:'30-60分钟', pain:false,
+    desc:'自动监控客户品牌舆情变化和风险信号，日报推送，销售第一时间掌握客户动态' },
+
+  // 客情管理
+  { role:'sales', wcat:'客情管理', ai:'high',
+    name:'会后跟进邮件 / 微信总结',
+    freq:'每次会议后', time:'30-60分钟', pain:true,
+    desc:'基于会议纪要自动生成跟进邮件/微信消息，含核心共识、待办、下次沟通节点' },
+  { role:'sales', wcat:'客情管理', ai:'mid',
+    name:'Leads 优先级判断 & 分配',
+    freq:'每天', time:'30分钟', pain:false,
+    desc:'基于历史转化数据给 Leads 打分排序，推荐优先跟进顺序；最终决策仍需销售判断' },
+  { role:'sales', wcat:'客情管理', ai:'low',
+    name:'客情关系维护（饭局/微信维系）',
+    freq:'持续', time:'—', pain:false,
+    desc:'AI可提示客户生日/重要节点发关怀，但核心是人际信任，AI辅助有限' },
+  { role:'sales', wcat:'客情管理', ai:'mid',
+    name:'季度客户健康度回顾',
+    freq:'每季度', time:'半天', pain:false,
+    desc:'自动汇总客户跟进频率、满意度信号、续约风险，生成客户健康度 Dashboard' },
+
+  // 提案材料
+  { role:'sales', wcat:'提案材料', ai:'high',
+    name:'拜访前资料准备（One Pager）',
+    freq:'每次拜访', time:'2-4小时', pain:true,
+    desc:'基于客户背景+行业数据自动生成拜访材料草稿，销售只需微调，节省80%制作时间' },
+  { role:'sales', wcat:'提案材料', ai:'high',
+    name:'客户需求整理 & 转化内部 Brief',
+    freq:'每次需求对接', time:'1-2小时', pain:true,
+    desc:'客户口头需求 → 结构化 Brief（目标人群/预算/KPI/时间节点），自动同步给策划和运营' },
+
+  // 内部协作
+  { role:'sales', wcat:'内部协作', ai:'mid',
+    name:'合同 / 排期表填写',
+    freq:'成单时', time:'30-60分钟', pain:false,
+    desc:'自动从 Brief 提取关键信息填入合同/排期模板，减少手动录入和漏项风险' },
+  { role:'sales', wcat:'内部协作', ai:'mid',
+    name:'销售 KPI 追踪 & 漏斗分析',
+    freq:'每周/每月', time:'1-2小时', pain:false,
+    desc:'自动汇总各客户跟进状态、转化漏斗数据，生成个人 Dashboard，识别停滞原因' },
+  { role:'sales', wcat:'内部协作', ai:'low',
+    name:'跨部门资源协调 & 争取',
+    freq:'持续', time:'—', pain:false,
+    desc:'跨部门协调依赖关系网络和话语权，AI无法替代' },
+
+  // ══════════ 运营 ══════════
+
+  // 数据分析
+  { role:'ops', wcat:'数据分析', ai:'high',
+    name:'每日数据拉取 & 报表制作',
+    freq:'每天', time:'1-2小时', pain:true,
+    desc:'自动从 BI/灵犀/聚光 拉取数据，生成标准报表，异常数据自动标红预警' },
+  { role:'ops', wcat:'数据分析', ai:'mid',
+    name:'投放策略调整 & 出价优化',
+    freq:'每天', time:'1-2小时', pain:false,
+    desc:'AI推荐出价区间和定向调整方案，但最终策略决策需结合客户目标判断' },
+  { role:'ops', wcat:'数据分析', ai:'mid',
+    name:'跨平台数据整合',
+    freq:'每月', time:'1天', pain:false,
+    desc:'自动汇总小红书+抖音+天猫等多平台数据，生成统一视图；口径对齐仍需人工确认' },
+  { role:'ops', wcat:'数据分析', ai:'high',
+    name:'搜索词分析 & 推词',
+    freq:'每周', time:'半天-1天', pain:true,
+    desc:'自动分析搜索词热度/竞争度/转化率，生成推词建议列表，减少人工逐条分析' },
+
+  // 复盘报告
+  { role:'ops', wcat:'复盘报告', ai:'high',
+    name:'客户月报 / 周报撰写',
+    freq:'每月/每周', time:'1-2天', pain:true,
+    desc:'基于数据自动生成报告框架+图表解读，运营只需审核结论和补充背景，节省70%时间' },
+  { role:'ops', wcat:'复盘报告', ai:'high',
+    name:'投放复盘报告',
+    freq:'每周/每Campaign', time:'半天-1天', pain:true,
+    desc:'自动对比实际vs目标，识别超/低效素材，生成优化建议列表，结构化输出复盘结论' },
+  { role:'ops', wcat:'复盘报告', ai:'high',
+    name:'行业周报（对客/对内）',
+    freq:'每周', time:'1-2天', pain:true,
+    desc:'自动抓取行业数据+热点+竞品动态，生成 one-page 行业周报，运营只需最终审核' },
+
+  // 内容生产
+  { role:'ops', wcat:'内容生产', ai:'high',
+    name:'内容打标 & 分类',
+    freq:'持续', time:'数小时/批次', pain:true,
+    desc:'AI批量对笔记/素材进行行业/场景/情绪/卖点多维打标，人工只需抽检验收' },
+
+  // 洞察研究
+  { role:'ops', wcat:'洞察研究', ai:'mid',
+    name:'品牌情感 / 舆情分析',
+    freq:'每月/专项', time:'半天', pain:false,
+    desc:'AI自动对评论/笔记进行情感分类、关键词提取，识别风险舆情；结论解读需人工' },
+
+  // 客情管理
+  { role:'ops', wcat:'客情管理', ai:'low',
+    name:'客户需求深度沟通',
+    freq:'持续', time:'—', pain:false,
+    desc:'理解客户真实诉求需要大量上下文和信任关系，AI可记录整理，但不能替代沟通本身' },
+
+  // ══════════ 策划 ══════════
+
+  // 洞察研究
+  { role:'planner', wcat:'洞察研究', ai:'high',
+    name:'行业洞察报告撰写',
+    freq:'每月/专项', time:'2-3天', pain:true,
+    desc:'自动整合灵犀数据+行业报告+小红书趋势，生成洞察框架；策划专注于解读和创意延伸' },
+  { role:'planner', wcat:'洞察研究', ai:'high',
+    name:'竞品内容策略分析',
+    freq:'每次提案前', time:'半天-1天', pain:true,
+    desc:'自动抓取竞品爆文规律、内容公式、达人矩阵，输出竞品内容地图' },
+  { role:'planner', wcat:'洞察研究', ai:'high',
+    name:'人群画像 & 消费者洞察',
+    freq:'每次提案', time:'1天', pain:true,
+    desc:'基于灵犀人群数据自动生成目标人群画像（兴趣/场景/消费习惯），替代人工逐条分析' },
+  { role:'planner', wcat:'洞察研究', ai:'high',
+    name:'品牌形象 & 情绪浓度分析',
+    freq:'每次提案/复盘', time:'1-2天', pain:true,
+    desc:'AI批量分析品牌相关笔记的情感倾向、核心词云、用户评价聚类，替代人工阅读数千条内容' },
+  { role:'planner', wcat:'洞察研究', ai:'high',
+    name:'爆文 / 内容公式拆解',
+    freq:'每次内容策略', time:'半天', pain:true,
+    desc:'自动分析行业 Top 爆文的标题公式、封面规律、内容结构，生成可复用内容模板' },
+
+  // 提案材料
+  { role:'planner', wcat:'提案材料', ai:'high',
+    name:'提案 PPT 数据填充',
+    freq:'每次提案', time:'半天', pain:true,
+    desc:'自动从灵犀/BI拉取行业数据填入PPT模板（人群规模/声量趋势/行业增速），10分钟完成' },
+  { role:'planner', wcat:'提案材料', ai:'mid',
+    name:'达人 / KOL 推荐筛选',
+    freq:'每次合作前', time:'半天', pain:false,
+    desc:'AI按受众重合度/内容风格/历史数据筛选候选达人名单，策划确认调性匹配后决策' },
+  { role:'planner', wcat:'提案材料', ai:'low',
+    name:'客户提案现场演讲',
+    freq:'每次提案', time:'—', pain:false,
+    desc:'现场临机应变、读懂客户反应、建立信任感是核心，AI无法替代' },
+
+  // 内容生产
+  { role:'planner', wcat:'内容生产', ai:'mid',
+    name:'AIGC 笔记内容生产',
+    freq:'持续', time:'数小时/批次', pain:false,
+    desc:'AI基于内容公式批量生成笔记初稿，策划审核品牌调性和合规性后输出，提速60-80%' },
+  { role:'planner', wcat:'内容生产', ai:'mid',
+    name:'Campaign 方向 & 主题策划',
+    freq:'每次Campaign', time:'1-2天', pain:false,
+    desc:'AI可基于趋势数据生成多个Campaign方向备选，但核心创意洞察仍依赖策划判断' },
+
+  // 复盘报告
+  { role:'planner', wcat:'复盘报告', ai:'mid',
+    name:'营销复盘 & 效果归因',
+    freq:'每次Campaign后', time:'1-2天', pain:false,
+    desc:'AI自动汇总各渠道数据、归因分析，策划专注于策略解读和下次方向建议' },
+
+  // 内部协作
+  { role:'planner', wcat:'内部协作', ai:'low',
+    name:'Big Idea 创意发想',
+    freq:'每次大Campaign', time:'—', pain:false,
+    desc:'AI可提供发散参考，但打动人的核心创意洞察源于对人性和文化的深刻理解，不可替代' },
+];
+
+// ═══════════════════════════════════════
+// 渲染
+// ═══════════════════════════════════════
+const WCATS = ['洞察研究','客情管理','提案材料','数据分析','内容生产','复盘报告','内部协作'];
+const WCAT_ICON = { '洞察研究':'🔍','客情管理':'🤝','提案材料':'📄','数据分析':'📈','内容生产':'✍️','复盘报告':'📋','内部协作':'🔗' };
+const AI_LABEL = { high:'🔴 高', mid:'🟠 中', low:'🟢 低' };
+
+function render() {
+  const container = document.getElementById('role-sections');
+  container.innerHTML = '';
+
+  ROLES.forEach(role => {
+    const roleTasks = TASKS.filter(t => t.role === role.key);
+    const high = roleTasks.filter(t=>t.ai==='high').length;
+    const mid  = roleTasks.filter(t=>t.ai==='mid').length;
+    const low  = roleTasks.filter(t=>t.ai==='low').length;
+
+    // 按 wcat 分组
+    const wcatGroups = {};
+    WCATS.forEach(wc => {
+      const items = roleTasks.filter(t => t.wcat === wc);
+      if (items.length) wcatGroups[wc] = items;
     });
+
+    const block = document.createElement('div');
+    block.className = 'role-block';
+    block.dataset.role = role.key;
+
+    block.innerHTML = `
+      <div class="role-header ${role.cls}">
+        <div class="role-icon">${role.icon}</div>
+        <div class="role-info">
+          <h2>${role.label}</h2>
+          <p>${role.sub}</p>
+        </div>
+        <div class="role-stats">
+          <div class="role-stat"><div class="n">${high}</div><div class="lb">高提效</div></div>
+          <div class="role-stat"><div class="n">${mid}</div><div class="lb">中提效</div></div>
+          <div class="role-stat"><div class="n">${low}</div><div class="lb">低提效</div></div>
+        </div>
+      </div>
+      <div class="role-body">
+        ${Object.entries(wcatGroups).map(([wc, items]) => `
+          <div class="wcat-section" data-wcat="${wc}">
+            <div class="wcat-header">
+              <span class="wcat-tag">${WCAT_ICON[wc]} ${wc}</span>
+              <div class="wcat-line"></div>
+              <span class="wcat-count">${items.length} 项</span>
+            </div>
+            <div class="tasks-grid">
+              ${items.map(t => `
+                <div class="task-card" data-role="${t.role}" data-ai="${t.ai}" data-wcat="${t.wcat}">
+                  <div class="task-top">
+                    <div class="task-name">${t.name}</div>
+                    <span class="ai-badge ${t.ai}">${AI_LABEL[t.ai]}</span>
+                  </div>
+                  <div class="task-meta">
+                    ${t.freq ? `<span class="tag freq">🔄 ${t.freq}</span>` : ''}
+                    ${t.time && t.time!=='—' ? `<span class="tag time">⏱ ${t.time}</span>` : ''}
+                    ${t.pain ? `<span class="tag pain">🔥 高耗时</span>` : ''}
+                  </div>
+                  <div class="task-ai-desc">${t.desc}</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `).join('')}
+      </div>`;
+    container.appendChild(block);
   });
+
+  applyFilters();
 }
+
+// ═══════════════════════════════════════
+// 筛选
+// ═══════════════════════════════════════
+let activeRole = 'all', activeAI = 'all', activeWcat = 'all';
 
 function applyFilters() {
-  // 角色块显隐
   document.querySelectorAll('.role-block').forEach(block => {
-    const match = activeRole === 'all' || block.dataset.role === activeRole;
-    block.classList.toggle('hidden', !match);
+    const rMatch = activeRole === 'all' || block.dataset.role === activeRole;
+    block.classList.toggle('hidden', !rMatch);
   });
 
-  // 卡片显隐
-  document.querySelectorAll('.task-card').forEach(card => {
-    const rMatch = activeRole === 'all' || card.dataset.role === activeRole;
-    const aMatch = activeAI   === 'all' || card.dataset.ai   === activeAI;
-    card.classList.toggle('hidden', !rMatch || !aMatch);
+  document.querySelectorAll('.wcat-section').forEach(sec => {
+    const wMatch = activeWcat === 'all' || sec.dataset.wcat === activeWcat;
+    // 还需检查 section 内是否有可见卡片
+    const hasVisible = wMatch && [...sec.querySelectorAll('.task-card')].some(c => {
+      const aMatch = activeAI === 'all' || c.dataset.ai === activeAI;
+      return aMatch;
+    });
+    sec.classList.toggle('hidden', !hasVisible);
+    if (!sec.classList.contains('hidden')) {
+      sec.querySelectorAll('.task-card').forEach(card => {
+        const aMatch = activeAI === 'all' || card.dataset.ai === activeAI;
+        card.classList.toggle('hidden', !aMatch);
+      });
+    }
   });
 }
 
-// 角色筛选
 document.querySelectorAll('.ftab[data-role]').forEach(btn => {
   btn.addEventListener('click', () => {
     activeRole = btn.dataset.role;
@@ -1627,8 +1432,14 @@ document.querySelectorAll('.ftab[data-role]').forEach(btn => {
     applyFilters();
   });
 });
-
-// AI提效筛选
+document.querySelectorAll('.ftab[data-wcat]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    activeWcat = btn.dataset.wcat;
+    document.querySelectorAll('.ftab[data-wcat]').forEach(b => b.classList.remove('on'));
+    btn.classList.add('on');
+    applyFilters();
+  });
+});
 document.querySelectorAll('.ftab[data-ai]').forEach(btn => {
   btn.addEventListener('click', () => {
     activeAI = btn.dataset.ai;
@@ -1638,7 +1449,7 @@ document.querySelectorAll('.ftab[data-ai]').forEach(btn => {
   });
 });
 
-updateStats();
+render();
 </script>
 
 </div>
@@ -1650,6 +1461,11 @@ document.querySelectorAll('.nav-tab').forEach(btn => {
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
     btn.classList.add('active');
     document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    // workflow tab 需要触发初始化渲染（如果还没 render）
+    if (btn.dataset.tab === 'workflow' && !window._workflowRendered) {
+      window._workflowRendered = true;
+      if (typeof render === 'function') render();
+    }
   });
 });
 </script>
