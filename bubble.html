@@ -133,127 +133,137 @@
 
 const items = [
   // ── 内容 ──
-  {
-    label: "AIGC笔记生产\n【大健康+食饮】",
-    priority: "P0", category: "内容",
-    x: 3, y: 3,   // 难易高，影响高
-    saveDays: 60,  // 每天2-3h/人，多人 → 估60人天/月
-    cap: "partial"
-  },
+  // 高影响·低难度 象限 (x:1~1.8, y:2.5~3.5)
   {
     label: "内容分析\n【母婴赛道】",
     priority: "P0", category: "内容",
-    x: 1, y: 3,
+    x: 1.1, y: 3.3,
     saveDays: 20,
     cap: "partial"
   },
   {
     label: "内容分析\n【大健康赛道】",
     priority: "P0", category: "内容",
-    x: 1, y: 3,
+    x: 1.5, y: 2.85,
     saveDays: 20,
     cap: "partial"
   },
+  // 高影响·高难度 象限 (x:2.5~3.5, y:2.5~3.5)
+  {
+    label: "AIGC笔记生产\n【大健康+食饮】",
+    priority: "P0", category: "内容",
+    x: 3.1, y: 3.2,
+    saveDays: 60,
+    cap: "partial"
+  },
+
   // ── 分析/复盘 ──
+  // 高影响·中难度区 铺开
   {
     label: "品牌形象分析",
     priority: "P0", category: "分析/复盘",
-    x: 2, y: 3,
+    x: 2.0, y: 3.4,
     saveDays: 40,
     cap: "none"
   },
   {
     label: "情绪浓度分析",
     priority: "P0", category: "分析/复盘",
-    x: 2, y: 3,
+    x: 2.5, y: 3.0,
     saveDays: 40,
     cap: "none"
   },
   {
-    label: "品牌营销复盘\n(AURA)",
-    priority: "P2", category: "分析/复盘",
-    x: 2, y: 1,
-    saveDays: 12,
-    cap: "partial"
-  },
-  {
     label: "一方工具升级",
     priority: "P2", category: "分析/复盘",
-    x: 2, y: 3,
+    x: 1.7, y: 3.0,
     saveDays: 18,
     cap: "has"
   },
   {
     label: "投放复盘",
     priority: "P2", category: "分析/复盘",
-    x: 2, y: 2,
+    x: 2.2, y: 2.3,
     saveDays: 22,
     cap: "has"
   },
+  // 低影响区
+  {
+    label: "品牌营销复盘\n(AURA)",
+    priority: "P2", category: "分析/复盘",
+    x: 1.8, y: 1.2,
+    saveDays: 12,
+    cap: "partial"
+  },
+
   // ── 搜索 ──
+  // 中影响·中难度，错开
   {
     label: "搜索推词工具",
     priority: "P1", category: "搜索",
-    x: 2, y: 2,
+    x: 2.55, y: 2.55,
     saveDays: 30,
     cap: "none"
   },
   {
-    label: "搜索词打标+取数",
+    label: "搜索词打标\n+取数",
     priority: "P1", category: "搜索",
-    x: 2, y: 2,
+    x: 1.6, y: 2.2,
     saveDays: 25,
     cap: "none"
   },
+
   // ── 月报/周报 ──
+  // 高影响，沿 y=3 一字排开
   {
     label: "行业周报\n(对客)",
     priority: "P0", category: "月报/周报",
-    x: 2, y: 3,
+    x: 2.1, y: 3.55,
     saveDays: 48,
     cap: "has"
   },
   {
     label: "行业周报\n(对内)",
     priority: "P0", category: "月报/周报",
-    x: 2, y: 3,
+    x: 2.7, y: 3.5,
     saveDays: 30,
     cap: "none"
   },
   {
     label: "头客月报",
     priority: "P1", category: "月报/周报",
-    x: 2, y: 3,
+    x: 1.3, y: 3.55,
     saveDays: 35,
     cap: "partial"
   },
+
   // ── 洞察 ──
-  {
-    label: "潮玩IP\n维度分析",
-    priority: "P2", category: "洞察",
-    x: 2, y: 1,
-    saveDays: 10,
-    cap: "none"
-  },
   {
     label: "站内舆情\n风险提示",
     priority: "P0", category: "洞察",
-    x: 2, y: 3,
+    x: 2.3, y: 2.75,
     saveDays: 36,
     cap: "none"
   },
   {
     label: "行业&竞品\n洞察",
     priority: "P1", category: "洞察",
-    x: 2, y: 2,
+    x: 2.9, y: 2.2,
     saveDays: 20,
     cap: "partial"
   },
   {
     label: "Campaign Idea",
     priority: "P2", category: "洞察",
-    x: 2, y: 2,
+    x: 3.2, y: 1.6,
     saveDays: 12,
+    cap: "none"
+  },
+  {
+    label: "潮玩IP\n维度分析",
+    priority: "P2", category: "洞察",
+    x: 2.5, y: 1.3,
+    saveDays: 10,
     cap: "none"
   },
 ];
@@ -270,11 +280,8 @@ function toR(days) {
   return Math.sqrt(days) * 2.8;
 }
 
-// 轻微抖动避免完全重叠
-function jitter(v, seed) {
-  const s = (seed * 9301 + 49297) % 233280;
-  return v + (s / 233280 - 0.5) * 0.28;
-}
+// 不再使用随机抖动，坐标已手动铺开
+function jitter(v, _seed) { return v; }
 
 // 按能力分组构建 dataset
 const groups = {
@@ -317,7 +324,7 @@ const labelPlugin = {
         const item = pt._meta;
 
         ctx.save();
-        ctx.font = "bold 11px 'PingFang SC', 'Microsoft YaHei', sans-serif";
+        ctx.font = "bold 10px 'PingFang SC', 'Microsoft YaHei', sans-serif";
         ctx.fillStyle = "#1a1a2e";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
@@ -402,7 +409,7 @@ const chart = new Chart(ctx, {
     },
     scales: {
       x: {
-        min: 0.4, max: 3.6,
+        min: 0.5, max: 3.7,
         title: {
           display: true,
           text: "← 低难度                    实现难易度                    高难度 →",
@@ -418,7 +425,7 @@ const chart = new Chart(ctx, {
         grid: { color: "rgba(0,0,0,0.05)" },
       },
       y: {
-        min: 0.3, max: 3.6,
+        min: 0.5, max: 3.85,
         title: {
           display: true,
           text: "↑ 业务影响力",
