@@ -532,28 +532,37 @@
 <footer>AI专项 Priorities 汇报 · 数据截至 2026-03</footer>
 
 <script>
-  let activeP = 'all';
+  let activeP   = 'all';
+  let activeCat = 'all';
 
-  // ── 优先级筛选：显示/隐藏卡片 ──
-  function applyPFilter() {
-    const allCards = document.querySelectorAll('.item-card');
+  function applyFilters() {
     let total = 0, p0 = 0, p1 = 0, p2 = 0;
 
-    allCards.forEach(card => {
-      const show = activeP === 'all' || card.dataset.p === activeP;
-      card.classList.toggle('hidden', !show);
-      if (show) {
-        total++;
-        if (card.dataset.p === 'p0') p0++;
-        if (card.dataset.p === 'p1') p1++;
-        if (card.dataset.p === 'p2') p2++;
-      }
-    });
-
-    // 如果某个 section 里全部卡片都隐藏，隐藏整个 section
     document.querySelectorAll('.category-section').forEach(sec => {
-      const hasVisible = [...sec.querySelectorAll('.item-card')].some(c => !c.classList.contains('hidden'));
-      sec.classList.toggle('hidden', !hasVisible);
+      const catMatch = activeCat === 'all' || sec.dataset.cat === activeCat;
+
+      // 如果大类不匹配，整个 section 隐藏
+      if (!catMatch) {
+        sec.classList.add('hidden');
+        return;
+      }
+
+      // 大类匹配，再按优先级过滤卡片
+      let sectionHasVisible = false;
+      sec.querySelectorAll('.item-card').forEach(card => {
+        const pMatch = activeP === 'all' || card.dataset.p === activeP;
+        card.classList.toggle('hidden', !pMatch);
+        if (pMatch) {
+          sectionHasVisible = true;
+          total++;
+          if (card.dataset.p === 'p0') p0++;
+          if (card.dataset.p === 'p1') p1++;
+          if (card.dataset.p === 'p2') p2++;
+        }
+      });
+
+      // section 内有可见卡片才显示
+      sec.classList.toggle('hidden', !sectionHasVisible);
     });
 
     document.getElementById('cnt-total').textContent = total;
@@ -563,41 +572,29 @@
     document.getElementById('empty-state').classList.toggle('visible', total === 0);
   }
 
-  // 优先级按钮点击
+  // 优先级按钮
   document.querySelectorAll('[data-p]').forEach(btn => {
     btn.addEventListener('click', () => {
       activeP = btn.dataset.p;
       document.querySelectorAll('[data-p]').forEach(b => {
         b.className = 'filter-btn';
-        if (b.dataset.p === activeP) {
+        if (b.dataset.p === activeP)
           b.classList.add(activeP === 'all' ? 'active-all' : `active-${activeP}`);
-        }
       });
-      applyPFilter();
+      applyFilters();
     });
   });
 
-  // ── 大类按钮：滚动跳转 ──
+  // 大类按钮
   document.querySelectorAll('[data-cat]').forEach(btn => {
     btn.addEventListener('click', () => {
-      const cat = btn.dataset.cat;
-
-      // 高亮按钮
+      activeCat = btn.dataset.cat;
       document.querySelectorAll('[data-cat]').forEach(b => {
         b.className = 'filter-btn';
-        if (b.dataset.cat === cat) b.classList.add(cat === 'all' ? 'active-all' : 'active-cat');
+        if (b.dataset.cat === activeCat)
+          b.classList.add(activeCat === 'all' ? 'active-all' : 'active-cat');
       });
-
-      if (cat === 'all') {
-        // 滚回顶部
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else {
-        // 找到对应 section 滚过去
-        const sec = document.querySelector(`.category-section[data-cat="${cat}"]`);
-        if (sec) {
-          sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      }
+      applyFilters();
     });
   });
 </script>
