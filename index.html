@@ -61,7 +61,7 @@ body {
 
 .matrix-outer { display:flex; gap:0; align-items:stretch; }
 .matrix-y-label {
-  writing-mode:vertical-rl; transform:rotate(180deg);
+  writing-mode:vertical-lr; transform:rotate(180deg);
   font-size:11px; font-weight:600; color:#aaa; text-align:center;
   padding-right:10px; white-space:nowrap; letter-spacing:1px;
 }
@@ -69,8 +69,8 @@ body {
 
 .matrix-row { display:flex; align-items:stretch; }
 .matrix-row-label {
-  width:36px; display:flex; align-items:center; justify-content:flex-end;
-  padding-right:8px; font-size:11px; font-weight:700; color:#bbb; flex-shrink:0;
+  font-size:11px; font-weight:700; color:#aaa;
+  text-align:right; white-space:nowrap; flex-shrink:0;
 }
 
 .matrix-grid { flex:1; display:grid; grid-template-columns:repeat(3,1fr); }
@@ -270,6 +270,11 @@ footer { text-align:center; margin-top:40px; font-size:12px; color:#bbb; }
   </div>
   <div class="matrix-outer">
     <div class="matrix-y-label">↑ 业务影响力</div>
+    <div style="display:flex;flex-direction:column;justify-content:space-around;padding-right:8px;padding-bottom:32px;">
+      <div class="matrix-row-label">高影响力</div>
+      <div class="matrix-row-label">中影响力</div>
+      <div class="matrix-row-label">低影响力</div>
+    </div>
     <div class="matrix-inner">
       <div class="matrix-grid" id="matrix-grid"></div>
       <div class="matrix-x-labels">
