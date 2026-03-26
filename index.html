@@ -46,6 +46,66 @@ body {
 .p0-card .count { color:#27ae60; } .p1-card .count { color:#e67e22; }
 .p2-card .count { color:#3498db; } .total-card .count { color:#2c3e50; }
 
+/* ── 3×3 矩阵 ── */
+.matrix-wrap {
+  background:white; border-radius:16px; padding:24px 28px;
+  box-shadow:0 2px 12px rgba(0,0,0,0.07); margin-bottom:32px;
+}
+.matrix-title {
+  font-size:14px; font-weight:700; color:#888; margin-bottom:16px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.matrix-legend { display:flex; gap:14px; }
+.matrix-legend-item { display:flex; align-items:center; gap:5px; font-size:12px; color:#555; }
+.matrix-legend-dot { width:10px; height:10px; border-radius:3px; }
+
+.matrix-outer { display:flex; gap:0; align-items:stretch; }
+.matrix-y-label {
+  writing-mode:vertical-rl; transform:rotate(180deg);
+  font-size:11px; font-weight:600; color:#aaa; text-align:center;
+  padding-right:10px; white-space:nowrap; letter-spacing:1px;
+}
+.matrix-inner { flex:1; display:flex; flex-direction:column; gap:0; }
+
+.matrix-row { display:flex; align-items:stretch; }
+.matrix-row-label {
+  width:36px; display:flex; align-items:center; justify-content:flex-end;
+  padding-right:8px; font-size:11px; font-weight:700; color:#bbb; flex-shrink:0;
+}
+
+.matrix-grid { flex:1; display:grid; grid-template-columns:repeat(3,1fr); }
+
+.matrix-cell {
+  border:1px solid #eef0f3; padding:10px 8px; min-height:90px;
+  display:flex; flex-direction:column; gap:5px; position:relative;
+  background:#fafbfc;
+}
+/* 高影响·低难度 = 右上角 3列×高行 */
+.matrix-cell.highlight-qw { background:#f0faf5; }
+.matrix-cell.highlight-bet { background:#fffbf0; }
+
+.matrix-x-labels {
+  display:flex; margin-left:36px;
+  border-top:1px solid #eef0f3;
+}
+.matrix-x-label {
+  flex:1; text-align:center; font-size:11px; font-weight:700;
+  color:#bbb; padding:6px 0; letter-spacing:0.5px;
+}
+.matrix-x-axis-title {
+  text-align:center; font-size:11px; font-weight:600;
+  color:#aaa; margin-top:4px; letter-spacing:1px;
+}
+
+.mbox {
+  display:inline-block; font-size:10.5px; font-weight:600;
+  padding:3px 7px; border-radius:5px; line-height:1.4;
+  cursor:default; word-break:break-all;
+}
+.mbox.strategy { background:#e0f5f1; color:#16a085; border:1px solid #b2dfdb; }
+.mbox.product  { background:#f3e8ff; color:#8e44ad; border:1px solid #e1bee7; }
+.mbox.p0 { font-weight:800; }
+
 /* ── 大类 ── */
 .category-section { margin-bottom:28px; }
 .category-section.hidden { display:none; }
@@ -197,6 +257,29 @@ footer { text-align:center; margin-top:40px; font-size:12px; color:#bbb; }
   <div class="summary-card p0-card"><div class="count" id="cnt-p0">0</div><div class="label">🟢 P0</div></div>
   <div class="summary-card p1-card"><div class="count" id="cnt-p1">0</div><div class="label">🟠 P1</div></div>
   <div class="summary-card p2-card"><div class="count" id="cnt-p2">0</div><div class="label">🔵 P2</div></div>
+</div>
+
+<!-- 3×3 矩阵 -->
+<div class="matrix-wrap">
+  <div class="matrix-title">
+    <span>📊 项目矩阵 — 难易度 × 影响力</span>
+    <div class="matrix-legend">
+      <div class="matrix-legend-item"><div class="matrix-legend-dot" style="background:#27ae60;border:1px solid #b2dfdb"></div>行策自建</div>
+      <div class="matrix-legend-item"><div class="matrix-legend-dot" style="background:#c39bd3;border:1px solid #e1bee7"></div>产品共建</div>
+    </div>
+  </div>
+  <div class="matrix-outer">
+    <div class="matrix-y-label">↑ 业务影响力</div>
+    <div class="matrix-inner">
+      <div class="matrix-grid" id="matrix-grid"></div>
+      <div class="matrix-x-labels">
+        <div class="matrix-x-label">高难度</div>
+        <div class="matrix-x-label">中难度</div>
+        <div class="matrix-x-label">低难度</div>
+      </div>
+      <div class="matrix-x-axis-title">实现难易度 →（右 = 低难度）</div>
+    </div>
+  </div>
 </div>
 
 <!-- 各大类容器（JS动态渲染） -->
@@ -411,6 +494,8 @@ let activeP = 'all', activeCat = 'all', activeOwner = 'all';
 
 function applyFilters() {
   let total = 0, p0 = 0, p1 = 0, p2 = 0;
+  const visibleIds = new Set();
+
   document.querySelectorAll('.category-section').forEach(sec => {
     const catMatch = activeCat === 'all' || sec.dataset.cat === activeCat;
     if (!catMatch) { sec.classList.add('hidden'); return; }
@@ -422,6 +507,7 @@ function applyFilters() {
       const show = pMatch && oMatch;
       card.classList.toggle('hidden', !show);
       if (show) {
+        visibleIds.add(card.dataset.id);
         catTotal++; total++;
         if (card.dataset.p==='p0'){catP0++;p0++;}
         if (card.dataset.p==='p1'){catP1++;p1++;}
@@ -442,6 +528,73 @@ function applyFilters() {
   document.getElementById('cnt-p1').textContent = p1;
   document.getElementById('cnt-p2').textContent = p2;
   document.getElementById('empty-state').classList.toggle('visible', total === 0);
+  renderMatrix(visibleIds);
+}
+
+// ═══════════════════════════════════════════════════════
+// 3×3 矩阵渲染
+// ═══════════════════════════════════════════════════════
+// 列：难易度 high→mid→low（左到右）
+// 行：影响力 high→mid→low（上到下，视觉上 high 在上）
+const DIFF_COLS  = ['high','mid','low'];   // x轴：高难度→低难度
+const IMPACT_ROWS = ['high','mid','low'];  // y轴：高影响在上
+
+const CELL_BG = {
+  // [impactRow][diffCol] → 高影响低难度=右上角=best
+  'high-low':  '#f0faf5',  // Quick Win
+  'high-mid':  '#f5fbf8',
+  'high-high': '#fffbf0',  // 大赌注
+  'mid-low':   '#f9fafb',
+  'mid-mid':   '#f9fafb',
+  'mid-high':  '#fafafa',
+  'low-low':   '#fafafa',
+  'low-mid':   '#fafafa',
+  'low-high':  '#fafafa',
+};
+const CELL_CORNER = {
+  'high-low':  '⭐ Quick Win',
+  'high-high': '🎯 大赌注',
+  'low-low':   '📌 填充项',
+  'low-high':  '⚠️ 谨慎推进',
+};
+
+function renderMatrix(visibleIds) {
+  const grid = document.getElementById('matrix-grid');
+  if (!grid) return;
+
+  // 3行×3列，行=影响力(high/mid/low)，列=难易度(high/mid/low)
+  const cells = {};
+  IMPACT_ROWS.forEach(imp => DIFF_COLS.forEach(diff => { cells[`${imp}-${diff}`] = []; }));
+
+  DATA.forEach(item => {
+    if (!visibleIds.has(item.id)) return;
+    const key = `${item.impact||'mid'}-${item.difficulty||'mid'}`;
+    if (cells[key]) cells[key].push(item);
+  });
+
+  let html = '';
+  IMPACT_ROWS.forEach((imp, ri) => {
+    DIFF_COLS.forEach((diff, ci) => {
+      const key = `${imp}-${diff}`;
+      const bg = CELL_BG[key] || '#fafafa';
+      const corner = CELL_CORNER[key] || '';
+      const items = cells[key];
+      const borderTop    = ri===0 ? '2px solid #dde1e7' : '1px solid #eef0f3';
+      const borderLeft   = ci===0 ? '2px solid #dde1e7' : '1px solid #eef0f3';
+      const borderRight  = ci===2 ? '2px solid #dde1e7' : '1px solid #eef0f3';
+      const borderBottom = ri===2 ? '2px solid #dde1e7' : '1px solid #eef0f3';
+      html += `<div style="background:${bg};padding:8px;min-height:80px;display:flex;flex-direction:column;gap:4px;
+        border-top:${borderTop};border-left:${borderLeft};border-right:${borderRight};border-bottom:${borderBottom};position:relative;">
+        ${corner ? `<div style="position:absolute;top:4px;right:5px;font-size:9px;color:#bbb;font-weight:600">${corner}</div>` : ''}
+        ${items.map(it => `
+          <div class="mbox ${it.owner} ${it.p}" title="${it.name}">${it.name}</div>
+        `).join('')}
+        ${items.length===0 ? '<div style="color:#ddd;font-size:11px;margin:auto">—</div>' : ''}
+      </div>`;
+    });
+  });
+  grid.style.gridTemplateColumns = 'repeat(3,1fr)';
+  grid.innerHTML = html;
 }
 
 document.querySelectorAll('button[data-p]').forEach(btn => {
