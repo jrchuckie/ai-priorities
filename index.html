@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI专项 Priorities 汇报</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #f0f2f5;
+    color: #1a1a2e;
+    padding: 32px;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+  .header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1a2e;
+    letter-spacing: 1px;
+  }
+  .header p {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #666;
+  }
+
+  /* Priority summary cards */
+  .summary-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 36px;
+    justify-content: center;
+  }
+  .summary-card {
+    background: white;
+    border-radius: 12px;
+    padding: 18px 28px;
+    text-align: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    min-width: 110px;
+  }
+  .summary-card .count {
+    font-size: 36px;
+    font-weight: 800;
+  }
+  .summary-card .label {
+    font-size: 13px;
+    color: #888;
+    margin-top: 4px;
+  }
+  .p0-card .count { color: #e74c3c; }
+  .p1-card .count { color: #e67e22; }
+  .p2-card .count { color: #3498db; }
+  .total-card .count { color: #2c3e50; }
+
+  /* Category sections */
+  .category-section {
+    margin-bottom: 28px;
+  }
+  .category-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .category-tag {
+    background: #1a1a2e;
+    color: white;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .category-line {
+    flex: 1;
+    height: 1px;
+    background: #dde1e7;
+  }
+
+  /* Cards grid */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 14px;
+  }
+
+  .item-card {
+    background: white;
+    border-radius: 12px;
+    padding: 18px 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    border-left: 4px solid #ccc;
+    transition: transform 0.15s, box-shadow 0.15s;
+    position: relative;
+  }
+  .item-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+  }
+  .item-card.p0 { border-left-color: #e74c3c; }
+  .item-card.p1 { border-left-color: #e67e22; }
+  .item-card.p2 { border-left-color: #3498db; }
+
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+  }
+  .item-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a1a2e;
+    flex: 1;
+    line-height: 1.4;
+  }
+  .priority-badge {
+    font-size: 12px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-left: 10px;
+    white-space: nowrap;
+  }
+  .priority-badge.p0 { background: #fdecea; color: #e74c3c; }
+  .priority-badge.p1 { background: #fef3e2; color: #e67e22; }
+  .priority-badge.p2 { background: #e8f4fd; color: #3498db; }
+
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .meta-chip {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: #555;
+    background: #f5f6f8;
+    padding: 3px 9px;
+    border-radius: 8px;
+  }
+  .meta-chip .icon { font-size: 11px; }
+
+  /* Impact & difficulty indicators */
+  .indicator-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .indicator {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+  }
+  .indicator-label { color: #888; }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .dot.high { background: #e74c3c; }
+  .dot.mid  { background: #f39c12; }
+  .dot.low  { background: #27ae60; }
+  .dot.none { background: #bdc3c7; }
+
+  .note {
+    font-size: 12px;
+    color: #888;
+    background: #fafafa;
+    border-radius: 6px;
+    padding: 7px 10px;
+    line-height: 1.5;
+    border: 1px solid #f0f0f0;
+  }
+
+  /* Capability bar */
+  .capability {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 6px;
+  }
+  .capability.has    { background: #e8f8f0; color: #27ae60; }
+  .capability.partial { background: #fff8e1; color: #e67e22; }
+  .capability.none   { background: #fdecea; color: #e74c3c; }
+
+  footer {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 12px;
+    color: #bbb;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🤖 AI 专项 Priorities 总览</h1>
+  <p>向老板汇报 · 各优先级事项一览</p>
+</div>
+
+<!-- Summary Cards -->
+<div class="summary-row">
+  <div class="summary-card total-card">
+    <div class="count">16</div>
+    <div class="label">总事项</div>
+  </div>
+  <div class="summary-card p0-card">
+    <div class="count">8</div>
+    <div class="label">🔴 P0 最高优先</div>
+  </div>
+  <div class="summary-card p1-card">
+    <div class="count">4</div>
+    <div class="label">🟠 P1 次优先</div>
+  </div>
+  <div class="summary-card p2-card">
+    <div class="count">4</div>
+    <div class="label">🔵 P2 规划中</div>
+  </div>
+</div>
+
+<!-- 内容 -->
+<div class="category-section">
+  <div class="category-header">
+    <span class="category-tag">📝 内容</span>
+    <div class="category-line"></div>
+  </div>
+  <div class="cards-grid">
+
+    <div class="item-card p0">
+      <div class="card-top">
+        <div class="item-name">AIGC笔记生产【大健康+食饮攻坚】</div>
+        <span class="priority-badge p0">P0</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-chip"><span class="icon">👥</span> 适用：客户</span>
+        <span class="meta-chip"><span class="icon">🔄</span> 每天</span>
+        <span class="meta-chip"><span class="icon">⏱</span> 2-3小时/人天</span>
+      </div>
+      <div class="indicator-row">
+        <div class="indicator">
+          <span class="indicator-label">快消影响力</span>
+          <span class="dot high"></span><span style="font-size:12px">高</span>
+        </div>
+        <div class="indicator">
+          <span class="indicator-label">实现难易度</span>
+          <span class="dot high"></span><span style="font-size:12px">高</span>
+        </div>
+        <span class="capability partial">⚡ 有部分能力</span>
+      </div>
+    </div>
+
+    <div class="item-card p0">
+      <div class="card-top">
+        <div class="item-name">内容分析：【母婴赛道攻坚】</div>
+        <span class="priority-badge p0">P0</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-chip"><span class="icon">👥</span> 适用：运营</span>
+        <span class="meta-chip"><span class="icon">🔄</span> 每周</span>
+        <span class="meta-chip"><span class="icon">⏱</span> 半天/人天</span>
+      </div>
+      <div class="indicator-row">
+        <div class="indicator">
+          <span class="indicator-label">快消影响力</span>
+          <span class="dot high"></span><span style="font-size:12px">高</span>
+        </div>
+        <div class="indicator">
+          <span class="indicator-label">实现难易度</span>
+          <span class="dot low"></span><span style="font-size:12px">低</span>
+        </div>
+        <span class="capability partial">⚡ 有部分能力</span>
+      </div>
+      <div class="note">目前内容打标需求推进中，需要行业梳理知识图谱（母婴-爱妮），产品用claw做</div>
+    </div>
+
+    <div class="item-card p0">
+      <div class="card-top">
+        <div class="item-name">内容分析：【大健康赛道攻坚】</div>
+        <span class="priority-badge p0">P0</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-chip"><span class="icon">👥</span> 适用：运营</span>
+        <span class="meta-chip"><span class="icon">🔄</span> 每周</span>
+        <span class="meta-chip"><span class="icon">⏱</span> 半天/人天</span>
+      </div>
+      <div class="indicator-row">
+        <div class="indicator">
+          <span class="indicator-label">快消影响力</span>
+          <span class="dot high"></span><span style="font-size:12px">高</span>
+        </div>
+        <div class="indicator">
+          <span class="indicator-label">实现难易度</span>
+          <span class="dot low"></span><span style="font-size:12px">低</span>
+        </div>
+        <span class="capability partial">⚡ 有部分能力</span>
+      </div>
+      <div class="note">目前内容打标需求推进中，需要行业梳理知识图谱（大健康-西泽），产品用claw做</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- 分析/复盘 -->
+<div class="category-section">
+  <div class="category-header">
+    <span class="category-tag">📊 分析/复盘</span>
+    <div class="category-line"></div>
+  </div>
+  <div class="cards-grid">
+
+    <div class="item-card p0">
+      <div class="card-top">
+        <div class="item-name">品牌形象分析</div>
+        <span class="priority-badge p0">P0</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-chip"><span class="icon">👥</span> 销售/策划/运营</span>
+        <span class="meta-chip"><span class="icon">🔄</span> 每周</span>
+        <span class="meta-chip"><span class="icon">⏱</span> 1-2天/人天</span>
+      </div>
+      <div class="indicator-row">
+        <div class="indicator">
+          <span class="indicator-label">快消影响力</span>
+          <span class="dot high"></span><span style="font-size:12px">高</span>
+        </div>
+        <div class="indicator">
+          <span class="indicator-label">实现难易度</span>
+          <span class="dot mid"></span><span style="font-size:12px">中</span>
+        </div>
+        <span class="capability none">✗ 无现有能力</span>
+      </div>
+    </div>
+
+    <div class="item-card p0">
+      <div class="card-top">
+        <div class="item-name">情绪浓度分析</div>
+        <span class="priority-badge p0">P0</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-chip"><span class="icon">👥</span> 销售/策划/运营</span>
+        <span class="meta-chip"><span class="icon">🔄</span> 每周</span>
+        <span class="meta-chip"><span class="icon">⏱</span> 1-2天/人天</span>
+      </div>
+      <div class="indicator-row">
+        <div class="indicator">
+          <span class="indicator-label">快消影响力</span>
+          <span class="dot high"></span><span style="font-size:12px">高</span>
+        </div>
+        <div class="indicator">
+          <span class="indicator-label">实现难易度</span>
+          <span class="dot mid"></span><span style="font-size:12px">中</span>
+        </div>
+        <span class="capability none">✗ 无现有能力</span>
+      </div>
+    </div>
+
+    <div class="item-card p2">
+      <div class="card-top">
+        <div class="item-name">品牌营销复盘助手 - AURA</div>
+        <span class="priority-badge p2">P2</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-chip"><span class="icon">👥</span> 平台专家/IP策划</span>
+        <span class="meta-chip"><span class="icon">🔄</span> 每月</span>
+        <span class="meta-chip"><span class="icon">⏱</span> 2-3天/人天</span>
+      </div>
+      <div class="indicator-row">
+        <div class="indicator">
+          <span class="indicator-label">快消影响力</span>
+          <span class="dot low"></span><span style="font-size:12px">低</span>
+        </div>
+        <div class="indicator">
+          <span class="indicator-label">实现难易度</span>
+          <span class="dot mid"></span><span style="font-size:12px">中</span>
+        </div>
+        <span class="capability partial">⚡ 有部分能力</span>
+      </div>
+    </div>
+
+    <div class="item-card p2">
+      <div class="card-top">
+        <div class="item-name">一方工具升级</div>
+        <span class="priority-badge p2">P2</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-chip"><span class="icon">👥</span> 运营</span>
+        <span class="meta-chip"><span class="icon">🔄</span> 每季度</span>
+        <span class="meta-chip"><span class="icon">⏱</span> 1-2天/人天</span>
+      </div>
+      <div class="indicator-row">
+        <div class="indicator">
+          <span class="indicator-label">快消影响力</span>
+          <span class="dot high"></span><span style="font-size:12px">高</span>
+        </div>
+        <div class="indicator">
+          <span class="indicator-label">实现难易度</span>
+          <span class="dot mid"></span><span style="font-size:12px">中</span>
+        </div>
+        <span class="capability has">✓ 行业+产品都有</span>
+      </div>
+    </div>
+
+    <div class="item-card p2">
+      <div class="card-top">
+        <div class="item-name">投放复盘</div>
+        <span class="priority-badge p2">P2</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-chip"><span class="icon">👥</span> 运营</span>
+        <span class="meta-chip"><span class="icon">🔄</span> 每周</span>
+        <span class="meta-chip"><span class="icon">⏱</span> 1-2天/人天</span>
+      </div>
+      <div class="indicator-row">
+        <div class="indicator">
+          <span class="indicator-label">快消影响力</span>
+          <span class="dot mid"></span><span style="font-size:12px">中</span>
+        </div>
+        <div class="indicator">
+          <span class="indicator-label">实现难易度</span>
+          <span class="dot mid"></span><span style="font-size:12px">中</span>
+        </div>
+        <span class="capability has">✓ 有，在agent</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- 搜索 -->
+<div class="category-section">
+  <div class="category-header">
+    <span class="category-tag">🔍 搜索</span>
+    <div class="category-line"></div>
+  </div>
+  <div class="cards-grid">
+
+    <div class="item-card p1">
+      <div class="card-top">
+        <div class="item-name">搜索推词工具</div>
+        <span class="priority-badge p1">P1</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-chip"><span class="icon">👥</span> 运营</span>
+        <span class="meta-chip"><span class="icon">🔄</span> 每周</span>
+        <span class="meta-chip"><span class="icon">⏱</span> 1-2天/人天</span>
+      </div>
+      <div class="indicator-row">
+        <div class="indicator">
+          <span class="indicator-label">快消影响力</span>
+          <span class="dot mid"></span><span style="font-size:12px">中</span>
+        </div>
+        <div class="indicator">
+          <span class="indicator-label">实现难易度</span>
+          <span class="dot mid"></span><span style="font-size:12px">中</span>
+        </div>
+        <span class="capability none">✗ 无现有能力</span>
+      </div>
+    </div>
+
+    <div class="item-card p1">
+      <div class="card-top">
+        <div class="item-name">拆分为搜索词打标+取数</div>
+        <span class="priority-badge p1">P1</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-chip"><span class="icon">👥</span> 运营</span>
+        <span class="meta-chip"><span class="icon">🔄</span> 每周</span>
+        <span class="meta-chip"><span class="icon">⏱</span> 1-2天/人天</span>
+      </div>
+      <div class="indicator-row">
+        <div class="indicator">
+          <span class="indicator-label">快消影响力</span>
+          <span class="dot mid"></span><span style="font-size:12px">中</span>
+        </div>
+        <div class="indicator">
+          <span class="indicator-label">实现难易度</span>
+          <span class="dot mid"></span><span style="font-size:12px">中</span>
+        </div>
+        <span class="capability none">✗ 无现有能力</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- 月报/周报 -->
+<div class="category-section">
+  <div class="category-header">
+    <span class="category-tag">📅 月报/周报</span>
+    <div class="category-line"></div>
+  </div>
+  <div class="cards-grid">
+
+    <div class="item-card p0">
+      <div class="card-top">
+        <div class="item-name">行业周报 one page 自动生成（对客）</div>
+        <span class="priority-badge p0">P0</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-chip"><span class="icon">👥</span> 销售/策划/运营</span>
+        <span class="meta-chip"><span class="icon">🔄</span> 每周</span>
+        <span class="meta-chip"><span class="icon">⏱</span> 1-2天/人天</span>
+      </div>
+      <div class="indicator-row">
+        <div class="indicator">
+          <span class="indicator-label">快消影响力</span>
+          <span class="dot high"></span><span style="font-size:12px">高</span>
+        </div>
+        <div class="indicator">
+          <span class="indicator-label">实现难易度</span>
+          <span class="dot mid"></span><span style="font-size:12px">中</span>
+        </div>
+        <span class="capability has">✓ data agent</span>
+      </div>
+    </div>
+
+    <div class="item-card p0">
+      <div class="card-top">
+        <div class="item-name">行业周报 one page 自动生成（对内）</div>
+        <span class="priority-badge p0">P0</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-chip"><span class="icon">🔄</span> 每周</span>
+      </div>
+      <div class="indicator-row">
+        <span class="capability none">✗ 待定</span>
+      </div>
+    </div>
+
+    <div class="item-card p1">
+      <div class="card-top">
+        <div class="item-name">头客月报</div>
+        <span class="priority-badge p1">P1</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-chip"><span class="icon">👥</span> 销售/策划/运营</span>
+        <span class="meta-chip"><span class="icon">🔄</span> 每月</span>
+        <span class="meta-chip"><span class="icon">⏱</span> 1-2天/人天</span>
+      </div>
+      <div class="indicator-row">
+        <div class="indicator">
+          <span class="indicator-label">快消影响力</span>
+          <span class="dot high"></span><span style="font-size:12px">高</span>
+        </div>
+        <div class="indicator">
+          <span class="indicator-label">实现难易度</span>
+          <span class="dot mid"></span><span style="font-size:12px">中</span>
+        </div>
+        <span class="capability partial">⚡ 优先尝试灵犀</span>
+      </div>
+      <div class="note">优先尝试通过灵犀已有人群能力来提效</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- 洞察类 -->
+<div class="category-section">
+  <div class="category-header">
+    <span class="category-tag">💡 洞察类</span>
+    <div class="category-line"></div>
+  </div>
+  <div class="cards-grid">
+
+    <div class="item-card p2">
+      <div class="card-top">
+        <div class="item-name">潮玩IP维度分析（如宝可梦IP热度）</div>
+        <span class="priority-badge p2">P2</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-chip"><span class="icon">👥</span> 销售/策划</span>
+        <span class="meta-chip"><span class="icon">🔄</span> 每季?</span>
+        <span class="meta-chip"><span class="icon">⏱</span> 1-2天?/人天</span>
+      </div>
+      <div class="indicator-row">
+        <div class="indicator">
+          <span class="indicator-label">快消影响力</span>
+          <span class="dot low"></span><span style="font-size:12px">低</span>
+        </div>
+        <div class="indicator">
+          <span class="indicator-label">实现难易度</span>
+          <span class="dot mid"></span><span style="font-size:12px">中?</span>
+        </div>
+        <span class="capability none">✗ 受限于基建</span>
+      </div>
+      <div class="note">受限于基建，建议通过轻量工具实现主题词打标与简单统计，暂无法支持数据生产</div>
+    </div>
+
+    <div class="item-card p0">
+      <div class="card-top">
+        <div class="item-name">站内舆情风险提示</div>
+        <span class="priority-badge p0">P0</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-chip"><span class="icon">👥</span> 销售/运营</span>
+        <span class="meta-chip"><span class="icon">🔄</span> 每天</span>
+        <span class="meta-chip"><span class="icon">⏱</span> 1-2小时/人天</span>
+      </div>
+      <div class="indicator-row">
+        <div class="indicator">
+          <span class="indicator-label">快消影响力</span>
+          <span class="dot high"></span><span style="font-size:12px">高</span>
+        </div>
+        <div class="indicator">
+          <span class="indicator-label">实现难易度</span>
+          <span class="dot mid"></span><span style="font-size:12px">中</span>
+        </div>
+        <span class="capability none">✗ 无现有能力</span>
+      </div>
+    </div>
+
+    <div class="item-card p1">
+      <div class="card-top">
+        <div class="item-name">行业 &amp; 竞品洞察</div>
+        <span class="priority-badge p1">P1</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-chip"><span class="icon">👥</span> 销售/策划</span>
+        <span class="meta-chip"><span class="icon">🔄</span> 每周</span>
+        <span class="meta-chip"><span class="icon">⏱</span> 2-3小时/人天</span>
+      </div>
+      <div class="indicator-row">
+        <div class="indicator">
+          <span class="indicator-label">快消影响力</span>
+          <span class="dot mid"></span><span style="font-size:12px">中</span>
+        </div>
+        <div class="indicator">
+          <span class="indicator-label">实现难易度</span>
+          <span class="dot mid"></span><span style="font-size:12px">中</span>
+        </div>
+        <span class="capability partial">⚡ agent有行业洞察部分</span>
+      </div>
+    </div>
+
+    <div class="item-card p2">
+      <div class="card-top">
+        <div class="item-name">Campaign Idea</div>
+        <span class="priority-badge p2">P2</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-chip"><span class="icon">👥</span> 销售/运营</span>
+        <span class="meta-chip"><span class="icon">🔄</span> 每周</span>
+        <span class="meta-chip"><span class="icon">⏱</span> 2-3小时/人天</span>
+      </div>
+      <div class="indicator-row">
+        <div class="indicator">
+          <span class="indicator-label">快消影响力</span>
+          <span class="dot mid"></span><span style="font-size:12px">中</span>
+        </div>
+        <div class="indicator">
+          <span class="indicator-label">实现难易度</span>
+          <span class="dot mid"></span><span style="font-size:12px">中</span>
+        </div>
+        <span class="capability none">✗ 无现有能力</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>AI专项 Priorities 汇报 · 数据截至 2026-03</footer>
+
+</body>
+</html>
