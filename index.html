@@ -288,20 +288,14 @@ footer { text-align:center; margin-top:40px; font-size:12px; color:#bbb; }
   <div class="matrix-outer">
     <div class="matrix-y-label">↑ 业务影响力</div>
     <div class="matrix-inner">
-      <!-- 行标签 + 格子并排 -->
-      <div style="display:flex;">
-        <!-- 行标签列 -->
-        <div id="matrix-row-labels" style="display:flex;flex-direction:column;width:52px;flex-shrink:0;"></div>
-        <!-- 格子 -->
-        <div class="matrix-grid" id="matrix-grid" style="flex:1;"></div>
-      </div>
-      <div style="display:flex;">
-        <div style="width:52px;flex-shrink:0;"></div>
-        <div class="matrix-x-labels" style="flex:1;margin-left:0;">
-          <div class="matrix-x-label">高难度</div>
-          <div class="matrix-x-label">中难度</div>
-          <div class="matrix-x-label">低难度</div>
-        </div>
+      <!-- grid = 4列：行标签 + 高难度 + 中难度 + 低难度 -->
+      <div id="matrix-grid" style="display:grid;grid-template-columns:56px 1fr 1fr 1fr;"></div>
+      <!-- X轴标签，对齐grid后三列 -->
+      <div style="display:grid;grid-template-columns:56px 1fr 1fr 1fr;border-top:2px solid #dde1e7;margin-top:0;">
+        <div></div>
+        <div class="matrix-x-label">高难度</div>
+        <div class="matrix-x-label">中难度</div>
+        <div class="matrix-x-label">低难度</div>
       </div>
       <div class="matrix-x-axis-title">实现难易度 →（右 = 低难度）</div>
     </div>
@@ -607,67 +601,61 @@ const ROW_LABEL = { high:'高影响力', mid:'中影响力', low:'低影响力' 
 
 function renderMatrix(visibleIds) {
   const grid = document.getElementById('matrix-grid');
-  const rowLabelsEl = document.getElementById('matrix-row-labels');
   if (!grid) return;
 
   const cells = {};
   IMPACT_ROWS.forEach(imp => DIFF_COLS.forEach(diff => { cells[`${imp}-${diff}`] = []; }));
-
   DATA.forEach(item => {
     if (!visibleIds.has(item.id)) return;
     const key = `${item.impact||'mid'}-${item.difficulty||'mid'}`;
     if (cells[key]) cells[key].push(item);
   });
 
-  // 先算每行高度（每个box约26px + 8px padding + corner）
-  // 用 CSS 让行标签和格子行高一致：给每行格子加相同的 min-height
   const ROW_MIN_H = 90;
-
-  let gridHtml = '';
-  let labelsHtml = '';
+  let html = '';
 
   IMPACT_ROWS.forEach((imp, ri) => {
-    // 行标签
-    labelsHtml += `<div style="flex:1;display:flex;align-items:center;justify-content:flex-end;
-      padding-right:8px;font-size:11px;font-weight:700;color:#aaa;white-space:nowrap;
-      border-top:${ri===0?'2px':'1px'} solid #eef0f3;
-      border-bottom:${ri===2?'2px':'0'} solid #eef0f3;
-      min-height:${ROW_MIN_H}px;">${ROW_LABEL[imp]}</div>`;
+    const bRowTop    = ri === 0 ? '2px solid #dde1e7' : '1px solid #eef0f3';
+    const bRowBottom = ri === 2 ? '2px solid #dde1e7' : 'none';
 
+    // 列0：行标签，同行高
+    html += `<div style="
+      display:flex; align-items:center; justify-content:flex-end;
+      padding-right:10px; min-height:${ROW_MIN_H}px;
+      font-size:11px; font-weight:700; color:#aaa; white-space:nowrap;
+      border-top:${bRowTop}; border-bottom:${bRowBottom};
+      border-right:2px solid #dde1e7;
+    ">${ROW_LABEL[imp]}</div>`;
+
+    // 列1-3：内容格子
     DIFF_COLS.forEach((diff, ci) => {
       const key = `${imp}-${diff}`;
       const bg = CELL_BG[key] || '#fafafa';
       const corner = CELL_CORNER[key] || '';
       const items = cells[key];
+      const bLeft   = ci === 0 ? 'none' : '1px solid #eef0f3';
+      const bRight  = ci === 2 ? '2px solid #dde1e7' : '1px solid #eef0f3';
 
-      const bTop    = ri===0 ? '2px solid #dde1e7' : '1px solid #eef0f3';
-      const bLeft   = ci===0 ? '2px solid #dde1e7' : '1px solid #eef0f3';
-      const bRight  = ci===2 ? '2px solid #dde1e7' : '1px solid #eef0f3';
-      const bBottom = ri===2 ? '2px solid #dde1e7' : '1px solid #eef0f3';
-
-      gridHtml += `<div style="background:${bg};padding:8px 8px 8px 8px;min-height:${ROW_MIN_H}px;
-        display:flex;flex-direction:column;gap:5px;position:relative;
-        border-top:${bTop};border-left:${bLeft};border-right:${bRight};border-bottom:${bBottom};">
-        ${corner ? `<div style="position:absolute;top:4px;right:5px;font-size:9px;color:#bbb;font-weight:600;pointer-events:none">${corner}</div>` : ''}
+      html += `<div style="background:${bg}; padding:8px; min-height:${ROW_MIN_H}px;
+        display:flex; flex-direction:column; gap:5px; position:relative;
+        border-top:${bRowTop}; border-bottom:${bRowBottom};
+        border-left:${bLeft}; border-right:${bRight};">
+        ${corner ? `<div style="position:absolute;top:4px;right:5px;font-size:9px;color:#bbb;font-weight:600;pointer-events:none;white-space:nowrap;">${corner}</div>` : ''}
         ${items.map(it => {
           const catS = CAT_SHORT[it.cat] || it.cat;
-          const pTag = P_LABEL[it.p];
           return `<div class="mbox ${it.owner} ${it.p}" title="${it.name}">
-            <span style="opacity:0.7;font-weight:700">${pTag}</span>
-            <span style="opacity:0.5;margin:0 2px">·</span>
+            <span style="opacity:0.75;font-weight:800">${P_LABEL[it.p]}</span>
+            <span style="opacity:0.4;margin:0 2px">·</span>
             <span style="opacity:0.7">${catS}</span>
-            <span style="opacity:0.5;margin:0 2px">·</span>
-            ${it.name}
+            <span style="opacity:0.4;margin:0 2px">·</span>${it.name}
           </div>`;
         }).join('')}
-        ${items.length===0 ? `<div style="color:#e0e0e0;font-size:12px;margin:auto;font-weight:500">—</div>` : ''}
+        ${items.length === 0 ? `<div style="color:#ddd;font-size:13px;margin:auto;">—</div>` : ''}
       </div>`;
     });
   });
 
-  grid.style.gridTemplateColumns = 'repeat(3,1fr)';
-  grid.innerHTML = gridHtml;
-  if (rowLabelsEl) rowLabelsEl.innerHTML = labelsHtml;
+  grid.innerHTML = html;
 }
 
 document.querySelectorAll('button[data-p]').forEach(btn => {
