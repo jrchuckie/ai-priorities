@@ -56,7 +56,7 @@
   }
   .filter-btn:hover { border-color: #aaa; color: #1a1a2e; }
   .filter-btn.active-all    { background: #1a1a2e; color: white; border-color: #1a1a2e; }
-  .filter-btn.active-p0     { background: #e74c3c; color: white; border-color: #e74c3c; }
+  .filter-btn.active-p0     { background: #27ae60; color: white; border-color: #27ae60; }
   .filter-btn.active-p1     { background: #e67e22; color: white; border-color: #e67e22; }
   .filter-btn.active-p2     { background: #3498db; color: white; border-color: #3498db; }
   .filter-btn.active-cat    { background: #1a1a2e; color: white; border-color: #1a1a2e; }
@@ -532,17 +532,15 @@
 <footer>AI专项 Priorities 汇报 · 数据截至 2026-03</footer>
 
 <script>
-  let activeP   = 'all';
-  let activeCat = 'all';
+  let activeP = 'all';
 
-  function applyFilter() {
+  // ── 优先级筛选：显示/隐藏卡片 ──
+  function applyPFilter() {
     const allCards = document.querySelectorAll('.item-card');
     let total = 0, p0 = 0, p1 = 0, p2 = 0;
 
     allCards.forEach(card => {
-      const matchP   = activeP   === 'all' || card.dataset.p   === activeP;
-      const matchCat = activeCat === 'all' || card.dataset.cat === activeCat;
-      const show = matchP && matchCat;
+      const show = activeP === 'all' || card.dataset.p === activeP;
       card.classList.toggle('hidden', !show);
       if (show) {
         total++;
@@ -552,24 +550,20 @@
       }
     });
 
-    // 隐藏空 section
+    // 如果某个 section 里全部卡片都隐藏，隐藏整个 section
     document.querySelectorAll('.category-section').forEach(sec => {
-      const hasCat = activeCat === 'all' || sec.dataset.cat === activeCat;
-      const visibleCards = [...sec.querySelectorAll('.item-card')].some(c => !c.classList.contains('hidden'));
-      sec.classList.toggle('hidden', !hasCat || !visibleCards);
+      const hasVisible = [...sec.querySelectorAll('.item-card')].some(c => !c.classList.contains('hidden'));
+      sec.classList.toggle('hidden', !hasVisible);
     });
 
-    // 更新统计
     document.getElementById('cnt-total').textContent = total;
     document.getElementById('cnt-p0').textContent    = p0;
     document.getElementById('cnt-p1').textContent    = p1;
     document.getElementById('cnt-p2').textContent    = p2;
-
-    // 空状态
     document.getElementById('empty-state').classList.toggle('visible', total === 0);
   }
 
-  // 优先级按钮
+  // 优先级按钮点击
   document.querySelectorAll('[data-p]').forEach(btn => {
     btn.addEventListener('click', () => {
       activeP = btn.dataset.p;
@@ -579,21 +573,31 @@
           b.classList.add(activeP === 'all' ? 'active-all' : `active-${activeP}`);
         }
       });
-      applyFilter();
+      applyPFilter();
     });
   });
 
-  // 大类按钮
+  // ── 大类按钮：滚动跳转 ──
   document.querySelectorAll('[data-cat]').forEach(btn => {
     btn.addEventListener('click', () => {
-      activeCat = btn.dataset.cat;
+      const cat = btn.dataset.cat;
+
+      // 高亮按钮
       document.querySelectorAll('[data-cat]').forEach(b => {
         b.className = 'filter-btn';
-        if (b.dataset.cat === activeCat) {
-          b.classList.add(activeCat === 'all' ? 'active-all' : 'active-cat');
-        }
+        if (b.dataset.cat === cat) b.classList.add(cat === 'all' ? 'active-all' : 'active-cat');
       });
-      applyFilter();
+
+      if (cat === 'all') {
+        // 滚回顶部
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        // 找到对应 section 滚过去
+        const sec = document.querySelector(`.category-section[data-cat="${cat}"]`);
+        if (sec) {
+          sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
     });
   });
 </script>
