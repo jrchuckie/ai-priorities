@@ -146,11 +146,10 @@ const quadrantPlugin = {
     const my = scales.y.getPixelForValue(2);
 
     const zones = [
-      // X轴已反转：左=高难度，右=低难度
-      { x: ca.left, y: ca.top,  w: mx-ca.left,  h: my-ca.top,    fill: "rgba(243,156,18,0.05)", label: "大赌注",      tx: ca.left+10,  ty: ca.top+10,    align: "left",  base: "top" },
-      { x: mx,      y: ca.top,  w: ca.right-mx, h: my-ca.top,    fill: "rgba(39,174,96,0.06)",  label: "Quick Win ✦", tx: ca.right-10, ty: ca.top+10,    align: "right", base: "top" },
-      { x: ca.left, y: my,      w: mx-ca.left,  h: ca.bottom-my, fill: "rgba(200,200,200,0.05)", label: "谨慎推进",   tx: ca.left+10,  ty: ca.bottom-10, align: "left",  base: "bottom" },
-      { x: mx,      y: my,      w: ca.right-mx, h: ca.bottom-my, fill: "rgba(52,152,219,0.05)",  label: "填充项",     tx: ca.right-10, ty: ca.bottom-10, align: "right", base: "bottom" },
+      { x: ca.left, y: ca.top,  w: mx-ca.left,  h: my-ca.top,      fill: "rgba(39,174,96,0.06)",  label: "Quick Win ✦", tx: ca.left+10, ty: ca.top+10,      align: "left",  base: "top" },
+      { x: mx,      y: ca.top,  w: ca.right-mx, h: my-ca.top,      fill: "rgba(243,156,18,0.05)", label: "大赌注",       tx: ca.right-10,ty: ca.top+10,      align: "right", base: "top" },
+      { x: ca.left, y: my,      w: mx-ca.left,  h: ca.bottom-my,   fill: "rgba(52,152,219,0.05)", label: "填充项",       tx: ca.left+10, ty: ca.bottom-10,   align: "left",  base: "bottom" },
+      { x: mx,      y: my,      w: ca.right-mx, h: ca.bottom-my,   fill: "rgba(200,200,200,0.05)","label": "谨慎推进",   tx: ca.right-10,ty: ca.bottom-10,   align: "right", base: "bottom" },
     ];
 
     zones.forEach(z => {
@@ -228,10 +227,9 @@ const chart = new Chart(
       scales: {
         x: {
           min: 0.6, max: 3.8,
-          reverse: true,
           title: {
             display: true,
-            text: "← 高难度          实现难易度          低难度 →",
+            text: "← 低难度          实现难易度          高难度 →",
             font: { size: 12, weight: "600" }, color: "#555",
           },
           ticks: {
