@@ -13,77 +13,31 @@
     flex-direction: column;
     align-items: center;
     padding: 40px 24px;
-    min-height: 100vh;
   }
-  h1 {
-    font-size: 22px;
-    font-weight: 700;
-    color: #1a1a2e;
-    margin-bottom: 6px;
-  }
-  .subtitle {
-    font-size: 13px;
-    color: #888;
-    margin-bottom: 32px;
-  }
+  h1 { font-size: 22px; font-weight: 700; color: #1a1a2e; margin-bottom: 6px; }
+  .subtitle { font-size: 13px; color: #888; margin-bottom: 28px; }
   .chart-wrap {
     background: white;
     border-radius: 16px;
     box-shadow: 0 4px 24px rgba(0,0,0,0.09);
     padding: 32px 36px 24px;
     width: 100%;
-    max-width: 860px;
-    position: relative;
+    max-width: 820px;
   }
-
-  /* 四象限底色标注 */
-  .quadrant-labels {
-    position: absolute;
-    top: 32px; left: 36px;
-    width: calc(100% - 72px);
-    height: calc(100% - 80px);
-    pointer-events: none;
-  }
-
   .legend-row {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    margin-top: 20px;
-    flex-wrap: wrap;
+    display: flex; gap: 20px; justify-content: center;
+    margin-top: 18px; flex-wrap: wrap;
   }
   .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    font-size: 13px;
-    color: #444;
+    display: flex; align-items: center; gap: 7px;
+    font-size: 13px; color: #444;
   }
   .legend-dot {
-    width: 13px;
-    height: 13px;
-    border-radius: 50%;
-    display: inline-block;
-    border: 2px solid rgba(255,255,255,0.7);
+    width: 13px; height: 13px; border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.6);
     box-shadow: 0 1px 4px rgba(0,0,0,0.15);
   }
-  .note-row {
-    margin-top: 14px;
-    font-size: 12px;
-    color: #aaa;
-    text-align: center;
-  }
-
-  /* 2x2 label overlays */
-  .q-label {
-    position: absolute;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    opacity: 0.35;
-    pointer-events: none;
-  }
+  .note-row { margin-top: 10px; font-size: 12px; color: #aaa; text-align: center; }
 </style>
 </head>
 <body>
@@ -92,261 +46,94 @@
 <p class="subtitle">X轴：实现难易度 · Y轴：业务影响力 · 气泡大小：预估节省人天/月 · 颜色：产品现有能力</p>
 
 <div class="chart-wrap">
-  <canvas id="bubble" width="800" height="520"></canvas>
+  <canvas id="bubble" width="780" height="500"></canvas>
 </div>
 
 <div class="legend-row">
-  <div class="legend-item">
-    <span class="legend-dot" style="background:#27ae60"></span>已有能力（可直接落地）
-  </div>
-  <div class="legend-item">
-    <span class="legend-dot" style="background:#f39c12"></span>部分能力（需补齐）
-  </div>
-  <div class="legend-item">
-    <span class="legend-dot" style="background:#e74c3c"></span>无现有能力（需新建）
-  </div>
+  <div class="legend-item"><span class="legend-dot" style="background:#27ae60"></span>已有能力</div>
+  <div class="legend-item"><span class="legend-dot" style="background:#f39c12"></span>有部分能力</div>
+  <div class="legend-item"><span class="legend-dot" style="background:#e74c3c"></span>无现有能力</div>
 </div>
-<div class="note-row">气泡越大 = 节省人天越多 · 点击气泡可查看详情</div>
+<div class="note-row">气泡越大 = 节省人天越多 · 鼠标悬停查看详情</div>
 
 <div id="tooltip" style="
-  display:none;
-  position:fixed;
-  background:rgba(26,26,46,0.92);
-  color:white;
-  padding:10px 14px;
-  border-radius:10px;
-  font-size:13px;
-  pointer-events:none;
-  z-index:999;
-  max-width:220px;
-  line-height:1.6;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  display:none; position:fixed;
+  background:rgba(26,26,46,0.92); color:white;
+  padding:10px 14px; border-radius:10px;
+  font-size:13px; pointer-events:none;
+  z-index:999; max-width:240px; line-height:1.7;
+  box-shadow:0 4px 16px rgba(0,0,0,0.2);
 "></div>
 
 <script>
-// ─── 数据定义 ───────────────────────────────────────────
-// x: 难易度 1=低 2=中 3=高
-// y: 影响力 1=低 2=中 3=高
-// r: 气泡半径（由节省人天推算，做视觉映射）
-// color: green=有能力 orange=部分 red=无
-// label, priority, saveDays: 标注用
+// ─── 类别级别数据 ───────────────────────────────────────
+// x: 难易度  1=低  2=中  3=高
+// y: 影响力  1=低  2=中  3=高
+// saveDays: 汇总预估节省人天/月
+// cap: 整体能力评估
+// detail: tooltip 里的补充说明
 
-const items = [
-  // ── 内容 ──
-  // 高影响·低难度 象限 (x:1~1.8, y:2.5~3.5)
+const categories = [
   {
-    label: "内容分析\n【母婴赛道】",
-    priority: "P0", category: "内容",
-    x: 1.1, y: 3.3,
-    saveDays: 20,
-    cap: "partial"
+    label: "内容",
+    x: 2.5, y: 3.2,
+    saveDays: 100,   // AIGC笔记60 + 内容分析×2 共100
+    cap: "partial",
+    priority: "P0",
+    detail: "AIGC笔记生产、内容分析（母婴+大健康）\n节省 ~100 人天/月",
   },
   {
-    label: "内容分析\n【大健康赛道】",
-    priority: "P0", category: "内容",
-    x: 1.5, y: 2.85,
-    saveDays: 20,
-    cap: "partial"
-  },
-  // 高影响·高难度 象限 (x:2.5~3.5, y:2.5~3.5)
-  {
-    label: "AIGC笔记生产\n【大健康+食饮】",
-    priority: "P0", category: "内容",
-    x: 3.1, y: 3.2,
-    saveDays: 60,
-    cap: "partial"
-  },
-
-  // ── 分析/复盘 ──
-  // 高影响·中难度区 铺开
-  {
-    label: "品牌形象分析",
-    priority: "P0", category: "分析/复盘",
-    x: 2.0, y: 3.4,
-    saveDays: 40,
-    cap: "none"
+    label: "月报/周报",
+    x: 1.7, y: 3.5,
+    saveDays: 113,   // 行业周报对客48+对内30+头客月报35
+    cap: "partial",
+    priority: "P0~P1",
+    detail: "行业周报（对客/对内）、头客月报\n节省 ~113 人天/月",
   },
   {
-    label: "情绪浓度分析",
-    priority: "P0", category: "分析/复盘",
-    x: 2.5, y: 3.0,
-    saveDays: 40,
-    cap: "none"
+    label: "分析/复盘",
+    x: 2.2, y: 2.5,
+    saveDays: 132,   // 品牌形象40+情绪浓度40+AURA12+一方工具18+投放复盘22
+    cap: "none",
+    priority: "P0~P2",
+    detail: "品牌形象/情绪浓度分析、AURA复盘、\n一方工具升级、投放复盘\n节省 ~132 人天/月",
   },
   {
-    label: "一方工具升级",
-    priority: "P2", category: "分析/复盘",
-    x: 1.7, y: 3.0,
-    saveDays: 18,
-    cap: "has"
+    label: "搜索",
+    x: 2.0, y: 2.0,
+    saveDays: 55,    // 搜索推词30+打标取数25
+    cap: "none",
+    priority: "P1",
+    detail: "搜索推词工具、搜索词打标+取数\n节省 ~55 人天/月",
   },
   {
-    label: "投放复盘",
-    priority: "P2", category: "分析/复盘",
-    x: 2.2, y: 2.3,
-    saveDays: 22,
-    cap: "has"
-  },
-  // 低影响区
-  {
-    label: "品牌营销复盘\n(AURA)",
-    priority: "P2", category: "分析/复盘",
-    x: 1.8, y: 1.2,
-    saveDays: 12,
-    cap: "partial"
-  },
-
-  // ── 搜索 ──
-  // 中影响·中难度，错开
-  {
-    label: "搜索推词工具",
-    priority: "P1", category: "搜索",
-    x: 2.55, y: 2.55,
-    saveDays: 30,
-    cap: "none"
-  },
-  {
-    label: "搜索词打标\n+取数",
-    priority: "P1", category: "搜索",
-    x: 1.6, y: 2.2,
-    saveDays: 25,
-    cap: "none"
-  },
-
-  // ── 月报/周报 ──
-  // 高影响，沿 y=3 一字排开
-  {
-    label: "行业周报\n(对客)",
-    priority: "P0", category: "月报/周报",
-    x: 2.1, y: 3.55,
-    saveDays: 48,
-    cap: "has"
-  },
-  {
-    label: "行业周报\n(对内)",
-    priority: "P0", category: "月报/周报",
-    x: 2.7, y: 3.5,
-    saveDays: 30,
-    cap: "none"
-  },
-  {
-    label: "头客月报",
-    priority: "P1", category: "月报/周报",
-    x: 1.3, y: 3.55,
-    saveDays: 35,
-    cap: "partial"
-  },
-
-  // ── 洞察 ──
-  {
-    label: "站内舆情\n风险提示",
-    priority: "P0", category: "洞察",
-    x: 2.3, y: 2.75,
-    saveDays: 36,
-    cap: "none"
-  },
-  {
-    label: "行业&竞品\n洞察",
-    priority: "P1", category: "洞察",
-    x: 2.9, y: 2.2,
-    saveDays: 20,
-    cap: "partial"
-  },
-  {
-    label: "Campaign Idea",
-    priority: "P2", category: "洞察",
-    x: 3.2, y: 1.6,
-    saveDays: 12,
-    cap: "none"
-  },
-  {
-    label: "潮玩IP\n维度分析",
-    priority: "P2", category: "洞察",
-    x: 2.5, y: 1.3,
-    saveDays: 10,
-    cap: "none"
+    label: "洞察",
+    x: 2.6, y: 2.2,
+    saveDays: 78,    // 舆情36+行业竞品20+CampaignIdea12+潮玩IP10
+    cap: "partial",
+    priority: "P0~P2",
+    detail: "站内舆情风险、行业&竞品洞察、\nCampaign Idea、潮玩IP分析\n节省 ~78 人天/月",
   },
 ];
 
-// 能力 → 颜色
 const capColor = {
-  has:     { bg: "rgba(39,174,96,0.75)",  border: "#27ae60" },
-  partial: { bg: "rgba(243,156,18,0.75)", border: "#f39c12" },
-  none:    { bg: "rgba(231,76,60,0.75)",  border: "#e74c3c" },
+  has:     { bg: "rgba(39,174,96,0.78)",  border: "#1e8449" },
+  partial: { bg: "rgba(243,156,18,0.78)", border: "#b7770d" },
+  none:    { bg: "rgba(231,76,60,0.78)",  border: "#922b21" },
 };
 
-// 气泡半径映射（视觉上合适）
-function toR(days) {
-  return Math.sqrt(days) * 2.8;
-}
+// 气泡半径：对数映射，避免最大泡撑死画布
+function toR(days) { return Math.sqrt(days) * 3.5; }
 
-// 不再使用随机抖动，坐标已手动铺开
-function jitter(v, _seed) { return v; }
-
-// 按能力分组构建 dataset
-const groups = {
-  has:     { label: "已有能力", data: [], backgroundColor: [], borderColor: [] },
-  partial: { label: "部分能力", data: [], backgroundColor: [], borderColor: [] },
-  none:    { label: "无现有能力", data: [], backgroundColor: [], borderColor: [] },
-};
-
-items.forEach((item, i) => {
-  const g = groups[item.cap];
-  g.data.push({
-    x: jitter(item.x, i * 7),
-    y: jitter(item.y, i * 13),
-    r: toR(item.saveDays),
-    _meta: item,
-  });
-  g.backgroundColor.push(capColor[item.cap].bg);
-  g.borderColor.push(capColor[item.cap].border);
-});
-
-const datasets = Object.values(groups).map(g => ({
-  label: g.label,
-  data: g.data,
-  backgroundColor: g.backgroundColor,
-  borderColor: g.borderColor,
-  borderWidth: 2,
-}));
-
-// ─── 自定义标签插件 ───────────────────────────────────────
-const labelPlugin = {
-  id: "bubbleLabels",
-  afterDatasetsDraw(chart) {
-    const ctx = chart.ctx;
-    chart.data.datasets.forEach((ds, di) => {
-      ds.data.forEach((pt, pi) => {
-        const meta = chart.getDatasetMeta(di).data[pi];
-        if (!meta) return;
-        const { x, y } = meta.getProps(["x","y"], true);
-        const r = meta.options.radius;
-        const item = pt._meta;
-
-        ctx.save();
-        ctx.font = "bold 10px 'PingFang SC', 'Microsoft YaHei', sans-serif";
-        ctx.fillStyle = "#1a1a2e";
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-
-        // 多行标签
-        const lines = item.label.split("\n");
-        const lineH = 13;
-        const totalH = lines.length * lineH;
-        lines.forEach((line, li) => {
-          ctx.fillText(line, x, y - totalH/2 + li * lineH + lineH/2);
-        });
-
-        // priority badge 右上角
-        const pColor = { P0: "#e74c3c", P1: "#e67e22", P2: "#3498db" };
-        ctx.font = "bold 9px sans-serif";
-        ctx.fillStyle = pColor[item.priority] || "#888";
-        ctx.fillText(item.priority, x + r * 0.65, y - r * 0.65);
-
-        ctx.restore();
-      });
-    });
-  }
+const dataset = {
+  data: categories.map(c => ({
+    x: c.x, y: c.y,
+    r: toR(c.saveDays),
+    _meta: c,
+  })),
+  backgroundColor: categories.map(c => capColor[c.cap].bg),
+  borderColor:     categories.map(c => capColor[c.cap].border),
+  borderWidth: 2.5,
 };
 
 // ─── 四象限背景插件 ───────────────────────────────────────
@@ -359,118 +146,140 @@ const quadrantPlugin = {
     const my = scales.y.getPixelForValue(2);
 
     const zones = [
-      { x: ca.left, y: ca.top,    w: mx - ca.left,    h: my - ca.top,    color: "rgba(39,174,96,0.05)",  text: "高影响 · 低难度", tx: ca.left + 8,  ty: ca.top + 8,  anchor: "left" },
-      { x: mx,      y: ca.top,    w: ca.right - mx,   h: my - ca.top,    color: "rgba(243,156,18,0.05)", text: "高影响 · 高难度", tx: ca.right - 8, ty: ca.top + 8,  anchor: "right" },
-      { x: ca.left, y: my,        w: mx - ca.left,    h: ca.bottom - my, color: "rgba(52,152,219,0.05)", text: "低影响 · 低难度", tx: ca.left + 8,  ty: ca.bottom - 8, anchor: "left" },
-      { x: mx,      y: my,        w: ca.right - mx,   h: ca.bottom - my, color: "rgba(231,76,60,0.04)",  text: "低影响 · 高难度", tx: ca.right - 8, ty: ca.bottom - 8, anchor: "right" },
+      { x: ca.left, y: ca.top,  w: mx-ca.left,  h: my-ca.top,      fill: "rgba(39,174,96,0.06)",  label: "Quick Win ✦", tx: ca.left+10, ty: ca.top+10,      align: "left",  base: "top" },
+      { x: mx,      y: ca.top,  w: ca.right-mx, h: my-ca.top,      fill: "rgba(243,156,18,0.05)", label: "大赌注",       tx: ca.right-10,ty: ca.top+10,      align: "right", base: "top" },
+      { x: ca.left, y: my,      w: mx-ca.left,  h: ca.bottom-my,   fill: "rgba(52,152,219,0.05)", label: "填充项",       tx: ca.left+10, ty: ca.bottom-10,   align: "left",  base: "bottom" },
+      { x: mx,      y: my,      w: ca.right-mx, h: ca.bottom-my,   fill: "rgba(200,200,200,0.05)","label": "谨慎推进",   tx: ca.right-10,ty: ca.bottom-10,   align: "right", base: "bottom" },
     ];
 
     zones.forEach(z => {
       ctx.save();
-      ctx.fillStyle = z.color;
+      ctx.fillStyle = z.fill;
       ctx.fillRect(z.x, z.y, z.w, z.h);
-
       ctx.font = "bold 11px 'PingFang SC', sans-serif";
-      ctx.fillStyle = "rgba(0,0,0,0.18)";
-      ctx.textAlign = z.anchor;
-      ctx.textBaseline = z.anchor === "left" ? "top" : "bottom";
-      // adjust for bottom anchors
-      if (z.ty === ca.bottom - 8) ctx.textBaseline = "bottom";
-      ctx.fillText(z.text, z.tx, z.ty);
+      ctx.fillStyle = "rgba(0,0,0,0.2)";
+      ctx.textAlign = z.align;
+      ctx.textBaseline = z.base;
+      ctx.fillText(z.label, z.tx, z.ty);
       ctx.restore();
     });
 
-    // center lines
+    // 分割线
     ctx.save();
     ctx.strokeStyle = "rgba(0,0,0,0.1)";
-    ctx.setLineDash([5, 4]);
+    ctx.setLineDash([5, 5]);
     ctx.lineWidth = 1;
     ctx.beginPath();
-    ctx.moveTo(mx, ca.top); ctx.lineTo(mx, ca.bottom);
-    ctx.moveTo(ca.left, my); ctx.lineTo(ca.right, my);
+    ctx.moveTo(mx, ca.top);    ctx.lineTo(mx, ca.bottom);
+    ctx.moveTo(ca.left, my);   ctx.lineTo(ca.right, my);
     ctx.stroke();
     ctx.restore();
   }
 };
 
-// ─── 渲染图表 ─────────────────────────────────────────────
-const ctx = document.getElementById("bubble").getContext("2d");
-const chart = new Chart(ctx, {
-  type: "bubble",
-  data: { datasets },
-  options: {
-    responsive: true,
-    animation: { duration: 800, easing: "easeOutQuart" },
-    plugins: {
-      legend: { display: false },
-      tooltip: {
-        enabled: false,   // 用自定义 tooltip
-      },
-    },
-    scales: {
-      x: {
-        min: 0.5, max: 3.7,
-        title: {
-          display: true,
-          text: "← 低难度                    实现难易度                    高难度 →",
-          font: { size: 12, weight: "600" },
-          color: "#555",
-        },
-        ticks: {
-          stepSize: 1,
-          callback: v => ({ 1: "低", 2: "中", 3: "高" }[v] || ""),
-          font: { size: 12 },
-          color: "#888",
-        },
-        grid: { color: "rgba(0,0,0,0.05)" },
-      },
-      y: {
-        min: 0.5, max: 3.85,
-        title: {
-          display: true,
-          text: "↑ 业务影响力",
-          font: { size: 12, weight: "600" },
-          color: "#555",
-        },
-        ticks: {
-          stepSize: 1,
-          callback: v => ({ 1: "低", 2: "中", 3: "高" }[v] || ""),
-          font: { size: 12 },
-          color: "#888",
-        },
-        grid: { color: "rgba(0,0,0,0.05)" },
-      },
-    },
-    onHover(event, elements) {
-      event.native.target.style.cursor = elements.length ? "pointer" : "default";
-    },
-    onClick(event, elements) {
-      // handled below
-    },
-  },
-  plugins: [quadrantPlugin, labelPlugin],
-});
+// ─── 气泡标签插件 ─────────────────────────────────────────
+const labelPlugin = {
+  id: "bubbleLabels",
+  afterDatasetsDraw(chart) {
+    const ctx = chart.ctx;
+    const ds = chart.data.datasets[0];
+    ds.data.forEach((pt, i) => {
+      const meta = chart.getDatasetMeta(0).data[i];
+      if (!meta) return;
+      const { x, y } = meta.getProps(["x","y"], true);
+      const item = pt._meta;
 
-// ─── 自定义 Tooltip ───────────────────────────────────────
+      ctx.save();
+
+      // 类别名（大字）
+      ctx.font = "bold 14px 'PingFang SC', 'Microsoft YaHei', sans-serif";
+      ctx.fillStyle = "#fff";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.shadowColor = "rgba(0,0,0,0.3)";
+      ctx.shadowBlur = 3;
+      ctx.fillText(item.label, x, y - 8);
+
+      // 节省人天（小字）
+      ctx.font = "12px 'PingFang SC', sans-serif";
+      ctx.fillStyle = "rgba(255,255,255,0.88)";
+      ctx.shadowBlur = 2;
+      ctx.fillText(`~${item.saveDays}人天/月`, x, y + 9);
+
+      ctx.restore();
+    });
+  }
+};
+
+// ─── 渲染 ─────────────────────────────────────────────────
+const chart = new Chart(
+  document.getElementById("bubble").getContext("2d"),
+  {
+    type: "bubble",
+    data: { datasets: [dataset] },
+    options: {
+      responsive: true,
+      animation: { duration: 900, easing: "easeOutQuart" },
+      plugins: {
+        legend: { display: false },
+        tooltip: { enabled: false },
+      },
+      scales: {
+        x: {
+          min: 0.6, max: 3.8,
+          title: {
+            display: true,
+            text: "← 低难度          实现难易度          高难度 →",
+            font: { size: 12, weight: "600" }, color: "#555",
+          },
+          ticks: {
+            stepSize: 1,
+            callback: v => ({1:"低",2:"中",3:"高"}[v] || ""),
+            font: { size: 12 }, color: "#888",
+          },
+          grid: { color: "rgba(0,0,0,0.05)" },
+        },
+        y: {
+          min: 0.8, max: 4.1,
+          title: {
+            display: true,
+            text: "↑ 业务影响力",
+            font: { size: 12, weight: "600" }, color: "#555",
+          },
+          ticks: {
+            stepSize: 1,
+            callback: v => ({1:"低",2:"中",3:"高"}[v] || ""),
+            font: { size: 12 }, color: "#888",
+          },
+          grid: { color: "rgba(0,0,0,0.05)" },
+        },
+      },
+      onHover(e, els) {
+        e.native.target.style.cursor = els.length ? "pointer" : "default";
+      },
+    },
+    plugins: [quadrantPlugin, labelPlugin],
+  }
+);
+
+// ─── Tooltip ─────────────────────────────────────────────
 const tip = document.getElementById("tooltip");
-const pLabel = { P0: "🔴 P0 最高优先", P1: "🟠 P1 次优先", P2: "🔵 P2 规划中" };
-const capLabel = { has: "✅ 已有能力", partial: "⚡ 有部分能力", none: "❌ 无现有能力" };
+const capLabel = { has:"✅ 已有能力", partial:"⚡ 有部分能力", none:"❌ 无现有能力" };
+const pColor   = { P0:"#e74c3c", P1:"#e67e22", P2:"#3498db" };
 
 document.getElementById("bubble").addEventListener("mousemove", e => {
   const pts = chart.getElementsAtEventForMode(e, "nearest", { intersect: true }, false);
   if (!pts.length) { tip.style.display = "none"; return; }
-  const { datasetIndex, index } = pts[0];
-  const item = chart.data.datasets[datasetIndex].data[index]._meta;
+  const item = chart.data.datasets[0].data[pts[0].index]._meta;
   tip.innerHTML = `
-    <div style="font-weight:700;margin-bottom:4px">${item.label.replace("\n"," ")}</div>
-    <div>${pLabel[item.priority]}</div>
-    <div>📂 ${item.category}</div>
-    <div>⏱ 节省约 <b>${item.saveDays}</b> 人天/月</div>
-    <div>${capLabel[item.cap]}</div>
+    <div style="font-weight:700;font-size:15px;margin-bottom:5px">📂 ${item.label}</div>
+    <div style="white-space:pre-line;font-size:12px;opacity:0.9">${item.detail}</div>
+    <div style="margin-top:6px">${capLabel[item.cap]}</div>
+    <div style="color:#f9ca24;font-weight:600">优先级：${item.priority}</div>
   `;
   tip.style.display = "block";
-  tip.style.left = (e.clientX + 14) + "px";
-  tip.style.top  = (e.clientY - 10) + "px";
+  tip.style.left = (e.clientX + 16) + "px";
+  tip.style.top  = (e.clientY - 12) + "px";
 });
 document.getElementById("bubble").addEventListener("mouseleave", () => {
   tip.style.display = "none";
