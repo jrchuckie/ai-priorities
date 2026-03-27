@@ -15,78 +15,75 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 48px 32px;
+    padding: 60px 48px;
   }
 
   .page-label {
-    font-size: 11px;
+    font-size: 14px;
     letter-spacing: 3px;
     text-transform: uppercase;
     color: #ff2442;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
     font-weight: 600;
   }
 
   h1 {
-    font-size: 32px;
+    font-size: 44px;
     font-weight: 700;
     text-align: center;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
   }
   h1 span { color: #ff2442; }
 
   .subtitle {
-    font-size: 13.5px;
+    font-size: 17px;
     color: rgba(255,255,255,0.4);
     text-align: center;
-    margin-bottom: 52px;
-    max-width: 640px;
-    line-height: 1.6;
+    margin-bottom: 56px;
+    max-width: 760px;
+    line-height: 1.7;
   }
 
-  /* Timeline */
   .timeline {
     width: 100%;
-    max-width: 1060px;
+    max-width: 1100px;
     display: flex;
     flex-direction: column;
-    gap: 0;
   }
 
   .step {
     display: grid;
-    grid-template-columns: 100px 40px 1fr;
-    gap: 0 24px;
+    grid-template-columns: 110px 48px 1fr;
+    gap: 0 28px;
     align-items: stretch;
-    min-height: 100px;
+    min-height: 110px;
   }
 
-  /* Step number */
   .step-num {
     display: flex;
     align-items: flex-start;
     justify-content: flex-end;
-    padding-top: 24px;
+    padding-top: 28px;
     padding-right: 4px;
   }
 
   .step-num-inner {
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 700;
     letter-spacing: 1px;
     color: rgba(255,255,255,0.25);
+    text-align: right;
   }
 
   .step-num-inner span {
     display: block;
-    font-size: 22px;
+    font-size: 26px;
     font-weight: 800;
     letter-spacing: -1px;
     line-height: 1;
     margin-bottom: 2px;
   }
 
-  /* Dot + line */
   .step-track {
     display: flex;
     flex-direction: column;
@@ -94,12 +91,12 @@
   }
 
   .step-dot {
-    width: 40px; height: 40px;
+    width: 48px; height: 48px;
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    font-size: 16px;
+    font-size: 20px;
     flex-shrink: 0;
-    margin-top: 14px;
+    margin-top: 16px;
     position: relative;
     z-index: 1;
   }
@@ -108,18 +105,17 @@
     width: 2px;
     flex: 1;
     background: rgba(255,255,255,0.08);
-    margin: 4px 0;
+    margin: 6px 0;
   }
 
   .step:last-child .step-line { display: none; }
 
-  /* Card */
   .step-card {
     background: rgba(255,255,255,0.04);
     border: 1px solid rgba(255,255,255,0.07);
-    border-radius: 14px;
-    padding: 20px 24px;
-    margin-bottom: 16px;
+    border-radius: 16px;
+    padding: 24px 30px;
+    margin-bottom: 18px;
     position: relative;
     overflow: hidden;
   }
@@ -128,42 +124,41 @@
     content: '';
     position: absolute;
     left: 0; top: 0; bottom: 0;
-    width: 3px;
-    border-radius: 14px 0 0 14px;
+    width: 4px;
+    border-radius: 16px 0 0 16px;
   }
 
-  /* Step colors */
-  .s00 .step-dot { background: rgba(139,92,246,0.2); border: 1.5px solid rgba(139,92,246,0.5); }
+  .s00 .step-dot { background: rgba(139,92,246,0.2); border: 2px solid rgba(139,92,246,0.5); }
   .s00 .step-dot::after { content: '🔍'; }
   .s00 .step-card::before { background: #7c3aed; }
   .s00 .step-tag { color: #a78bfa; border-color: rgba(139,92,246,0.3); background: rgba(139,92,246,0.1); }
   .s00 .step-num-inner span { color: #a78bfa; }
 
-  .s01 .step-dot { background: rgba(59,130,246,0.2); border: 1.5px solid rgba(59,130,246,0.5); }
+  .s01 .step-dot { background: rgba(59,130,246,0.2); border: 2px solid rgba(59,130,246,0.5); }
   .s01 .step-dot::after { content: '✅'; }
   .s01 .step-card::before { background: #2563eb; }
   .s01 .step-tag { color: #93c5fd; border-color: rgba(59,130,246,0.3); background: rgba(59,130,246,0.1); }
   .s01 .step-num-inner span { color: #93c5fd; }
 
-  .s02 .step-dot { background: rgba(16,185,129,0.2); border: 1.5px solid rgba(16,185,129,0.5); }
+  .s02 .step-dot { background: rgba(16,185,129,0.2); border: 2px solid rgba(16,185,129,0.5); }
   .s02 .step-dot::after { content: '🩺'; }
   .s02 .step-card::before { background: #059669; }
   .s02 .step-tag { color: #6ee7b7; border-color: rgba(16,185,129,0.3); background: rgba(16,185,129,0.1); }
   .s02 .step-num-inner span { color: #6ee7b7; }
 
-  .s03 .step-dot { background: rgba(245,158,11,0.2); border: 1.5px solid rgba(245,158,11,0.5); }
+  .s03 .step-dot { background: rgba(245,158,11,0.2); border: 2px solid rgba(245,158,11,0.5); }
   .s03 .step-dot::after { content: '🎯'; }
   .s03 .step-card::before { background: #d97706; }
   .s03 .step-tag { color: #fcd34d; border-color: rgba(245,158,11,0.3); background: rgba(245,158,11,0.1); }
   .s03 .step-num-inner span { color: #fcd34d; }
 
-  .s04 .step-dot { background: rgba(239,68,68,0.2); border: 1.5px solid rgba(239,68,68,0.5); }
+  .s04 .step-dot { background: rgba(239,68,68,0.2); border: 2px solid rgba(239,68,68,0.5); }
   .s04 .step-dot::after { content: '📊'; }
   .s04 .step-card::before { background: #dc2626; }
   .s04 .step-tag { color: #fca5a5; border-color: rgba(239,68,68,0.3); background: rgba(239,68,68,0.1); }
   .s04 .step-num-inner span { color: #fca5a5; }
 
-  .s05 .step-dot { background: rgba(255,36,66,0.2); border: 1.5px solid rgba(255,36,66,0.5); }
+  .s05 .step-dot { background: rgba(255,36,66,0.2); border: 2px solid rgba(255,36,66,0.5); }
   .s05 .step-dot::after { content: '💰'; }
   .s05 .step-card::before { background: #ff2442; }
   .s05 .step-tag { color: #ff8fa3; border-color: rgba(255,36,66,0.3); background: rgba(255,36,66,0.1); }
@@ -172,31 +167,31 @@
   .step-header {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 10px;
+    gap: 14px;
+    margin-bottom: 12px;
     flex-wrap: wrap;
   }
 
   .step-tag {
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 700;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    padding: 3px 10px;
+    padding: 4px 12px;
     border-radius: 100px;
     border: 1px solid;
   }
 
   .step-title {
-    font-size: 16px;
+    font-size: 19px;
     font-weight: 700;
     color: #fff;
   }
 
   .step-body {
-    font-size: 13px;
+    font-size: 15px;
     color: rgba(255,255,255,0.55);
-    line-height: 1.75;
+    line-height: 1.8;
   }
 
   .step-body strong { color: rgba(255,255,255,0.85); }
@@ -205,32 +200,31 @@
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin-top: 12px;
+    margin-top: 14px;
   }
 
   .pill {
-    font-size: 11.5px;
-    padding: 4px 11px;
+    font-size: 13px;
+    padding: 5px 14px;
     border-radius: 6px;
     background: rgba(255,255,255,0.06);
     border: 1px solid rgba(255,255,255,0.1);
     color: rgba(255,255,255,0.6);
   }
 
-  /* differentiator badge */
   .diff-badge {
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    font-size: 11px;
-    padding: 3px 10px;
+    font-size: 13px;
+    padding: 5px 12px;
     border-radius: 6px;
-    margin-top: 10px;
+    margin-top: 12px;
     background: rgba(255,36,66,0.1);
     border: 1px solid rgba(255,36,66,0.2);
     color: #ff8fa3;
   }
-  .diff-badge::before { content: '★'; font-size: 10px; }
+  .diff-badge::before { content: '★'; font-size: 11px; }
 </style>
 </head>
 <body>
@@ -241,7 +235,6 @@
 
   <div class="timeline">
 
-    <!-- Step 00 -->
     <div class="step s00">
       <div class="step-num">
         <div class="step-num-inner"><span>00</span>RESEARCH</div>
@@ -268,7 +261,6 @@
       </div>
     </div>
 
-    <!-- Step 01 -->
     <div class="step s01">
       <div class="step-num">
         <div class="step-num-inner"><span>01</span>VALIDATE</div>
@@ -290,11 +282,10 @@
             <span class="pill">行业 Attribute 重要性排序</span>
           </div>
         </div>
-        <div class="diff-badge">实时验证，替代传统 6-8 周调研周期</div>
+        <div class="diff-badge">实时验证，替代传统 6–8 周调研周期</div>
       </div>
     </div>
 
-    <!-- Step 02 -->
     <div class="step s02">
       <div class="step-num">
         <div class="step-num-inner"><span>02</span>DIAGNOSE</div>
@@ -319,7 +310,6 @@
       </div>
     </div>
 
-    <!-- Step 03 -->
     <div class="step s03">
       <div class="step-num">
         <div class="step-num-inner"><span>03</span>OCCUPY</div>
@@ -345,7 +335,6 @@
       </div>
     </div>
 
-    <!-- Step 04 -->
     <div class="step s04">
       <div class="step-num">
         <div class="step-num-inner"><span>04</span>MEASURE</div>
@@ -371,7 +360,6 @@
       </div>
     </div>
 
-    <!-- Step 05 -->
     <div class="step s05">
       <div class="step-num">
         <div class="step-num-inner"><span>05</span>ATTRIBUTE</div>
