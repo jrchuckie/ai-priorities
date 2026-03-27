@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brand Attributes Framework</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+    background: #0a0e1a;
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 32px;
+  }
+
+  .page-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #ff2442;
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+
+  h1 {
+    font-size: 36px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+
+  h1 span { color: #ff2442; }
+
+  .subtitle {
+    font-size: 14px;
+    color: rgba(255,255,255,0.45);
+    text-align: center;
+    margin-bottom: 48px;
+    max-width: 600px;
+    line-height: 1.6;
+  }
+
+  .columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    width: 100%;
+    max-width: 1100px;
+    margin-bottom: 40px;
+  }
+
+  .col {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 28px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .col::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: 16px 16px 0 0;
+  }
+
+  .col-functional::before { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+  .col-emotional::before  { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+  .col-interest::before   { background: linear-gradient(90deg, #ff2442, #ff6b6b); }
+
+  .col-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    margin-bottom: 16px;
+  }
+  .col-functional .col-icon { background: rgba(59,130,246,0.15); }
+  .col-emotional  .col-icon { background: rgba(245,158,11,0.15); }
+  .col-interest   .col-icon { background: rgba(255,36,66,0.15); }
+
+  .col-title {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .col-functional .col-title { color: #60a5fa; }
+  .col-emotional  .col-title { color: #fbbf24; }
+  .col-interest   .col-title { color: #ff6b6b; }
+
+  .col-en {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #fff;
+  }
+
+  .col-desc {
+    font-size: 12.5px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tag {
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-weight: 500;
+  }
+  .col-functional .tag { background: rgba(59,130,246,0.15); color: #93c5fd; border: 1px solid rgba(59,130,246,0.2); }
+  .col-emotional  .tag { background: rgba(245,158,11,0.15); color: #fcd34d; border: 1px solid rgba(245,158,11,0.2); }
+  .col-interest   .tag { background: rgba(255,36,66,0.12);  color: #ff8fa3; border: 1px solid rgba(255,36,66,0.2); }
+
+  /* Sponsorship ROI callout */
+  .callout {
+    width: 100%;
+    max-width: 1100px;
+    background: linear-gradient(135deg, rgba(255,36,66,0.08), rgba(255,107,107,0.04));
+    border: 1px solid rgba(255,36,66,0.2);
+    border-radius: 16px;
+    padding: 24px 32px;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .callout-icon {
+    font-size: 28px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .callout-body { flex: 1; }
+
+  .callout-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #ff8fa3;
+    margin-bottom: 8px;
+  }
+
+  .callout-text {
+    font-size: 13.5px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.75;
+  }
+
+  .callout-text strong { color: rgba(255,255,255,0.9); }
+
+  .callout-questions {
+    margin-top: 12px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .q-chip {
+    font-size: 12.5px;
+    padding: 6px 14px;
+    border-radius: 8px;
+    background: rgba(255,36,66,0.12);
+    border: 1px solid rgba(255,36,66,0.2);
+    color: #ff8fa3;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .q-chip::before { content: '?'; font-weight: 800; opacity: 0.6; }
+</style>
+</head>
+<body>
+
+  <div class="page-label">Solution A · Framework</div>
+  <h1>Brand <span>Attributes</span> = 三类买点</h1>
+  <p class="subtitle">每个品牌的心智资产，都可以拆解为三个维度的 attributes——这是驱动消费者认知、情感和行为的底层语言</p>
+
+  <div class="columns">
+
+    <!-- Functional -->
+    <div class="col col-functional">
+      <div class="col-icon">⚙️</div>
+      <div class="col-title">Functional</div>
+      <div class="col-en">功能性买点</div>
+      <div class="col-desc">产品本身能带来的具体价值，消费者用理性语言描述的购买理由</div>
+      <div class="tags">
+        <span class="tag">爽口</span>
+        <span class="tag">高品质</span>
+        <span class="tag">方便</span>
+        <span class="tag">好吃</span>
+        <span class="tag">易于搭配食物</span>
+        <span class="tag">低卡健康</span>
+        <span class="tag">性价比高</span>
+        <span class="tag">包装便携</span>
+      </div>
+    </div>
+
+    <!-- Emotional -->
+    <div class="col col-emotional">
+      <div class="col-icon">💛</div>
+      <div class="col-title">Emotional</div>
+      <div class="col-en">情绪性买点</div>
+      <div class="col-desc">消费者使用/购买时感受到的情绪状态，品牌建立情感依恋的核心</div>
+      <div class="tags">
+        <span class="tag">享乐</span>
+        <span class="tag">放松</span>
+        <span class="tag">满足好奇心</span>
+        <span class="tag">仪式感</span>
+        <span class="tag">被照料</span>
+        <span class="tag">自我奖励</span>
+        <span class="tag">社交连接</span>
+        <span class="tag">治愈</span>
+      </div>
+    </div>
+
+    <!-- Interest / Sponsorship -->
+    <div class="col col-interest">
+      <div class="col-icon">🎯</div>
+      <div class="col-title">Interest</div>
+      <div class="col-en">兴趣买点</div>
+      <div class="col-desc">品牌与特定兴趣圈层的关联——通常靠 <strong>Sponsorship</strong> 建立，是品牌预算最大的非透明黑盒</div>
+      <div class="tags">
+        <span class="tag">音乐节</span>
+        <span class="tag">露营</span>
+        <span class="tag">滑雪</span>
+        <span class="tag">赛车</span>
+        <span class="tag">网球</span>
+        <span class="tag">时尚</span>
+        <span class="tag">二次元</span>
+        <span class="tag">电竞</span>
+        <span class="tag">户外运动</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Sponsorship ROI callout -->
+  <div class="callout">
+    <div class="callout-icon">💸</div>
+    <div class="callout-body">
+      <div class="callout-title">Sponsorship 的 ROI 黑盒问题 — 越来越多 CMO 开始追问</div>
+      <div class="callout-text">
+        品牌每年在「兴趣买点」上投入大量 Sponsorship 预算（赛事赞助 / 音乐节 / 极限运动），但
+        <strong>这笔钱到底带来了多少销量？投哪个兴趣 ROI 更好？</strong>
+        目前主流方法（Kantar 调研 / GRP 收视率）无法给出实时可行动的答案。
+      </div>
+      <div class="callout-questions">
+        <div class="q-chip">赞助滑雪赛事，年轻高净值人群品牌认知提升了多少？</div>
+        <div class="q-chip">音乐节露出 vs 网球赛事，哪个 Attribute 驱动的转化更高？</div>
+        <div class="q-chip">Sponsorship → 小红书 UGC 自然声量 → 终端销售，链路可追踪吗？</div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
