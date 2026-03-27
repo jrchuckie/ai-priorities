@@ -4,6 +4,32 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>快消 AI 专项</title>
+<!-- Firebase SDK -->
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+  import { getDatabase, ref, onValue, set, get } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAU0plLbzUk8U_fpuiFQCgLrqMJ2qflwHs",
+    authDomain: "chuck-xhs.firebaseapp.com",
+    databaseURL: "https://chuck-xhs-default-rtdb.firebaseio.com",
+    projectId: "chuck-xhs",
+    storageBucket: "chuck-xhs.firebasestorage.app",
+    messagingSenderId: "104639265884",
+    appId: "1:104639265884:web:864dfa11f02990cef47a99",
+    measurementId: "G-Y0YDGJJE30"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  window._fbDb = db;
+  window._fbRef = ref;
+  window._fbOnValue = onValue;
+  window._fbSet = set;
+  window._fbGet = get;
+  window._fbReady = true;
+  document.dispatchEvent(new Event('firebase-ready'));
+</script>
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
 html, body { height:100%; }
@@ -386,6 +412,10 @@ footer { text-align:center; margin-top:40px; font-size:12px; color:#bbb; }
   <div class="nav-title">🤖 <span>快消 AI 专项</span></div>
   <button class="nav-tab active" data-tab="priorities">📋 Priorities 总览</button>
   <button class="nav-tab"        data-tab="workflow">🗺️ AI 提效地图</button>
+  <div style="margin-left:auto;display:flex;align-items:center;gap:7px;font-size:12px;color:rgba(255,255,255,0.5);">
+    <div id="sync-dot" style="width:8px;height:8px;border-radius:50%;background:#e67e22;transition:background 0.5s;"></div>
+    <span id="sync-text">连接中…</span>
+  </div>
 </nav>
 
 <div class="tab-panel active" id="tab-priorities">
@@ -595,11 +625,20 @@ const DEFAULT_CATS = [
   { key:'月报周报', icon:'📅', label:'月报/周报' },
   { key:'洞察',    icon:'💡', label:'洞察类' },
 ];
+// ── Firebase 实时同步 ──
+// CATS 和 DATA 改为从 Firebase 读写，localStorage 仅作本地 fallback
+let _fbInitialized = false;
+
 function loadCats() {
   try { const s = localStorage.getItem('ai-cats-v1'); return s ? JSON.parse(s) : JSON.parse(JSON.stringify(DEFAULT_CATS)); }
   catch(e) { return JSON.parse(JSON.stringify(DEFAULT_CATS)); }
 }
-function saveCats() { localStorage.setItem('ai-cats-v1', JSON.stringify(CATS)); }
+function saveCats() {
+  localStorage.setItem('ai-cats-v1', JSON.stringify(CATS));
+  if (window._fbReady) {
+    window._fbSet(window._fbRef(window._fbDb, 'cats'), CATS).catch(e => console.warn('Firebase saveCats:', e));
+  }
+}
 let CATS = loadCats();
 
 const DEFAULT_DATA = [
@@ -633,7 +672,12 @@ function loadData() {
     return s ? JSON.parse(s) : JSON.parse(JSON.stringify(DEFAULT_DATA));
   } catch(e) { return JSON.parse(JSON.stringify(DEFAULT_DATA)); }
 }
-function saveData() { localStorage.setItem('ai-priorities-v2', JSON.stringify(DATA)); }
+function saveData() {
+  localStorage.setItem('ai-priorities-v2', JSON.stringify(DATA));
+  if (window._fbReady) {
+    window._fbSet(window._fbRef(window._fbDb, 'data'), DATA).catch(e => console.warn('Firebase saveData:', e));
+  }
+}
 let DATA = loadData();
 
 // ═══════════════════════════════════════════════════════
@@ -1085,8 +1129,65 @@ document.getElementById('cat-modal-save').addEventListener('click', () => {
   render();
 });
 
+// ═══════════════════════════════════════════════════════
+// Firebase 实时同步初始化
+// ═══════════════════════════════════════════════════════
+function initFirebase() {
+  const db = window._fbDb;
+  const fbRef = window._fbRef;
+  const onValue = window._fbOnValue;
+
+  // 显示同步状态
+  const syncDot = document.getElementById('sync-dot');
+  const syncText = document.getElementById('sync-text');
+
+  // 监听 data 节点
+  onValue(fbRef(db, 'data'), (snapshot) => {
+    const val = snapshot.val();
+    if (val && Array.isArray(val)) {
+      DATA = val;
+      localStorage.setItem('ai-priorities-v2', JSON.stringify(DATA));
+      render();
+    }
+    if (syncDot) { syncDot.style.background = '#27ae60'; }
+    if (syncText) { syncText.textContent = '已同步'; }
+  }, (err) => {
+    console.warn('Firebase onValue data error:', err);
+    if (syncDot) { syncDot.style.background = '#e74c3c'; }
+    if (syncText) { syncText.textContent = '离线模式'; }
+  });
+
+  // 监听 cats 节点
+  onValue(fbRef(db, 'cats'), (snapshot) => {
+    const val = snapshot.val();
+    if (val && Array.isArray(val)) {
+      CATS = val;
+      localStorage.setItem('ai-cats-v1', JSON.stringify(CATS));
+      render();
+    }
+  }, (err) => { console.warn('Firebase onValue cats error:', err); });
+
+  _fbInitialized = true;
+}
+
 // 初始化
-render();
+if (window._fbReady) {
+  initFirebase();
+} else {
+  document.addEventListener('firebase-ready', () => initFirebase(), { once: true });
+  // Firebase 加载超时（5秒）则降级为本地模式
+  setTimeout(() => {
+    if (!_fbInitialized) {
+      console.warn('Firebase 未在5秒内就绪，使用本地模式');
+      const syncDot = document.getElementById('sync-dot');
+      const syncText = document.getElementById('sync-text');
+      if (syncDot) syncDot.style.background = '#e67e22';
+      if (syncText) syncText.textContent = '本地模式';
+      render();
+    }
+  }, 5000);
+}
+render(); // 先用本地数据渲染，Firebase 数据到来后自动更新
 </script>
 
 </div>
