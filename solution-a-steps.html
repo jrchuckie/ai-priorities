@@ -15,7 +15,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 56px 48px;
+    padding: 56px 40px;
   }
 
   .page-label {
@@ -47,7 +47,7 @@
   /* ── Horizontal flow ── */
   .flow {
     width: 100%;
-    max-width: 1360px;
+    max-width: 1400px;
     display: flex;
     align-items: flex-start;
     gap: 0;
@@ -61,27 +61,25 @@
     position: relative;
   }
 
-  /* connector line between items */
+  /* connector arrow */
   .flow-item:not(:last-child)::after {
     content: '';
     position: absolute;
-    top: 38px; /* vertically centered with dot */
+    top: 37px;
     right: -1px;
-    width: calc(100% - 80px); /* gap minus half dots */
+    width: calc(100% - 76px);
     height: 2px;
-    background: linear-gradient(90deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
-    transform: translateX(40px);
+    background: linear-gradient(90deg, rgba(255,255,255,0.14), rgba(255,255,255,0.04));
+    transform: translateX(38px);
     z-index: 0;
   }
-
-  /* arrow tip */
   .flow-item:not(:last-child)::before {
     content: '▶';
     position: absolute;
-    top: 28px;
+    top: 27px;
     right: -10px;
-    font-size: 14px;
-    color: rgba(255,255,255,0.18);
+    font-size: 13px;
+    color: rgba(255,255,255,0.16);
     z-index: 1;
   }
 
@@ -96,8 +94,6 @@
     margin-bottom: 20px;
     position: relative;
   }
-
-  /* step number badge */
   .step-dot .num {
     position: absolute;
     top: -6px; right: -6px;
@@ -109,15 +105,19 @@
     border: 2px solid #0a0e1a;
   }
 
-  /* card */
+  /* card — equal height via flex column */
   .step-card {
     background: rgba(255,255,255,0.04);
     border: 1px solid rgba(255,255,255,0.07);
     border-radius: 16px;
-    padding: 20px 18px;
+    padding: 22px 18px;
     width: 100%;
     position: relative;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    /* equal height across all cards */
+    height: 320px;
   }
 
   .step-card::before {
@@ -128,16 +128,18 @@
     border-radius: 16px 16px 0 0;
   }
 
+  /* english label — bigger */
   .step-tag {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 2px;
     text-transform: uppercase;
-    padding: 3px 10px;
+    padding: 4px 12px;
     border-radius: 100px;
     border: 1px solid;
     display: inline-block;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
+    width: fit-content;
   }
 
   .step-title {
@@ -145,13 +147,14 @@
     font-weight: 700;
     color: #fff;
     margin-bottom: 10px;
-    line-height: 1.4;
+    line-height: 1.45;
   }
 
   .step-body {
     font-size: 13px;
     color: rgba(255,255,255,0.5);
     line-height: 1.7;
+    flex: 1;
   }
   .step-body strong { color: rgba(255,255,255,0.8); }
 
@@ -161,7 +164,6 @@
     gap: 6px;
     margin-top: 12px;
   }
-
   .pill {
     font-size: 11px;
     padding: 3px 10px;
@@ -182,8 +184,26 @@
     background: rgba(255,36,66,0.1);
     border: 1px solid rgba(255,36,66,0.2);
     color: #ff8fa3;
+    width: fit-content;
   }
   .diff-badge::before { content: '★'; font-size: 10px; }
+
+  /* attribute chips for step 03 */
+  .attr-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+  }
+  .attr-chip {
+    font-size: 11px;
+    padding: 4px 11px;
+    border-radius: 100px;
+    font-weight: 600;
+  }
+  .attr-chip.func { background: rgba(59,130,246,0.15); color: #93c5fd; border: 1px solid rgba(59,130,246,0.25); }
+  .attr-chip.emo  { background: rgba(245,158,11,0.15);  color: #fcd34d; border: 1px solid rgba(245,158,11,0.25); }
+  .attr-chip.int  { background: rgba(255,36,66,0.12);   color: #ff8fa3; border: 1px solid rgba(255,36,66,0.25); }
 
   /* ── per-step colors ── */
   .s00 .step-dot { background: rgba(139,92,246,0.18); border: 2px solid rgba(139,92,246,0.5); }
@@ -221,7 +241,7 @@
 
   <div class="page-label">Solution A · 国际成熟品牌</div>
   <h1>Brand Building <span>6步数据闭环</span></h1>
-  <p class="subtitle">从 Attribute 定义 → 行业验证 → 品牌诊断 → 内容占领 → Brand Lift → 终端归因，首次打通品牌心智到销售的完整链路</p>
+  <p class="subtitle">从 Attribute 定义 → 行业验证 → 品牌诊断 → Attribute 占领 → Brand Lift → 终端归因，首次打通品牌心智到销售的完整链路</p>
 
   <div class="flow">
 
@@ -232,11 +252,12 @@
         <span class="step-tag">Research</span>
         <div class="step-title">收集主流 Research Firm 的 Attribute 体系</div>
         <div class="step-body">
-          整合 <strong>Kantar、Nielsen、Ipsos</strong> 等机构的 brand attributes 框架，建立三维属性词库。
+          整合 <strong>Kantar、Nielsen、Ipsos</strong> 等机构的 brand attributes 标准框架，建立三维属性词库（功能 / 情绪 / 兴趣）。
           <div class="step-pills">
             <span class="pill">Kantar BrandZ</span>
             <span class="pill">Nielsen</span>
             <span class="pill">Ipsos</span>
+            <span class="pill">Millward Brown</span>
           </div>
         </div>
         <div class="diff-badge">UGC 大样本覆盖调研盲区</div>
@@ -250,7 +271,7 @@
         <span class="step-tag">Validate</span>
         <div class="step-title">用一方数据验证行业重要 Attributes</div>
         <div class="step-body">
-          <strong>一方销售数据 × UGC 打标</strong>，验证哪些 attributes 真正影响购买决策，输出高 ROI attribute 清单。
+          <strong>一方销售数据 × UGC 打标</strong>，验证哪些 attributes 真正影响消费决策，保留高 ROI attribute 清单，去掉"看起来重要但不转化"的属性。
           <div class="step-pills">
             <span class="pill">UGC 内容打标</span>
             <span class="pill">Attribute 重要性排序</span>
@@ -267,29 +288,36 @@
         <span class="step-tag">Diagnose</span>
         <div class="step-title">诊断品牌 Attribute 占有率 vs 竞品</div>
         <div class="step-body">
-          分析品牌在每个 attribute 的 <strong>Share of Voice</strong>，找出优势位、缺失位、可进攻位。
+          通过 XHS 站内 UGC 分析品牌在每个 attribute 的 <strong>Share of Voice</strong>，找出优势位、缺失位、可进攻的白地。
           <div class="step-pills">
             <span class="pill">Attribute SOV</span>
+            <span class="pill">竞品对比</span>
             <span class="pill">白地识别</span>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 03 -->
+    <!-- 03 — UPDATED -->
     <div class="flow-item s03">
       <div class="step-dot">🎯<span class="num">03</span></div>
       <div class="step-card">
         <span class="step-tag">Occupy</span>
-        <div class="step-title">圈定目标兴趣生态，精准内容投放</div>
+        <div class="step-title">圈定目标 Brand Attributes，精准内容投放</div>
         <div class="step-body">
-          在 XHS 对应兴趣圈层做内容种草，<strong>Sponsorship 线上延伸</strong>，把线下 IP 转化为 UGC。
-          <div class="step-pills">
-            <span class="pill">兴趣圈层达人矩阵</span>
+          基于诊断结果，确定品牌要主攻的 attributes，在 XHS 站内对应场景做内容种草投放。
+          <div class="attr-chips">
+            <span class="attr-chip func">⚙️ 功能性</span>
+            <span class="attr-chip emo">💛 情绪性</span>
+            <span class="attr-chip int">🎯 兴趣</span>
+          </div>
+          <div class="step-pills" style="margin-top:10px;">
+            <span class="pill">达人矩阵</span>
             <span class="pill">场景化种草</span>
+            <span class="pill">Sponsorship 线上延伸</span>
           </div>
         </div>
-        <div class="diff-badge">Sponsorship → XHS UGC 放大</div>
+        <div class="diff-badge">线下 IP → XHS UGC 放大</div>
       </div>
     </div>
 
@@ -300,9 +328,9 @@
         <span class="step-tag">Measure</span>
         <div class="step-title">实时度量 Brand Lift</div>
         <div class="step-body">
-          投放前后追踪 attribute SOV 变化与情感倾向，输出<strong>品牌心智提升报告</strong>。
+          投放前后追踪 attribute SOV 变化与情感倾向，输出<strong>品牌心智提升报告</strong>——更快、样本量更大、成本更低。
           <div class="step-pills">
-            <span class="pill">SOV 变化</span>
+            <span class="pill">SOV 变化追踪</span>
             <span class="pill">情感倾向</span>
             <span class="pill">竞品 Benchmark</span>
           </div>
@@ -318,9 +346,10 @@
         <span class="step-tag">Attribute</span>
         <div class="step-title">终端销售归因 — 哪个 Attribute 驱动购买</div>
         <div class="step-body">
-          接入<strong>一方销售数据</strong>，构建心智 → 销售归因，回答 CMO：<strong>哪个 Sponsorship ROI 最高？</strong>
+          接入品牌<strong>一方销售数据</strong>，构建心智 → 销售归因模型。回答 CMO 核心问题：<strong>哪个 Sponsorship ROI 最高？明年预算怎么分？</strong>
           <div class="step-pills">
             <span class="pill">一方数据回传</span>
+            <span class="pill">Attribute → 销售路径</span>
             <span class="pill">Sponsorship ROI 排序</span>
           </div>
         </div>
