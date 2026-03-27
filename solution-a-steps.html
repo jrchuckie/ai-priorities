@@ -15,15 +15,15 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 60px 48px;
+    padding: 56px 48px;
   }
 
   .page-label {
-    font-size: 14px;
+    font-size: 13px;
     letter-spacing: 3px;
     text-transform: uppercase;
     color: #ff2442;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
     font-weight: 600;
   }
 
@@ -37,85 +37,85 @@
 
   .subtitle {
     font-size: 17px;
-    color: rgba(255,255,255,0.4);
+    color: rgba(255,255,255,0.38);
     text-align: center;
-    margin-bottom: 56px;
-    max-width: 760px;
+    margin-bottom: 64px;
+    max-width: 780px;
     line-height: 1.7;
   }
 
-  .timeline {
+  /* ── Horizontal flow ── */
+  .flow {
     width: 100%;
-    max-width: 1100px;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .step {
-    display: grid;
-    grid-template-columns: 110px 48px 1fr;
-    gap: 0 28px;
-    align-items: stretch;
-    min-height: 110px;
-  }
-
-  .step-num {
+    max-width: 1360px;
     display: flex;
     align-items: flex-start;
-    justify-content: flex-end;
-    padding-top: 28px;
-    padding-right: 4px;
+    gap: 0;
   }
 
-  .step-num-inner {
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    color: rgba(255,255,255,0.25);
-    text-align: right;
-  }
-
-  .step-num-inner span {
-    display: block;
-    font-size: 26px;
-    font-weight: 800;
-    letter-spacing: -1px;
-    line-height: 1;
-    margin-bottom: 2px;
-  }
-
-  .step-track {
+  .flow-item {
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
   }
 
-  .step-dot {
-    width: 48px; height: 48px;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 20px;
-    flex-shrink: 0;
-    margin-top: 16px;
-    position: relative;
+  /* connector line between items */
+  .flow-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 38px; /* vertically centered with dot */
+    right: -1px;
+    width: calc(100% - 80px); /* gap minus half dots */
+    height: 2px;
+    background: linear-gradient(90deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+    transform: translateX(40px);
+    z-index: 0;
+  }
+
+  /* arrow tip */
+  .flow-item:not(:last-child)::before {
+    content: '▶';
+    position: absolute;
+    top: 28px;
+    right: -10px;
+    font-size: 14px;
+    color: rgba(255,255,255,0.18);
     z-index: 1;
   }
 
-  .step-line {
-    width: 2px;
-    flex: 1;
-    background: rgba(255,255,255,0.08);
-    margin: 6px 0;
+  /* dot */
+  .step-dot {
+    width: 76px; height: 76px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+    flex-shrink: 0;
+    z-index: 2;
+    margin-bottom: 20px;
+    position: relative;
   }
 
-  .step:last-child .step-line { display: none; }
+  /* step number badge */
+  .step-dot .num {
+    position: absolute;
+    top: -6px; right: -6px;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    border: 2px solid #0a0e1a;
+  }
 
+  /* card */
   .step-card {
     background: rgba(255,255,255,0.04);
     border: 1px solid rgba(255,255,255,0.07);
     border-radius: 16px;
-    padding: 24px 30px;
-    margin-bottom: 18px;
+    padding: 20px 18px;
+    width: 100%;
     position: relative;
     overflow: hidden;
   }
@@ -123,108 +123,98 @@
   .step-card::before {
     content: '';
     position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 4px;
-    border-radius: 16px 0 0 16px;
-  }
-
-  .s00 .step-dot { background: rgba(139,92,246,0.2); border: 2px solid rgba(139,92,246,0.5); }
-  .s00 .step-dot::after { content: '🔍'; }
-  .s00 .step-card::before { background: #7c3aed; }
-  .s00 .step-tag { color: #a78bfa; border-color: rgba(139,92,246,0.3); background: rgba(139,92,246,0.1); }
-  .s00 .step-num-inner span { color: #a78bfa; }
-
-  .s01 .step-dot { background: rgba(59,130,246,0.2); border: 2px solid rgba(59,130,246,0.5); }
-  .s01 .step-dot::after { content: '✅'; }
-  .s01 .step-card::before { background: #2563eb; }
-  .s01 .step-tag { color: #93c5fd; border-color: rgba(59,130,246,0.3); background: rgba(59,130,246,0.1); }
-  .s01 .step-num-inner span { color: #93c5fd; }
-
-  .s02 .step-dot { background: rgba(16,185,129,0.2); border: 2px solid rgba(16,185,129,0.5); }
-  .s02 .step-dot::after { content: '🩺'; }
-  .s02 .step-card::before { background: #059669; }
-  .s02 .step-tag { color: #6ee7b7; border-color: rgba(16,185,129,0.3); background: rgba(16,185,129,0.1); }
-  .s02 .step-num-inner span { color: #6ee7b7; }
-
-  .s03 .step-dot { background: rgba(245,158,11,0.2); border: 2px solid rgba(245,158,11,0.5); }
-  .s03 .step-dot::after { content: '🎯'; }
-  .s03 .step-card::before { background: #d97706; }
-  .s03 .step-tag { color: #fcd34d; border-color: rgba(245,158,11,0.3); background: rgba(245,158,11,0.1); }
-  .s03 .step-num-inner span { color: #fcd34d; }
-
-  .s04 .step-dot { background: rgba(239,68,68,0.2); border: 2px solid rgba(239,68,68,0.5); }
-  .s04 .step-dot::after { content: '📊'; }
-  .s04 .step-card::before { background: #dc2626; }
-  .s04 .step-tag { color: #fca5a5; border-color: rgba(239,68,68,0.3); background: rgba(239,68,68,0.1); }
-  .s04 .step-num-inner span { color: #fca5a5; }
-
-  .s05 .step-dot { background: rgba(255,36,66,0.2); border: 2px solid rgba(255,36,66,0.5); }
-  .s05 .step-dot::after { content: '💰'; }
-  .s05 .step-card::before { background: #ff2442; }
-  .s05 .step-tag { color: #ff8fa3; border-color: rgba(255,36,66,0.3); background: rgba(255,36,66,0.1); }
-  .s05 .step-num-inner span { color: #ff8fa3; }
-
-  .step-header {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 12px;
-    flex-wrap: wrap;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: 16px 16px 0 0;
   }
 
   .step-tag {
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 700;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    padding: 4px 12px;
+    padding: 3px 10px;
     border-radius: 100px;
     border: 1px solid;
+    display: inline-block;
+    margin-bottom: 10px;
   }
 
   .step-title {
-    font-size: 19px;
+    font-size: 15px;
     font-weight: 700;
     color: #fff;
+    margin-bottom: 10px;
+    line-height: 1.4;
   }
 
   .step-body {
-    font-size: 15px;
-    color: rgba(255,255,255,0.55);
-    line-height: 1.8;
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.7;
   }
-
-  .step-body strong { color: rgba(255,255,255,0.85); }
+  .step-body strong { color: rgba(255,255,255,0.8); }
 
   .step-pills {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 14px;
+    gap: 6px;
+    margin-top: 12px;
   }
 
   .pill {
-    font-size: 13px;
-    padding: 5px 14px;
+    font-size: 11px;
+    padding: 3px 10px;
     border-radius: 6px;
     background: rgba(255,255,255,0.06);
     border: 1px solid rgba(255,255,255,0.1);
-    color: rgba(255,255,255,0.6);
+    color: rgba(255,255,255,0.55);
   }
 
   .diff-badge {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
-    font-size: 13px;
-    padding: 5px 12px;
+    gap: 4px;
+    font-size: 11px;
+    padding: 4px 10px;
     border-radius: 6px;
-    margin-top: 12px;
+    margin-top: 10px;
     background: rgba(255,36,66,0.1);
     border: 1px solid rgba(255,36,66,0.2);
     color: #ff8fa3;
   }
-  .diff-badge::before { content: '★'; font-size: 11px; }
+  .diff-badge::before { content: '★'; font-size: 10px; }
+
+  /* ── per-step colors ── */
+  .s00 .step-dot { background: rgba(139,92,246,0.18); border: 2px solid rgba(139,92,246,0.5); }
+  .s00 .step-dot .num { background: #7c3aed; color: #fff; }
+  .s00 .step-card::before { background: #7c3aed; }
+  .s00 .step-tag { color: #a78bfa; border-color: rgba(139,92,246,0.35); background: rgba(139,92,246,0.1); }
+
+  .s01 .step-dot { background: rgba(59,130,246,0.18); border: 2px solid rgba(59,130,246,0.5); }
+  .s01 .step-dot .num { background: #2563eb; color: #fff; }
+  .s01 .step-card::before { background: #2563eb; }
+  .s01 .step-tag { color: #93c5fd; border-color: rgba(59,130,246,0.35); background: rgba(59,130,246,0.1); }
+
+  .s02 .step-dot { background: rgba(16,185,129,0.18); border: 2px solid rgba(16,185,129,0.5); }
+  .s02 .step-dot .num { background: #059669; color: #fff; }
+  .s02 .step-card::before { background: #059669; }
+  .s02 .step-tag { color: #6ee7b7; border-color: rgba(16,185,129,0.35); background: rgba(16,185,129,0.1); }
+
+  .s03 .step-dot { background: rgba(245,158,11,0.18); border: 2px solid rgba(245,158,11,0.5); }
+  .s03 .step-dot .num { background: #d97706; color: #fff; }
+  .s03 .step-card::before { background: #d97706; }
+  .s03 .step-tag { color: #fcd34d; border-color: rgba(245,158,11,0.35); background: rgba(245,158,11,0.1); }
+
+  .s04 .step-dot { background: rgba(239,68,68,0.18); border: 2px solid rgba(239,68,68,0.5); }
+  .s04 .step-dot .num { background: #dc2626; color: #fff; }
+  .s04 .step-card::before { background: #dc2626; }
+  .s04 .step-tag { color: #fca5a5; border-color: rgba(239,68,68,0.35); background: rgba(239,68,68,0.1); }
+
+  .s05 .step-dot { background: rgba(255,36,66,0.18); border: 2px solid rgba(255,36,66,0.5); }
+  .s05 .step-dot .num { background: #ff2442; color: #fff; }
+  .s05 .step-card::before { background: #ff2442; }
+  .s05 .step-tag { color: #ff8fa3; border-color: rgba(255,36,66,0.35); background: rgba(255,36,66,0.1); }
 </style>
 </head>
 <body>
@@ -233,155 +223,108 @@
   <h1>Brand Building <span>6步数据闭环</span></h1>
   <p class="subtitle">从 Attribute 定义 → 行业验证 → 品牌诊断 → 内容占领 → Brand Lift → 终端归因，首次打通品牌心智到销售的完整链路</p>
 
-  <div class="timeline">
+  <div class="flow">
 
-    <div class="step s00">
-      <div class="step-num">
-        <div class="step-num-inner"><span>00</span>RESEARCH</div>
-      </div>
-      <div class="step-track">
-        <div class="step-dot"></div>
-        <div class="step-line"></div>
-      </div>
+    <!-- 00 -->
+    <div class="flow-item s00">
+      <div class="step-dot">🔍<span class="num">00</span></div>
       <div class="step-card">
-        <div class="step-header">
-          <span class="step-tag">Data Collection</span>
-          <span class="step-title">收集主流 Research Firm 的 Attribute 体系</span>
-        </div>
+        <span class="step-tag">Research</span>
+        <div class="step-title">收集主流 Research Firm 的 Attribute 体系</div>
         <div class="step-body">
-          整合 <strong>Kantar、Nielsen、Ipsos、Millward Brown</strong> 等主流品牌研究机构的 brand attributes 标准框架，建立三维属性词库（功能性 / 情绪性 / 兴趣买点）。
+          整合 <strong>Kantar、Nielsen、Ipsos</strong> 等机构的 brand attributes 框架，建立三维属性词库。
           <div class="step-pills">
             <span class="pill">Kantar BrandZ</span>
-            <span class="pill">Nielsen Brand Health</span>
-            <span class="pill">Ipsos Brand Value Creator</span>
-            <span class="pill">Millward Brown</span>
+            <span class="pill">Nielsen</span>
+            <span class="pill">Ipsos</span>
           </div>
         </div>
-        <div class="diff-badge">以 XHS UGC 大样本覆盖 Kantar 小样本调研盲区</div>
+        <div class="diff-badge">UGC 大样本覆盖调研盲区</div>
       </div>
     </div>
 
-    <div class="step s01">
-      <div class="step-num">
-        <div class="step-num-inner"><span>01</span>VALIDATE</div>
-      </div>
-      <div class="step-track">
-        <div class="step-dot"></div>
-        <div class="step-line"></div>
-      </div>
+    <!-- 01 -->
+    <div class="flow-item s01">
+      <div class="step-dot">✅<span class="num">01</span></div>
       <div class="step-card">
-        <div class="step-header">
-          <span class="step-tag">First-Party Validation</span>
-          <span class="step-title">用一方数据验证行业重要 Attributes</span>
-        </div>
+        <span class="step-tag">Validate</span>
+        <div class="step-title">用一方数据验证行业重要 Attributes</div>
         <div class="step-body">
-          用品牌<strong>一方销售数据 × XHS UGC 内容打标</strong>，验证哪些 attributes 在该行业中真正影响消费者决策。去掉"看起来重要但不驱动转化"的属性，保留高 ROI attribute 清单。
+          <strong>一方销售数据 × UGC 打标</strong>，验证哪些 attributes 真正影响购买决策，输出高 ROI attribute 清单。
           <div class="step-pills">
             <span class="pill">UGC 内容打标</span>
-            <span class="pill">销售数据 × Attribute 相关性</span>
-            <span class="pill">行业 Attribute 重要性排序</span>
+            <span class="pill">Attribute 重要性排序</span>
           </div>
         </div>
-        <div class="diff-badge">实时验证，替代传统 6–8 周调研周期</div>
+        <div class="diff-badge">替代 6–8 周传统调研</div>
       </div>
     </div>
 
-    <div class="step s02">
-      <div class="step-num">
-        <div class="step-num-inner"><span>02</span>DIAGNOSE</div>
-      </div>
-      <div class="step-track">
-        <div class="step-dot"></div>
-        <div class="step-line"></div>
-      </div>
+    <!-- 02 -->
+    <div class="flow-item s02">
+      <div class="step-dot">🩺<span class="num">02</span></div>
       <div class="step-card">
-        <div class="step-header">
-          <span class="step-tag">Brand Imagery Diagnosis</span>
-          <span class="step-title">诊断品牌当前 Attribute 占有率 vs 竞争对手</span>
-        </div>
+        <span class="step-tag">Diagnose</span>
+        <div class="step-title">诊断品牌 Attribute 占有率 vs 竞品</div>
         <div class="step-body">
-          基于行业验证后的 attribute 清单，通过 XHS 站内 UGC 分析品牌在每个 attribute 的<strong>声量占有率</strong>（Share of Voice）与<strong>竞争水位</strong>——找出品牌优势位、缺失位、可进攻位。
+          分析品牌在每个 attribute 的 <strong>Share of Voice</strong>，找出优势位、缺失位、可进攻位。
           <div class="step-pills">
             <span class="pill">Attribute SOV</span>
-            <span class="pill">竞品 Attribute 对比</span>
-            <span class="pill">品牌定位白地识别</span>
+            <span class="pill">白地识别</span>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="step s03">
-      <div class="step-num">
-        <div class="step-num-inner"><span>03</span>OCCUPY</div>
-      </div>
-      <div class="step-track">
-        <div class="step-dot"></div>
-        <div class="step-line"></div>
-      </div>
+    <!-- 03 -->
+    <div class="flow-item s03">
+      <div class="step-dot">🎯<span class="num">03</span></div>
       <div class="step-card">
-        <div class="step-header">
-          <span class="step-tag">Interest Ecosystem</span>
-          <span class="step-title">圈定目标兴趣生态，精准内容投放</span>
-        </div>
+        <span class="step-tag">Occupy</span>
+        <div class="step-title">圈定目标兴趣生态，精准内容投放</div>
         <div class="step-body">
-          基于品牌战略选定的<strong>兴趣 Attributes</strong>（如赛车 / 露营 / 网球），在 XHS 站内对应兴趣圈层中做内容种草投放——让品牌出现在消费者最有共鸣的场景里。
+          在 XHS 对应兴趣圈层做内容种草，<strong>Sponsorship 线上延伸</strong>，把线下 IP 转化为 UGC。
           <div class="step-pills">
-            <span class="pill">Sponsorship 内容放大</span>
             <span class="pill">兴趣圈层达人矩阵</span>
-            <span class="pill">场景化种草内容</span>
+            <span class="pill">场景化种草</span>
           </div>
         </div>
-        <div class="diff-badge">Sponsorship 线上延伸，把线下 IP 声量转化为 XHS UGC</div>
+        <div class="diff-badge">Sponsorship → XHS UGC 放大</div>
       </div>
     </div>
 
-    <div class="step s04">
-      <div class="step-num">
-        <div class="step-num-inner"><span>04</span>MEASURE</div>
-      </div>
-      <div class="step-track">
-        <div class="step-dot"></div>
-        <div class="step-line"></div>
-      </div>
+    <!-- 04 -->
+    <div class="flow-item s04">
+      <div class="step-dot">📊<span class="num">04</span></div>
       <div class="step-card">
-        <div class="step-header">
-          <span class="step-tag">Brand Lift</span>
-          <span class="step-title">实时度量 Brand Lift — Attribute 认知提升</span>
-        </div>
+        <span class="step-tag">Measure</span>
+        <div class="step-title">实时度量 Brand Lift</div>
         <div class="step-body">
-          投放前后追踪每个 attribute 的 SOV 变化、情感倾向变化，输出<strong>品牌心智提升报告</strong>——以实时 UGC 数据替代 Kantar 季度调研，更快、更大样本、更便宜。
+          投放前后追踪 attribute SOV 变化与情感倾向，输出<strong>品牌心智提升报告</strong>。
           <div class="step-pills">
-            <span class="pill">Attribute SOV 变化</span>
-            <span class="pill">情感倾向追踪</span>
+            <span class="pill">SOV 变化</span>
+            <span class="pill">情感倾向</span>
             <span class="pill">竞品 Benchmark</span>
           </div>
         </div>
-        <div class="diff-badge">实时替代 Kantar 季度调研（更快 / 样本量 100x / 成本更低）</div>
+        <div class="diff-badge">实时替代 Kantar 季度调研</div>
       </div>
     </div>
 
-    <div class="step s05">
-      <div class="step-num">
-        <div class="step-num-inner"><span>05</span>ATTRIBUTE</div>
-      </div>
-      <div class="step-track">
-        <div class="step-dot"></div>
-        <div class="step-line"></div>
-      </div>
+    <!-- 05 -->
+    <div class="flow-item s05">
+      <div class="step-dot">💰<span class="num">05</span></div>
       <div class="step-card">
-        <div class="step-header">
-          <span class="step-tag">Sales Attribution</span>
-          <span class="step-title">终端销售归因 — 哪个 Attribute 驱动了购买</span>
-        </div>
+        <span class="step-tag">Attribute</span>
+        <div class="step-title">终端销售归因 — 哪个 Attribute 驱动购买</div>
         <div class="step-body">
-          接入品牌<strong>一方销售数据</strong>（电商 / 线下 POS），构建品牌心智 → 终端销售归因模型。回答 CMO 最核心的问题：<strong>投了哪个兴趣 Sponsorship，ROI 最高？</strong>
+          接入<strong>一方销售数据</strong>，构建心智 → 销售归因，回答 CMO：<strong>哪个 Sponsorship ROI 最高？</strong>
           <div class="step-pills">
             <span class="pill">一方数据回传</span>
-            <span class="pill">Attribute → 销售路径</span>
             <span class="pill">Sponsorship ROI 排序</span>
           </div>
         </div>
-        <div class="diff-badge">首个打通品牌心智 → 终端销售归因的品牌广告产品</div>
+        <div class="diff-badge">首个心智 → 销售归因产品</div>
       </div>
     </div>
 
