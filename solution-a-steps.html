@@ -49,7 +49,7 @@
     width: 100%;
     max-width: 1400px;
     display: flex;
-    align-items: flex-start;
+    align-items: stretch;
     gap: 0;
   }
 
@@ -59,6 +59,8 @@
     flex-direction: column;
     align-items: center;
     position: relative;
+    /* stretch cards to same height */
+    align-self: stretch;
   }
 
   /* connector arrow */
@@ -105,7 +107,7 @@
     border: 2px solid #0a0e1a;
   }
 
-  /* card — equal height via flex column */
+  /* card — equal height via flex stretch */
   .step-card {
     background: rgba(255,255,255,0.04);
     border: 1px solid rgba(255,255,255,0.07);
@@ -116,8 +118,7 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    /* equal height across all cards */
-    height: 320px;
+    flex: 1;
   }
 
   .step-card::before {
