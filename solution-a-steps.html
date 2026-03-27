@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solution A — Brand Building 6步闭环</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+    background: #0a0e1a;
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 32px;
+  }
+
+  .page-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #ff2442;
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+
+  h1 {
+    font-size: 32px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  h1 span { color: #ff2442; }
+
+  .subtitle {
+    font-size: 13.5px;
+    color: rgba(255,255,255,0.4);
+    text-align: center;
+    margin-bottom: 52px;
+    max-width: 640px;
+    line-height: 1.6;
+  }
+
+  /* Timeline */
+  .timeline {
+    width: 100%;
+    max-width: 1060px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .step {
+    display: grid;
+    grid-template-columns: 100px 40px 1fr;
+    gap: 0 24px;
+    align-items: stretch;
+    min-height: 100px;
+  }
+
+  /* Step number */
+  .step-num {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding-top: 24px;
+    padding-right: 4px;
+  }
+
+  .step-num-inner {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: rgba(255,255,255,0.25);
+  }
+
+  .step-num-inner span {
+    display: block;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+
+  /* Dot + line */
+  .step-track {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .step-dot {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+    margin-top: 14px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .step-line {
+    width: 2px;
+    flex: 1;
+    background: rgba(255,255,255,0.08);
+    margin: 4px 0;
+  }
+
+  .step:last-child .step-line { display: none; }
+
+  /* Card */
+  .step-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 14px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .step-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    border-radius: 14px 0 0 14px;
+  }
+
+  /* Step colors */
+  .s00 .step-dot { background: rgba(139,92,246,0.2); border: 1.5px solid rgba(139,92,246,0.5); }
+  .s00 .step-dot::after { content: '🔍'; }
+  .s00 .step-card::before { background: #7c3aed; }
+  .s00 .step-tag { color: #a78bfa; border-color: rgba(139,92,246,0.3); background: rgba(139,92,246,0.1); }
+  .s00 .step-num-inner span { color: #a78bfa; }
+
+  .s01 .step-dot { background: rgba(59,130,246,0.2); border: 1.5px solid rgba(59,130,246,0.5); }
+  .s01 .step-dot::after { content: '✅'; }
+  .s01 .step-card::before { background: #2563eb; }
+  .s01 .step-tag { color: #93c5fd; border-color: rgba(59,130,246,0.3); background: rgba(59,130,246,0.1); }
+  .s01 .step-num-inner span { color: #93c5fd; }
+
+  .s02 .step-dot { background: rgba(16,185,129,0.2); border: 1.5px solid rgba(16,185,129,0.5); }
+  .s02 .step-dot::after { content: '🩺'; }
+  .s02 .step-card::before { background: #059669; }
+  .s02 .step-tag { color: #6ee7b7; border-color: rgba(16,185,129,0.3); background: rgba(16,185,129,0.1); }
+  .s02 .step-num-inner span { color: #6ee7b7; }
+
+  .s03 .step-dot { background: rgba(245,158,11,0.2); border: 1.5px solid rgba(245,158,11,0.5); }
+  .s03 .step-dot::after { content: '🎯'; }
+  .s03 .step-card::before { background: #d97706; }
+  .s03 .step-tag { color: #fcd34d; border-color: rgba(245,158,11,0.3); background: rgba(245,158,11,0.1); }
+  .s03 .step-num-inner span { color: #fcd34d; }
+
+  .s04 .step-dot { background: rgba(239,68,68,0.2); border: 1.5px solid rgba(239,68,68,0.5); }
+  .s04 .step-dot::after { content: '📊'; }
+  .s04 .step-card::before { background: #dc2626; }
+  .s04 .step-tag { color: #fca5a5; border-color: rgba(239,68,68,0.3); background: rgba(239,68,68,0.1); }
+  .s04 .step-num-inner span { color: #fca5a5; }
+
+  .s05 .step-dot { background: rgba(255,36,66,0.2); border: 1.5px solid rgba(255,36,66,0.5); }
+  .s05 .step-dot::after { content: '💰'; }
+  .s05 .step-card::before { background: #ff2442; }
+  .s05 .step-tag { color: #ff8fa3; border-color: rgba(255,36,66,0.3); background: rgba(255,36,66,0.1); }
+  .s05 .step-num-inner span { color: #ff8fa3; }
+
+  .step-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+
+  .step-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 100px;
+    border: 1px solid;
+  }
+
+  .step-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .step-body {
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.75;
+  }
+
+  .step-body strong { color: rgba(255,255,255,0.85); }
+
+  .step-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .pill {
+    font-size: 11.5px;
+    padding: 4px 11px;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.6);
+  }
+
+  /* differentiator badge */
+  .diff-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 6px;
+    margin-top: 10px;
+    background: rgba(255,36,66,0.1);
+    border: 1px solid rgba(255,36,66,0.2);
+    color: #ff8fa3;
+  }
+  .diff-badge::before { content: '★'; font-size: 10px; }
+</style>
+</head>
+<body>
+
+  <div class="page-label">Solution A · 国际成熟品牌</div>
+  <h1>Brand Building <span>6步数据闭环</span></h1>
+  <p class="subtitle">从 Attribute 定义 → 行业验证 → 品牌诊断 → 内容占领 → Brand Lift → 终端归因，首次打通品牌心智到销售的完整链路</p>
+
+  <div class="timeline">
+
+    <!-- Step 00 -->
+    <div class="step s00">
+      <div class="step-num">
+        <div class="step-num-inner"><span>00</span>RESEARCH</div>
+      </div>
+      <div class="step-track">
+        <div class="step-dot"></div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-card">
+        <div class="step-header">
+          <span class="step-tag">Data Collection</span>
+          <span class="step-title">收集主流 Research Firm 的 Attribute 体系</span>
+        </div>
+        <div class="step-body">
+          整合 <strong>Kantar、Nielsen、Ipsos、Millward Brown</strong> 等主流品牌研究机构的 brand attributes 标准框架，建立三维属性词库（功能性 / 情绪性 / 兴趣买点）。
+          <div class="step-pills">
+            <span class="pill">Kantar BrandZ</span>
+            <span class="pill">Nielsen Brand Health</span>
+            <span class="pill">Ipsos Brand Value Creator</span>
+            <span class="pill">Millward Brown</span>
+          </div>
+        </div>
+        <div class="diff-badge">以 XHS UGC 大样本覆盖 Kantar 小样本调研盲区</div>
+      </div>
+    </div>
+
+    <!-- Step 01 -->
+    <div class="step s01">
+      <div class="step-num">
+        <div class="step-num-inner"><span>01</span>VALIDATE</div>
+      </div>
+      <div class="step-track">
+        <div class="step-dot"></div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-card">
+        <div class="step-header">
+          <span class="step-tag">First-Party Validation</span>
+          <span class="step-title">用一方数据验证行业重要 Attributes</span>
+        </div>
+        <div class="step-body">
+          用品牌<strong>一方销售数据 × XHS UGC 内容打标</strong>，验证哪些 attributes 在该行业中真正影响消费者决策。去掉"看起来重要但不驱动转化"的属性，保留高 ROI attribute 清单。
+          <div class="step-pills">
+            <span class="pill">UGC 内容打标</span>
+            <span class="pill">销售数据 × Attribute 相关性</span>
+            <span class="pill">行业 Attribute 重要性排序</span>
+          </div>
+        </div>
+        <div class="diff-badge">实时验证，替代传统 6-8 周调研周期</div>
+      </div>
+    </div>
+
+    <!-- Step 02 -->
+    <div class="step s02">
+      <div class="step-num">
+        <div class="step-num-inner"><span>02</span>DIAGNOSE</div>
+      </div>
+      <div class="step-track">
+        <div class="step-dot"></div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-card">
+        <div class="step-header">
+          <span class="step-tag">Brand Imagery Diagnosis</span>
+          <span class="step-title">诊断品牌当前 Attribute 占有率 vs 竞争对手</span>
+        </div>
+        <div class="step-body">
+          基于行业验证后的 attribute 清单，通过 XHS 站内 UGC 分析品牌在每个 attribute 的<strong>声量占有率</strong>（Share of Voice）与<strong>竞争水位</strong>——找出品牌优势位、缺失位、可进攻位。
+          <div class="step-pills">
+            <span class="pill">Attribute SOV</span>
+            <span class="pill">竞品 Attribute 对比</span>
+            <span class="pill">品牌定位白地识别</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 03 -->
+    <div class="step s03">
+      <div class="step-num">
+        <div class="step-num-inner"><span>03</span>OCCUPY</div>
+      </div>
+      <div class="step-track">
+        <div class="step-dot"></div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-card">
+        <div class="step-header">
+          <span class="step-tag">Interest Ecosystem</span>
+          <span class="step-title">圈定目标兴趣生态，精准内容投放</span>
+        </div>
+        <div class="step-body">
+          基于品牌战略选定的<strong>兴趣 Attributes</strong>（如赛车 / 露营 / 网球），在 XHS 站内对应兴趣圈层中做内容种草投放——让品牌出现在消费者最有共鸣的场景里。
+          <div class="step-pills">
+            <span class="pill">Sponsorship 内容放大</span>
+            <span class="pill">兴趣圈层达人矩阵</span>
+            <span class="pill">场景化种草内容</span>
+          </div>
+        </div>
+        <div class="diff-badge">Sponsorship 线上延伸，把线下 IP 声量转化为 XHS UGC</div>
+      </div>
+    </div>
+
+    <!-- Step 04 -->
+    <div class="step s04">
+      <div class="step-num">
+        <div class="step-num-inner"><span>04</span>MEASURE</div>
+      </div>
+      <div class="step-track">
+        <div class="step-dot"></div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-card">
+        <div class="step-header">
+          <span class="step-tag">Brand Lift</span>
+          <span class="step-title">实时度量 Brand Lift — Attribute 认知提升</span>
+        </div>
+        <div class="step-body">
+          投放前后追踪每个 attribute 的 SOV 变化、情感倾向变化，输出<strong>品牌心智提升报告</strong>——以实时 UGC 数据替代 Kantar 季度调研，更快、更大样本、更便宜。
+          <div class="step-pills">
+            <span class="pill">Attribute SOV 变化</span>
+            <span class="pill">情感倾向追踪</span>
+            <span class="pill">竞品 Benchmark</span>
+          </div>
+        </div>
+        <div class="diff-badge">实时替代 Kantar 季度调研（更快 / 样本量 100x / 成本更低）</div>
+      </div>
+    </div>
+
+    <!-- Step 05 -->
+    <div class="step s05">
+      <div class="step-num">
+        <div class="step-num-inner"><span>05</span>ATTRIBUTE</div>
+      </div>
+      <div class="step-track">
+        <div class="step-dot"></div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-card">
+        <div class="step-header">
+          <span class="step-tag">Sales Attribution</span>
+          <span class="step-title">终端销售归因 — 哪个 Attribute 驱动了购买</span>
+        </div>
+        <div class="step-body">
+          接入品牌<strong>一方销售数据</strong>（电商 / 线下 POS），构建品牌心智 → 终端销售归因模型。回答 CMO 最核心的问题：<strong>投了哪个兴趣 Sponsorship，ROI 最高？</strong>
+          <div class="step-pills">
+            <span class="pill">一方数据回传</span>
+            <span class="pill">Attribute → 销售路径</span>
+            <span class="pill">Sponsorship ROI 排序</span>
+          </div>
+        </div>
+        <div class="diff-badge">首个打通品牌心智 → 终端销售归因的品牌广告产品</div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
