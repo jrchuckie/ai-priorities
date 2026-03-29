@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>国民品牌年轻化翻译官 — Solution B</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+      background: #fdf8f3;
+      color: #1a1a1a;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    .hero {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      color: #fff;
+      padding: 56px 60px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 340px; height: 340px;
+      background: radial-gradient(circle, rgba(255,90,31,.25) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      bottom: -40px; left: 200px;
+      width: 220px; height: 220px;
+      background: radial-gradient(circle, rgba(255,160,0,.18) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .tag {
+      display: inline-block;
+      background: rgba(255,90,31,.2);
+      border: 1px solid rgba(255,90,31,.5);
+      color: #ff9a5c;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: 42px;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 14px;
+      position: relative;
+    }
+    .hero h1 span { color: #ff5a1f; }
+    .hero .subtitle {
+      font-size: 15px;
+      color: rgba(255,255,255,.65);
+      line-height: 1.7;
+      max-width: 680px;
+      position: relative;
+    }
+
+    /* ── Core equation ── */
+    .equation {
+      background: #fff;
+      border-top: 4px solid #ff5a1f;
+      padding: 36px 60px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .eq-block {
+      flex: 1; min-width: 200px;
+      background: #fff8f5;
+      border: 2px solid #ffe0d0;
+      border-radius: 14px;
+      padding: 22px 26px;
+      text-align: center;
+    }
+    .eq-block.blue {
+      background: #f0f4ff;
+      border-color: #c5d3ff;
+    }
+    .eq-block .label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: #999;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .eq-block .main {
+      font-size: 19px;
+      font-weight: 800;
+      color: #ff5a1f;
+    }
+    .eq-block.blue .main { color: #3a5ce6; }
+    .eq-block .sub {
+      font-size: 12px;
+      color: #888;
+      margin-top: 6px;
+    }
+    .eq-op {
+      font-size: 36px;
+      font-weight: 300;
+      color: #ccc;
+      flex: 0;
+    }
+    .eq-result {
+      flex: 1; min-width: 180px;
+      background: linear-gradient(135deg, #ff5a1f, #e63900);
+      border-radius: 14px;
+      padding: 22px 26px;
+      text-align: center;
+      color: #fff;
+    }
+    .eq-result .label { color: rgba(255,255,255,.7); font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; }
+    .eq-result .main { font-size: 19px; font-weight: 800; }
+
+    /* ── Section title ── */
+    .section-wrap { padding: 48px 60px; }
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: #ff5a1f;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-title::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: #f0e0d8;
+    }
+
+    /* ── IP Demo cards ── */
+    .ip-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+    .ip-card {
+      background: #fff;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 2px 16px rgba(0,0,0,.06);
+      border: 1px solid #f0e8e0;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .ip-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(0,0,0,.1);
+    }
+    .ip-card-header {
+      padding: 22px 24px 16px;
+      border-bottom: 1px solid #f5ede6;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .ip-icon {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+    .ip-card-header-text { flex: 1; }
+    .ip-source {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .ip-card-header-text h3 {
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1.3;
+      color: #1a1a1a;
+    }
+    .ip-card-header-text .ip-sub {
+      font-size: 12px;
+      color: #999;
+      margin-top: 4px;
+    }
+    .ip-card-body { padding: 18px 24px 20px; }
+    .ip-desc {
+      font-size: 13px;
+      color: #555;
+      line-height: 1.7;
+      margin-bottom: 14px;
+    }
+    .ip-plays {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .play-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 12.5px;
+      color: #444;
+      line-height: 1.5;
+    }
+    .play-dot {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+      color: #fff;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .ip-card-footer {
+      padding: 12px 24px;
+      border-top: 1px solid #f5ede6;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .metric-tag {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+
+    /* colors per card */
+    .c-red .ip-icon { background: #fff0ec; }
+    .c-red .ip-source { color: #e63900; }
+    .c-red .play-dot { background: #ff5a1f; }
+    .c-red .metric-tag { background: #fff0ec; color: #e63900; }
+
+    .c-gold .ip-icon { background: #fffbe6; }
+    .c-gold .ip-source { color: #c47f00; }
+    .c-gold .play-dot { background: #e6a000; }
+    .c-gold .metric-tag { background: #fffbe6; color: #c47f00; }
+
+    .c-green .ip-icon { background: #edfaf0; }
+    .c-green .ip-source { color: #1a8a45; }
+    .c-green .play-dot { background: #28a85a; }
+    .c-green .metric-tag { background: #edfaf0; color: #1a8a45; }
+
+    .c-blue .ip-icon { background: #eef2ff; }
+    .c-blue .ip-source { color: #3a5ce6; }
+    .c-blue .play-dot { background: #3a5ce6; }
+    .c-blue .metric-tag { background: #eef2ff; color: #3a5ce6; }
+
+    .c-purple .ip-icon { background: #f5f0ff; }
+    .c-purple .ip-source { color: #7b3de6; }
+    .c-purple .play-dot { background: #7b3de6; }
+    .c-purple .metric-tag { background: #f5f0ff; color: #7b3de6; }
+
+    /* ── Playbook section ── */
+    .playbook-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      margin-bottom: 48px;
+    }
+    .play-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 28px 26px;
+      border: 1px solid #f0e8e0;
+      box-shadow: 0 2px 12px rgba(0,0,0,.05);
+    }
+    .play-card .num {
+      font-size: 36px;
+      font-weight: 900;
+      color: #f0e0d0;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+    .play-card h4 {
+      font-size: 16px;
+      font-weight: 800;
+      color: #1a1a1a;
+      margin-bottom: 12px;
+    }
+    .play-card .emoji { font-size: 22px; margin-bottom: 8px; display: block; }
+    .play-card p {
+      font-size: 13px;
+      color: #666;
+      line-height: 1.7;
+    }
+    .play-card .examples {
+      margin-top: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .play-card .ex {
+      background: #fdf8f3;
+      border-left: 3px solid #ff5a1f;
+      padding: 6px 10px;
+      font-size: 12px;
+      color: #555;
+      border-radius: 0 6px 6px 0;
+    }
+
+    /* ── Proof bar ── */
+    .proof-bar {
+      background: linear-gradient(135deg, #1a1a2e, #0f3460);
+      color: #fff;
+      padding: 40px 60px;
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .proof-item { text-align: center; flex: 1; min-width: 140px; }
+    .proof-item .num {
+      font-size: 36px;
+      font-weight: 900;
+      color: #ff7a3f;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .proof-item .label { font-size: 12px; color: rgba(255,255,255,.6); line-height: 1.4; }
+    .proof-divider { width: 1px; height: 60px; background: rgba(255,255,255,.15); flex: 0; }
+
+    /* ── Bottom banner ── */
+    .bottom-banner {
+      background: #ff5a1f;
+      color: #fff;
+      text-align: center;
+      padding: 28px 60px;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: .5px;
+    }
+    .bottom-banner span { opacity: .75; font-weight: 400; font-size: 14px; margin-left: 12px; }
+
+    /* ── Three pillars ── */
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 48px;
+    }
+    @media (max-width: 800px) {
+      .pillars { grid-template-columns: 1fr; }
+      .hero { padding: 40px 28px; }
+      .equation { padding: 28px; }
+      .section-wrap { padding: 32px 24px; }
+      .proof-bar { padding: 32px 24px; }
+      .bottom-banner { padding: 22px 24px; }
+    }
+    .pillar-card {
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid #f0e8e0;
+      box-shadow: 0 2px 12px rgba(0,0,0,.05);
+    }
+    .pillar-header {
+      padding: 20px 22px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .pillar-icon {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+    }
+    .pillar-header h4 { font-size: 15px; font-weight: 800; }
+    .pillar-body { padding: 0 22px 20px; }
+    .pillar-body p { font-size: 13px; color: #555; line-height: 1.7; margin-bottom: 10px; }
+    .pillar-body .example {
+      background: #fdf8f3;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 12.5px;
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 8px;
+    }
+    .pillar-body .example strong { color: #ff5a1f; }
+    .pillar-footer {
+      padding: 12px 22px;
+      border-top: 1px solid #f5ede6;
+      font-size: 11px;
+      font-weight: 600;
+      color: #e06030;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="tag">08 · Solution B</div>
+  <h1>有钱国企 / 卫视品牌<br><span>国民品牌年轻化翻译官</span></h1>
+  <p class="subtitle">核心问题：在卫星上很响亮，但在年轻人这里还很陌生。<br>
+  央视覆盖了广度，但没有换来年轻人的情感认同。</p>
+</div>
+
+<!-- ── EQUATION ── -->
+<div class="equation">
+  <div class="eq-block">
+    <div class="label">央视 / 卫视</div>
+    <div class="main">做权威背书</div>
+    <div class="sub">覆盖 · 仪式感</div>
+  </div>
+  <div class="eq-op">+</div>
+  <div class="eq-block blue">
+    <div class="label">小红书</div>
+    <div class="main">做情感共鸣</div>
+    <div class="sub">年轻化 · UGC</div>
+  </div>
+  <div class="eq-op">=</div>
+  <div class="eq-result">
+    <div class="label">结果</div>
+    <div class="main">国民品牌<br>年轻化软着陆</div>
+  </div>
+</div>
+
+<!-- ── THREE PILLARS ── -->
+<div class="section-wrap">
+  <div class="section-title">小红书承接三大产品能力</div>
+  <div class="pillars">
+    <!-- 1 -->
+    <div class="pillar-card">
+      <div class="pillar-header">
+        <div class="pillar-icon" style="background:#fff0ec;">🐝</div>
+        <h4>① 国民话题共建</h4>
+      </div>
+      <div class="pillar-body">
+        <p>品牌已有大IP资产（春晚赞助/体育赛事/民族文化），在小红书上翻译成年轻人能共鸣的话题生态。把单向电视广播 → 双向UGC对话。</p>
+        <div class="example"><strong>例：</strong>洋河「梦之蓝」→「当代年轻人的梦是什么」</div>
+      </div>
+      <div class="pillar-footer">度量指标：UGC声量提升 · 话题参与人数</div>
+    </div>
+    <!-- 2 -->
+    <div class="pillar-card">
+      <div class="pillar-header">
+        <div class="pillar-icon" style="background:#fffbe6;">🌱</div>
+        <h4>② 品牌文化种草</h4>
+      </div>
+      <div class="pillar-body">
+        <p>不只卖产品，帮品牌在年轻人心中建立「文化资产」。KOL原生内容 + 话题渗透，让不喝酒的年轻人「懂了觉得有价值」。</p>
+        <div class="example"><strong>例：</strong>白酒 = 中国礼仪/收藏文化/送礼艺术</div>
+      </div>
+      <div class="pillar-footer">度量指标：品牌文化attribute水位提升</div>
+    </div>
+    <!-- 3 -->
+    <div class="pillar-card">
+      <div class="pillar-header">
+        <div class="pillar-icon" style="background:#eef2ff;">📋</div>
+        <h4>③ 年轻人心智报告</h4>
+      </div>
+      <div class="pillar-body">
+        <p>针对习惯用电视收视率/GRP汇报的客户，提供「小红书上年轻消费者品牌感知报告」，证明投放后18-30岁人群认知/好感/购买意愿变化。</p>
+        <div class="example"><strong>让客户有硬数据向集团汇报年轻化成效</strong></div>
+      </div>
+      <div class="pillar-footer">度量指标：18-30岁品牌好感度变化</div>
+    </div>
+  </div>
+
+  <!-- ── IP DEMO SECTION ── -->
+  <div class="section-title">联合IP产品 Demo — 小红书 × 央视/卫视</div>
+  <div class="ip-grid">
+
+    <!-- Card 1: 国家宝藏 -->
+    <div class="ip-card c-red">
+      <div class="ip-card-header">
+        <div class="ip-icon">🏛️</div>
+        <div class="ip-card-header-text">
+          <div class="ip-source">CCTV-3 · 文化IP</div>
+          <h3>小红书 × 国家宝藏<br>「宝藏生活方式」</h3>
+          <div class="ip-sub">文博 × 国潮 × 非遗 消费场景化</div>
+        </div>
+      </div>
+      <div class="ip-card-body">
+        <p class="ip-desc">《国家宝藏》自带国民文化背书，将节目中的文物、非遗工艺转化为小红书上的生活方式内容，帮助文创品牌/茶饮/白酒/珠宝实现「文化价值→消费认同」。</p>
+        <div class="ip-plays">
+          <div class="play-item">
+            <div class="play-dot">①</div>
+            <span><b>社区话题：</b>#国宝同款生活方式# —— 用国宝图案/文物配色 DIY 现代家居，征集用户创作</span>
+          </div>
+          <div class="play-item">
+            <div class="play-dot">②</div>
+            <span><b>明星揭秘：</b>节目嘉宾（如张国立）在小红书发「国宝冷知识笔记」，当天直播拆解文物背后故事</span>
+          </div>
+          <div class="play-item">
+            <div class="play-dot">③</div>
+            <span><b>线下打卡：</b>联合博物馆发起「国宝城市寻访」打卡地图，用户拍笔记即可解锁品牌联名权益</span>
+          </div>
+          <div class="play-item">
+            <div class="play-dot">④</div>
+            <span><b>品牌植入：</b>故宫文创/茶颜悦色等国潮品牌冠名「宝藏好物」话题，软植入联名款笔记</span>
+          </div>
+        </div>
+      </div>
+      <div class="ip-card-footer">
+        <span class="metric-tag">文创品牌</span>
+        <span class="metric-tag">国潮消费</span>
+        <span class="metric-tag">白酒/茶饮</span>
+        <span class="metric-tag">珠宝</span>
+      </div>
+    </div>
+
+    <!-- Card 2: 非遗里的中国 -->
+    <div class="ip-card c-gold">
+      <div class="ip-card-header">
+        <div class="ip-icon">🎋</div>
+        <div class="ip-card-header-text">
+          <div class="ip-source">CCTV-1 · 文化IP</div>
+          <h3>小红书 × 非遗里的中国<br>「非遗手艺人来了」</h3>
+          <div class="ip-sub">非遗技艺 × 年轻化解读 × 国货消费</div>
+        </div>
+      </div>
+      <div class="ip-card-body">
+        <p class="ip-desc">《非遗里的中国》收视率居CCTV-1前列。将非遗手艺人引入小红书，以「亲手做出来」的参与感打动年轻人，帮助国货品牌建立工艺/品质叙事。</p>
+        <div class="ip-plays">
+          <div class="play-item">
+            <div class="play-dot">①</div>
+            <span><b>手艺人入驻：</b>节目非遗匠人开小红书账号，发幕后工艺视频/笔记，品牌冠名「匠人故事」系列</span>
+          </div>
+          <div class="play-item">
+            <div class="play-dot">②</div>
+            <span><b>跟我学非遗：</b>#我在家做非遗# 话题挑战，用户晒扎染/刺绣/漆艺作品，品牌送材料包+联名礼盒</span>
+          </div>
+          <div class="play-item">
+            <div class="play-dot">③</div>
+            <span><b>线下研学营：</b>联合文旅局发起「非遗寻访」线路，用户打卡发笔记解锁品牌补贴</span>
+          </div>
+        </div>
+      </div>
+      <div class="ip-card-footer">
+        <span class="metric-tag">国货美妆</span>
+        <span class="metric-tag">茶饮</span>
+        <span class="metric-tag">家纺/家居</span>
+        <span class="metric-tag">文旅</span>
+      </div>
+    </div>
+
+    <!-- Card 3: 中国宝藏美食 -->
+    <div class="ip-card c-green">
+      <div class="ip-card-header">
+        <div class="ip-icon">🍜</div>
+        <div class="ip-card-header-text">
+          <div class="ip-source">CCTV × 小红书 · 联合原创</div>
+          <h3>小红书 × CCTV<br>「中国宝藏美食」</h3>
+          <div class="ip-sub">地域美食 × UGC种草 × 食饮品牌</div>
+        </div>
+      </div>
+      <div class="ip-card-body">
+        <p class="ip-desc">类比《舌尖上的中国》，但以小红书为主战场的UGC版——央视负责拍摄权威纪录片式内容，小红书提供UGC承接与品牌种草转化闭环。</p>
+        <div class="ip-plays">
+          <div class="play-item">
+            <div class="play-dot">①</div>
+            <span><b>话题发酵：</b>#中国宝藏美食地图# 发起城市美食征集，用户晒家乡美食笔记即可上「宝藏榜」</span>
+          </div>
+          <div class="play-item">
+            <div class="play-dot">②</div>
+            <span><b>大厨揭秘：</b>节目厨师/美食博主小红书直播复刻「央视同款」做法，食品/调味料品牌软植入</span>
+          </div>
+          <div class="play-item">
+            <div class="play-dot">③</div>
+            <span><b>城市美食打卡：</b>联合地方文旅，发起线下「宝藏美食探店」地图，笔记打卡兑换品牌优惠券</span>
+          </div>
+          <div class="play-item">
+            <div class="play-dot">④</div>
+            <span><b>联名礼盒：</b>品牌推出「宝藏美食联名款」，节目内容背书+小红书种草形成购买转化</span>
+          </div>
+        </div>
+      </div>
+      <div class="ip-card-footer">
+        <span class="metric-tag">食饮品牌</span>
+        <span class="metric-tag">调味料</span>
+        <span class="metric-tag">速食</span>
+        <span class="metric-tag">地方文旅</span>
+      </div>
+    </div>
+
+    <!-- Card 4: 歌手 x 湖南卫视 -->
+    <div class="ip-card c-blue">
+      <div class="ip-card-header">
+        <div class="ip-icon">🎤</div>
+        <div class="ip-card-header-text">
+          <div class="ip-source">湖南卫视 · 音乐综艺</div>
+          <h3>小红书 × 歌手2025<br>「听见中国声音」</h3>
+          <div class="ip-sub">音乐情感 × 国潮审美 × 年轻化品牌</div>
+        </div>
+      </div>
+      <div class="ip-card-body">
+        <p class="ip-desc">《歌手》系列是卫视年轻受众最广的头部IP（百雀羚2025年冠名），小红书提供播出后的情绪承接与长尾传播，把「听完一首歌」变成品牌种草时机。</p>
+        <div class="ip-plays">
+          <div class="play-item">
+            <div class="play-dot">①</div>
+            <span><b>情绪话题：</b>#这首歌让我想起了# 播出当晚话题爆发，品牌冠名话题页，捕捉情感峰值时刻</span>
+          </div>
+          <div class="play-item">
+            <div class="play-dot">②</div>
+            <span><b>歌手入驻：</b>参赛歌手播出后在小红书发「备赛日记/幕后笔记」，品牌合作内容自然植入</span>
+          </div>
+          <div class="play-item">
+            <div class="play-dot">③</div>
+            <span><b>用户二创：</b>#我的歌手同款穿搭/妆容# 鼓励用户模仿歌手造型，美妆/服饰品牌带货</span>
+          </div>
+        </div>
+      </div>
+      <div class="ip-card-footer">
+        <span class="metric-tag">美妆</span>
+        <span class="metric-tag">服饰</span>
+        <span class="metric-tag">饮品</span>
+        <span class="metric-tag">电子产品</span>
+      </div>
+    </div>
+
+    <!-- Card 5: 春晚 -->
+    <div class="ip-card c-purple">
+      <div class="ip-card-header">
+        <div class="ip-icon">🎆</div>
+        <div class="ip-card-header-text">
+          <div class="ip-source">CCTV · 独家合作 · 已验证</div>
+          <h3>小红书 × 央视春晚<br>「国民情感联合体」</h3>
+          <div class="ip-sub">全年最大流量IP · 已连续3年合作</div>
+        </div>
+      </div>
+      <div class="ip-card-body">
+        <p class="ip-desc">小红书已连续合作春晚，2025年作为「独家笔记分享平台」交出战报：春晚相关内容总互动量超14亿，622个热聊话题（是去年的2.4倍）。已验证的合作模式可品牌化复制。</p>
+        <div class="ip-plays">
+          <div class="play-item">
+            <div class="play-dot">①</div>
+            <span><b>实时话题：</b>春晚直播同步，节目每个节目单独话题，品牌冠名热门节目话题页</span>
+          </div>
+          <div class="play-item">
+            <div class="play-dot">②</div>
+            <span><b>明星笔记：</b>演出嘉宾直播结束后发幕后笔记，品牌合作软植入全年最高曝光</span>
+          </div>
+          <div class="play-item">
+            <div class="play-dot">③</div>
+            <span><b>新春小红盒：</b>福签互动+品牌礼盒发放，打通情感 → 种草 → 转化全链路</span>
+          </div>
+        </div>
+      </div>
+      <div class="ip-card-footer">
+        <span class="metric-tag">全品类可合作</span>
+        <span class="metric-tag">14亿+互动量</span>
+        <span class="metric-tag">已验证</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── PLAYBOOK ── -->
+  <div class="section-title">小红书做线上承接 — 六大玩法体系</div>
+  <div class="playbook-grid">
+    <div class="play-card">
+      <span class="emoji">💬</span>
+      <div class="num">01</div>
+      <h4>社区话题 · 引爆UGC讨论</h4>
+      <p>节目播出前/中/后发起品牌冠名话题，将电视内容转化为小红书双向讨论。话题词由品牌+节目IP共同命名，沉淀在搜索端长尾流量。</p>
+      <div class="examples">
+        <div class="ex">春晚后→ #我家的年夜饭仪式感# 冠名某白酒品牌</div>
+        <div class="ex">国宝播出→ #我家的传家宝# 冠名珠宝/保险品牌</div>
+      </div>
+    </div>
+    <div class="play-card">
+      <span class="emoji">🎬</span>
+      <div class="num">02</div>
+      <h4>明星/嘉宾 · 笔记揭秘幕后</h4>
+      <p>节目演员/嘉宾/主持人入驻小红书，发「幕后花絮/备赛日记/拍摄故事」等真实内容，品牌作为合作伙伴获得内容中的自然植入机会。</p>
+      <div class="examples">
+        <div class="ex">歌手备赛 → 每周发护肤/饮食笔记，美妆/食品品牌植入</div>
+        <div class="ex">非遗匠人 → 拍工艺过程短视频，国货品牌联名故事</div>
+      </div>
+    </div>
+    <div class="play-card">
+      <span class="emoji">📍</span>
+      <div class="num">03</div>
+      <h4>线下打卡 · 实景种草地图</h4>
+      <p>联合节目取景地/合作城市/文旅局，在小红书上线「打卡地图」。用户到店/到景区发笔记，解锁品牌专属福利，线上线下形成流量闭环。</p>
+      <div class="examples">
+        <div class="ex">美食节目 → 城市探店地图 → 食品/饮料品牌补贴打卡</div>
+        <div class="ex">非遗节目 → 博物馆/工坊研学地图 → 文旅/保险品牌冠名</div>
+      </div>
+    </div>
+    <div class="play-card">
+      <span class="emoji">🎁</span>
+      <div class="num">04</div>
+      <h4>联名礼盒 · 内容转化购买</h4>
+      <p>品牌推出与节目IP联名的限定礼盒/产品，小红书作为种草主阵地，节目内容做背书，KOL/用户笔记驱动购买，打通「看→种草→买」全链路。</p>
+      <div class="examples">
+        <div class="ex">国家宝藏 × 茅台 → 文物纹样联名礼盒，小红书首发种草</div>
+        <div class="ex">春晚 × 品牌 → 新春小红盒，福签互动引导购买</div>
+      </div>
+    </div>
+    <div class="play-card">
+      <span class="emoji">🔴</span>
+      <div class="num">05</div>
+      <h4>直播承接 · 节目播出后即时互动</h4>
+      <p>节目直播/播出当晚，品牌在小红书开「陪看直播间」，与用户边看边聊，情绪最高点推出品牌福利/秒杀，把电视观看时刻转化为品牌互动时刻。</p>
+      <div class="examples">
+        <div class="ex">春晚陪看直播 → 品牌冠名，互动次数1.7亿（2024年验证数据）</div>
+        <div class="ex">歌手决赛夜 → 美妆品牌「同款妆容」直播教程</div>
+      </div>
+    </div>
+    <div class="play-card">
+      <span class="emoji">📊</span>
+      <div class="num">06</div>
+      <h4>心智报告 · 给甲方的数字证明</h4>
+      <p>合作结束后，小红书输出「年轻人品牌心智变化报告」：18-30岁人群在合作前后的品牌认知/好感/购买意愿数据，帮助国企/卫视品牌向集团汇报年轻化成效。</p>
+      <div class="examples">
+        <div class="ex">替代传统GRP/收视率汇报，提供有说服力的年轻化数据</div>
+        <div class="ex">品牌Attribute水位变化 + 搜索量增长 + UGC提及情绪分析</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PROOF BAR ── -->
+<div class="proof-bar">
+  <div class="proof-item">
+    <div class="num">14亿+</div>
+    <div class="label">2025春晚<br>小红书总互动量</div>
+  </div>
+  <div class="proof-divider"></div>
+  <div class="proof-item">
+    <div class="num">622个</div>
+    <div class="label">春晚相关<br>热聊话题数</div>
+  </div>
+  <div class="proof-divider"></div>
+  <div class="proof-item">
+    <div class="num">2.4×</div>
+    <div class="label">话题数量<br>同比增长</div>
+  </div>
+  <div class="proof-divider"></div>
+  <div class="proof-item">
+    <div class="num">1.7亿</div>
+    <div class="label">2024春晚陪看<br>直播互动次数</div>
+  </div>
+  <div class="proof-divider"></div>
+  <div class="proof-item">
+    <div class="num">连续3年</div>
+    <div class="label">小红书 × 央视<br>春晚独家合作</div>
+  </div>
+</div>
+
+<!-- ── BOTTOM BANNER ── -->
+<div class="bottom-banner">
+  小红书是国民品牌触达年轻人的「情感翻译官」
+  <span>—— 让品牌从「听过」变成「懂了，有认同」</span>
+</div>
+
+</body>
+</html>
