@@ -201,8 +201,8 @@
 
     /* ── IP DEMO CARDS ── */
     .ip-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      display: flex;
+      flex-direction: column;
       gap: 22px;
     }
     .ip-card {
@@ -210,21 +210,44 @@
       border: 1.5px solid #ede6dc;
       border-radius: 18px;
       overflow: hidden;
+      display: flex;
+      flex-direction: row;
+      min-height: 300px;
       transition: transform .2s, box-shadow .2s;
     }
     .ip-card:hover {
-      transform: translateY(-4px);
+      transform: translateY(-3px);
       box-shadow: 0 10px 36px rgba(0,0,0,.09);
     }
+    /* 左侧图片列 */
+    .ip-card-img {
+      width: 280px;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+    .ip-card-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+    /* 右侧内容列 */
+    .ip-card-right {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      border-left: 1px solid #f0e8de;
+    }
     .ip-card-head {
-      padding: 22px 26px 16px;
-      display: flex; align-items: flex-start; gap: 16px;
+      padding: 20px 24px 14px;
+      display: flex; align-items: flex-start; gap: 14px;
       border-bottom: 1px solid #f0e8de;
     }
     .ip-emoji {
-      width: 52px; height: 52px; border-radius: 14px;
+      width: 48px; height: 48px; border-radius: 12px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 26px; flex-shrink: 0;
+      font-size: 24px; flex-shrink: 0;
     }
     .ip-head-text { flex: 1; }
     .ip-source {
@@ -232,33 +255,33 @@
       text-transform: uppercase; margin-bottom: 5px;
     }
     .ip-card-head h3 {
-      font-size: 16px; font-weight: 800; color: #1a1a1a; line-height: 1.3;
+      font-size: 15px; font-weight: 800; color: #1a1a1a; line-height: 1.3;
     }
     .ip-card-head .ip-hook {
-      font-size: 13.5px; color: #888; margin-top: 4px; line-height: 1.55;
+      font-size: 12.5px; color: #888; margin-top: 4px; line-height: 1.5;
     }
-    .ip-card-body { padding: 18px 26px 20px; }
+    .ip-card-body { padding: 16px 24px 18px; flex: 1; }
     .ip-problem {
       background: #fff8f5;
       border-left: 3px solid #ff5a1f;
       padding: 8px 12px;
-      font-size: 12.5px; color: #555; line-height: 1.6;
+      font-size: 13px; color: #555; line-height: 1.65;
       border-radius: 0 8px 8px 0;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
     .ip-problem strong { color: #cc3a00; }
-    .ip-plays { display: flex; flex-direction: column; gap: 9px; }
+    .ip-plays { display: flex; flex-direction: column; gap: 8px; }
     .ip-play {
-      display: flex; align-items: flex-start; gap: 10px;
-      font-size: 14px; color: #444; line-height: 1.6;
+      display: flex; align-items: flex-start; gap: 9px;
+      font-size: 13px; color: #444; line-height: 1.6;
     }
     .play-badge {
       font-size: 9px; font-weight: 800; letter-spacing: .5px;
       color: #fff; padding: 2px 7px; border-radius: 10px;
-      flex-shrink: 0; margin-top: 2px; white-space: nowrap;
+      flex-shrink: 0; margin-top: 3px; white-space: nowrap;
     }
     .ip-card-foot {
-      padding: 12px 26px;
+      padding: 10px 24px;
       border-top: 1px solid #f0e8de;
       display: flex; flex-wrap: wrap; gap: 8px;
     }
@@ -475,190 +498,124 @@
 
   <div class="ip-grid">
 
-    <!-- Card 1: 国家宝藏 × 酒水 -->
+    <!-- Card c1 -->
     <div class="ip-card c1">
-      <div class="ip-card-head" style="padding:0;display:block;">
-        <div style="width:100%;height:200px;overflow:hidden;border-radius:18px 18px 0 0;">
-          <img src="https://i.ibb.co/Xk6r4XyQ/image.jpg" style="width:100%;height:100%;object-fit:cover;"/>
-        </div>
-        <div style="padding:18px 26px 14px;display:flex;align-items:flex-start;gap:16px;border-bottom:1px solid #f0e8de;">
-        <div class="ip-emoji">🏛️</div>
-        <div class="ip-head-text">
-          <div class="ip-source">CCTV-3 · 文博IP</div>
-          <h3>小红书 × 国家宝藏<br>「酒文化 · 从历史走进年轻人」</h3>
-          <div class="ip-hook">茅台/五粮液/洋河 等酒水品牌 — 文化底蕴是资产，但年轻人感觉"不是我的东西"</div>
-        </div>
-        </div>
+      <div class="ip-card-img">
+        <img src="https://i.ibb.co/Xk6r4XyQ/image.jpg" alt="酒水"/>
       </div>
-      <div class="ip-card-body">
-        <div class="ip-problem">
-          <strong>核心痛点：</strong>酒水品牌有历史、有文化、有故事，但这些资产只在中老年人那里有共鸣，年轻人觉得"白酒是爸爸喝的"——品牌文化没有完成年轻化翻译。
-        </div>
-        <div class="ip-plays">
-          <div class="ip-play">
-            <span class="play-badge" style="background:#ff5a1f">话题UGC</span>
-            <span>#国宝同款酒器# 发起用户晒与品牌相关的古典器物/仪式感场景，品牌冠名话题页，红薯集结流量激励放大UGC声量</span>
-          </div>
-          <div class="ip-play">
-            <span class="play-badge" style="background:#ff5a1f">明星笔记</span>
-            <span>节目嘉宾入驻小红书，发「古代文人怎么喝酒」笔记，揭秘品牌酿造工艺幕后，真实感强于任何硬广</span>
-          </div>
-          <div class="ip-play">
-            <span class="play-badge" style="background:#ff5a1f">品专拦截</span>
-            <span>「国家宝藏」「中国酒文化」等搜索词买品专，在年轻人主动搜索时卡位，把文化兴趣转化为品牌认知</span>
-          </div>
-          <div class="ip-play">
-            <span class="play-badge" style="background:#ff5a1f">心智追踪</span>
-            <span>追踪合作前后18-35岁用户对品牌「文化」「有品位」「送礼」等attribute的提及变化，出具年轻化成效报告</span>
+      <div class="ip-card-right">
+        <div class="ip-card-head">
+          <div class="ip-emoji">🏛️</div>
+          <div class="ip-head-text">
+            <div class="ip-source">CCTV-3 · 文博IP</div>
+            <h3>小红书 × 国家宝藏<br>「酒文化 · 从历史走进年轻人」</h3>
+            <div class="ip-hook">茅台/五粮液/洋河 等酒水品牌 — 文化底蕴是资产，但年轻人感觉"不是我的东西"</div>
           </div>
         </div>
-      </div>
-      <div class="ip-card-foot">
-        <span class="cat-tag">酒水</span>
-        <span class="cat-tag">白酒 / 黄酒</span>
-        <span class="cat-tag">国潮</span>
+        <div class="ip-card-body">
+          <div class="ip-problem"><strong>核心痛点：</strong>酒水品牌有历史、有文化、有故事，但这些资产只在中老年人那里有共鸣，年轻人觉得"白酒是爸爸喝的"——品牌文化没有完成年轻化翻译。</div>
+          <div class="ip-plays">
+            <div class="ip-play"><span class="play-badge" style="background:#ff5a1f">话题UGC</span><span>#国宝同款酒器# 发起用户晒与品牌相关的古典器物/仪式感场景，品牌冠名话题页，红薯集结流量激励放大UGC声量</span></div>
+            <div class="ip-play"><span class="play-badge" style="background:#ff5a1f">明星笔记</span><span>节目嘉宾入驻小红书，发「古代文人怎么喝酒」笔记，揭秘品牌酿造工艺幕后，真实感强于任何硬广</span></div>
+            <div class="ip-play"><span class="play-badge" style="background:#ff5a1f">品专拦截</span><span>「国家宝藏」「中国酒文化」等搜索词买品专，在年轻人主动搜索时卡位，把文化兴趣转化为品牌认知</span></div>
+            <div class="ip-play"><span class="play-badge" style="background:#ff5a1f">心智追踪</span><span>追踪合作前后18-35岁用户对品牌「文化」「有品位」「送礼」等attribute的提及变化，出具年轻化成效报告</span></div>
+          </div>
+        </div>
+        <div class="ip-card-foot">
+          <span class="cat-tag">酒水</span><span class="cat-tag">白酒 / 黄酒</span><span class="cat-tag">国潮</span>
+        </div>
       </div>
     </div>
 
-    <!-- Card 2: 本草中国 × 传统滋补/中医大健康 -->
+    <!-- Card c2 -->
     <div class="ip-card c2">
-      <div class="ip-card-head" style="padding:0;display:block;">
-        <div style="width:100%;height:200px;overflow:hidden;border-radius:18px 18px 0 0;">
-          <img src="https://i.ibb.co/nNCpQtTz/image.jpg" style="width:100%;height:100%;object-fit:cover;object-position:center top;"/>
-        </div>
-        <div style="padding:18px 26px 14px;display:flex;align-items:flex-start;gap:16px;border-bottom:1px solid #f0e8de;">
-        <div class="ip-emoji">🌿</div>
-        <div class="ip-head-text">
-          <div class="ip-source">CCTV-4 · 中医文化IP</div>
-          <h3>小红书 × 本草中国<br>「传统滋补焕新 · 让年轻人重新发现中医」</h3>
-          <div class="ip-hook">东阿阿胶 · 小鲜炖 · 童涵春堂 — 有千年背书，但年轻人觉得"那是老人家的东西"</div>
-        </div>
-        </div>
+      <div class="ip-card-img">
+        <img src="https://i.ibb.co/nNCpQtTz/image.jpg" alt="本草"/>
       </div>
-      <div class="ip-card-body">
-        <div class="ip-problem">
-          <strong>核心痛点：</strong>传统滋补/中医品牌的最大困境是品类认知的代际断层——东阿阿胶、童涵春堂在中老年群体中是金字招牌，但18-35岁消费者对"中医滋补"的第一反应是"养生是中年人的事"。品牌需要一次年轻化重新定义，而不只是换个包装。
-        </div>
-        <div class="ip-plays">
-          <div class="ip-play">
-            <span class="play-badge" style="background:#d4900a">话题重塑</span>
-            <span>#年轻人的第一口养生# 冠名话题，联合节目内容把「阿胶/燕窝/人参」从"老人专属"重新定义为"精致生活方式"，红薯集结激励年轻用户晒自己的滋补日常</span>
-          </div>
-          <div class="ip-play">
-            <span class="play-badge" style="background:#d4900a">专家直播</span>
-            <span>节目中医专家/本草达人入驻小红书，Redlive直播间讲「现代人怎么科学滋补」，品牌冠名，专业背书转化为年轻人信任</span>
-          </div>
-          <div class="ip-play">
-            <span class="play-badge" style="background:#d4900a">新品派样</span>
-            <span>针对健康/养生兴趣圈层定向派样，回收年轻用户真实体验UGC——"00后第一次试阿胶"比任何广告都有说服力</span>
-          </div>
-          <div class="ip-play">
-            <span class="play-badge" style="background:#d4900a">心智追踪</span>
-            <span>追踪「养生」「滋补」「中医」相关搜索词在18-35岁人群中的增长，以及品牌attribute从"老派"向"精致/科学"的迁移</span>
+      <div class="ip-card-right">
+        <div class="ip-card-head">
+          <div class="ip-emoji">🌿</div>
+          <div class="ip-head-text">
+            <div class="ip-source">CCTV-4 · 中医文化IP</div>
+            <h3>小红书 × 本草中国<br>「传统滋补焕新 · 让年轻人重新发现中医」</h3>
+            <div class="ip-hook">东阿阿胶 · 小鲜炖 · 童涵春堂 — 有千年背书，但年轻人觉得"那是老人家的东西"</div>
           </div>
         </div>
-      </div>
-      <div class="ip-card-foot">
-        <span class="cat-tag">传统滋补</span>
-        <span class="cat-tag">中医大健康</span>
-        <span class="cat-tag">东阿阿胶</span>
-        <span class="cat-tag">童涵春堂</span>
+        <div class="ip-card-body">
+          <div class="ip-problem"><strong>核心痛点：</strong>传统滋补/中医品牌的最大困境是品类认知的代际断层。东阿阿胶、童涵春堂在中老年群体中是金字招牌，但18-35岁消费者对"中医滋补"的第一反应是"养生是中年人的事"。品牌需要一次年轻化重新定义，而不只是换个包装。</div>
+          <div class="ip-plays">
+            <div class="ip-play"><span class="play-badge" style="background:#d4900a">话题重塑</span><span>#年轻人的第一口养生# 冠名话题，联合节目内容把「阿胶/燕窝/人参」从"老人专属"重新定义为"精致生活方式"，红薯集结激励年轻用户晒滋补日常</span></div>
+            <div class="ip-play"><span class="play-badge" style="background:#d4900a">专家直播</span><span>节目中医专家/本草达人入驻小红书，Redlive直播间讲「现代人怎么科学滋补」，品牌冠名，专业背书转化为年轻人信任</span></div>
+            <div class="ip-play"><span class="play-badge" style="background:#d4900a">新品派样</span><span>针对健康/养生兴趣圈层定向派样，回收年轻用户真实体验UGC，真实口碑比任何广告都有说服力</span></div>
+            <div class="ip-play"><span class="play-badge" style="background:#d4900a">心智追踪</span><span>追踪「养生」「滋补」「中医」相关搜索词在18-35岁人群中的增长，以及品牌attribute从"老派"向"精致/科学"的迁移</span></div>
+          </div>
+        </div>
+        <div class="ip-card-foot">
+          <span class="cat-tag">传统滋补</span><span class="cat-tag">中医大健康</span><span class="cat-tag">东阿阿胶</span><span class="cat-tag">童涵春堂</span>
+        </div>
       </div>
     </div>
 
-    <!-- Card 3: 中国宝藏美食 × 饮料/速食 -->
+    <!-- Card c3 -->
     <div class="ip-card c3">
-      <div class="ip-card-head" style="padding:0;display:block;">
-        <div style="width:100%;height:200px;overflow:hidden;border-radius:18px 18px 0 0;">
-          <img src="https://i.ibb.co/q3cHYnhD/image.jpg" style="width:100%;height:100%;object-fit:cover;"/>
-        </div>
-        <div style="padding:18px 26px 14px;display:flex;align-items:flex-start;gap:16px;border-bottom:1px solid #f0e8de;">
-        <div class="ip-emoji">🍜</div>
-        <div class="ip-head-text">
-          <div class="ip-source">CCTV × 小红书 · 联合原创IP</div>
-          <h3>小红书 × 中国宝藏美食<br>「地域美食种草 · 让品牌活在年轻人的餐桌上」</h3>
-          <div class="ip-hook">饮料/速食/调味料 — 品牌知名度高，但在年轻人餐桌场景里存在感低</div>
-        </div>
-        </div>
+      <div class="ip-card-img">
+        <img src="https://i.ibb.co/q3cHYnhD/image.jpg" alt="美食"/>
       </div>
-      <div class="ip-card-body">
-        <div class="ip-problem">
-          <strong>核心痛点：</strong>饮料、速食品牌在年轻人中的问题不是"没听过"，而是"不在他们日常生活的内容里"。小红书是年轻人最大的美食内容消费和生产平台，品牌需要进入这个场景，而不只是投广告。
-        </div>
-        <div class="ip-plays">
-          <div class="ip-play">
-            <span class="play-badge" style="background:#25a058">UGC征集</span>
-            <span>#中国宝藏美食地图# 全国征集用户晒家乡美食，品牌冠名话题，内容自然与品牌场景（下酒菜/配饮料）深度绑定</span>
-          </div>
-          <div class="ip-play">
-            <span class="play-badge" style="background:#25a058">直播种草</span>
-            <span>节目厨师/美食博主小红书直播复刻「央视同款」，Redlive定制直播间氛围，品牌在峰值热度时刻自然植入</span>
-          </div>
-          <div class="ip-play">
-            <span class="play-badge" style="background:#25a058">惊喜盒子</span>
-            <span>搜索「宝藏美食」相关词时，Redbox品牌定制礼盒弹出，拦截最有购买意图的主动搜索用户</span>
-          </div>
-          <div class="ip-play">
-            <span class="play-badge" style="background:#25a058">心智追踪</span>
-            <span>追踪"下饭""聚餐必备""家乡味"等生活化attribute在品牌UGC中的渗透率变化</span>
+      <div class="ip-card-right">
+        <div class="ip-card-head">
+          <div class="ip-emoji">🍜</div>
+          <div class="ip-head-text">
+            <div class="ip-source">CCTV × 小红书 · 联合原创IP</div>
+            <h3>小红书 × 中国宝藏美食<br>「地域美食种草 · 让品牌活在年轻人的餐桌上」</h3>
+            <div class="ip-hook">饮料/速食/调味料 — 品牌知名度高，但在年轻人餐桌场景里存在感低</div>
           </div>
         </div>
-      </div>
-      <div class="ip-card-foot">
-        <span class="cat-tag">饮料</span>
-        <span class="cat-tag">速食</span>
-        <span class="cat-tag">调味料</span>
-        <span class="cat-tag">地方文旅</span>
+        <div class="ip-card-body">
+          <div class="ip-problem"><strong>核心痛点：</strong>饮料、速食品牌在年轻人中的问题不是"没听过"，而是"不在他们日常生活的内容里"。小红书是年轻人最大的美食内容消费和生产平台，品牌需要进入这个场景，而不只是投广告。</div>
+          <div class="ip-plays">
+            <div class="ip-play"><span class="play-badge" style="background:#25a058">UGC征集</span><span>#中国宝藏美食地图# 全国征集用户晒家乡美食，品牌冠名话题，内容自然与品牌场景（下酒菜/配饮料）深度绑定</span></div>
+            <div class="ip-play"><span class="play-badge" style="background:#25a058">直播种草</span><span>节目厨师/美食博主小红书直播复刻「央视同款」，Redlive定制直播间氛围，品牌在峰值热度时刻自然植入</span></div>
+            <div class="ip-play"><span class="play-badge" style="background:#25a058">惊喜盒子</span><span>搜索「宝藏美食」相关词时，Redbox品牌定制礼盒弹出，拦截最有购买意图的主动搜索用户</span></div>
+            <div class="ip-play"><span class="play-badge" style="background:#25a058">心智追踪</span><span>追踪"下饭""聚餐必备""家乡味"等生活化attribute在品牌UGC中的渗透率变化</span></div>
+          </div>
+        </div>
+        <div class="ip-card-foot">
+          <span class="cat-tag">饮料</span><span class="cat-tag">速食</span><span class="cat-tag">调味料</span><span class="cat-tag">地方文旅</span>
+        </div>
       </div>
     </div>
 
-    <!-- Card 4: 你好生活 × 母婴/大健康 -->
+    <!-- Card c4 -->
     <div class="ip-card c4">
-      <div class="ip-card-head" style="padding:0;display:block;">
-        <div style="width:100%;height:200px;overflow:hidden;border-radius:18px 18px 0 0;">
-          <img src="https://i.ibb.co/QRr6qFk/image.jpg" style="width:100%;height:100%;object-fit:cover;object-position:center top;"/>
-        </div>
-        <div style="padding:18px 26px 14px;display:flex;align-items:flex-start;gap:16px;border-bottom:1px solid #f0e8de;">
-        <div class="ip-emoji">🌱</div>
-        <div class="ip-head-text">
-          <div class="ip-source">湖南卫视 · 生活方式IP</div>
-          <h3>小红书 × 你好生活<br>「健康育儿 · 专业背书转化妈妈信任」</h3>
-          <div class="ip-hook">母婴/大健康品牌 — 专业认可度高，但年轻妈妈的信任来自"真实妈妈说的"</div>
-        </div>
-        </div>
+      <div class="ip-card-img">
+        <img src="https://i.ibb.co/QRr6qFk/image.jpg" alt="母婴"/>
       </div>
-      <div class="ip-card-body">
-        <div class="ip-problem">
-          <strong>核心痛点：</strong>母婴、大健康品牌最核心的转化门槛是"信任"。年轻父母不信品牌官方，但极度信任"跟我一样的妈妈亲测推荐"。央视背书解决权威性，小红书解决真实感——两者缺一不可。
-        </div>
-        <div class="ip-plays">
-          <div class="ip-play">
-            <span class="play-badge" style="background:#3a5ce6">真实派样</span>
-            <span>联合节目发起「新手妈妈好物试用」，定向圈选0-3岁宝宝家庭人群，回收真实育儿测评笔记，口碑从官方背书变为妈妈互信</span>
-          </div>
-          <div class="ip-play">
-            <span class="play-badge" style="background:#3a5ce6">专家直播</span>
-            <span>节目健康/育儿专家入驻小红书做Redlive直播答疑，品牌冠名直播间，专业可信度+小红书真实互动双重加持</span>
-          </div>
-          <div class="ip-play">
-            <span class="play-badge" style="background:#3a5ce6">线下沉浸</span>
-            <span>联合节目主题线下亲子市集/有机农场，发起打卡话题，品牌赞助线下活动+线上笔记自然种草形成闭环</span>
-          </div>
-          <div class="ip-play">
-            <span class="play-badge" style="background:#3a5ce6">人群资产</span>
-            <span>话题互动人群沉淀为品牌DMP定向资产，后续精准再触达，把IP流量转化为品牌私域人群</span>
+      <div class="ip-card-right">
+        <div class="ip-card-head">
+          <div class="ip-emoji">🌱</div>
+          <div class="ip-head-text">
+            <div class="ip-source">湖南卫视 · 生活方式IP</div>
+            <h3>小红书 × 你好生活<br>「健康育儿 · 专业背书转化妈妈信任」</h3>
+            <div class="ip-hook">母婴/大健康品牌 — 专业认可度高，但年轻妈妈的信任来自"真实妈妈说的"</div>
           </div>
         </div>
-      </div>
-      <div class="ip-card-foot">
-        <span class="cat-tag">母婴</span>
-        <span class="cat-tag">大健康</span>
-        <span class="cat-tag">营养品</span>
-        <span class="cat-tag">有机食品</span>
+        <div class="ip-card-body">
+          <div class="ip-problem"><strong>核心痛点：</strong>母婴、大健康品牌最核心的转化门槛是"信任"。年轻父母不信品牌官方，但极度信任"跟我一样的妈妈亲测推荐"。央视背书解决权威性，小红书解决真实感——两者缺一不可。</div>
+          <div class="ip-plays">
+            <div class="ip-play"><span class="play-badge" style="background:#3a5ce6">真实派样</span><span>联合节目发起「新手妈妈好物试用」，定向圈选0-3岁宝宝家庭人群，回收真实育儿测评笔记，口碑从官方背书变为妈妈互信</span></div>
+            <div class="ip-play"><span class="play-badge" style="background:#3a5ce6">专家直播</span><span>节目健康/育儿专家入驻小红书做Redlive直播答疑，品牌冠名直播间，专业可信度+小红书真实互动双重加持</span></div>
+            <div class="ip-play"><span class="play-badge" style="background:#3a5ce6">线下沉浸</span><span>联合节目主题线下亲子市集/有机农场，发起打卡话题，品牌赞助线下活动+线上笔记自然种草形成闭环</span></div>
+            <div class="ip-play"><span class="play-badge" style="background:#3a5ce6">人群资产</span><span>话题互动人群沉淀为品牌DMP定向资产，后续精准再触达，把IP流量转化为品牌私域人群</span></div>
+          </div>
+        </div>
+        <div class="ip-card-foot">
+          <span class="cat-tag">母婴</span><span class="cat-tag">大健康</span><span class="cat-tag">营养品</span><span class="cat-tag">有机食品</span>
+        </div>
       </div>
     </div>
 
   </div>
+
 </div>
 
 <!-- ══ DATA BAR ══ -->
