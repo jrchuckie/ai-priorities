@@ -266,6 +266,21 @@ footer { text-align:center; margin-top:40px; font-size:12px; color:#bbb; padding
 <!-- 筛选器 -->
 <div class="filter-bar" id="filter-bar">
   <div class="filter-row">
+    <span class="filter-label">场景</span>
+    <button class="filter-btn active" data-filter="scene" data-val="all">全部</button>
+    <button class="filter-btn" data-filter="scene" data-val="work">💼 个人工作</button>
+    <button class="filter-btn" data-filter="scene" data-val="life">🌱 个人生活</button>
+    <button class="filter-btn" data-filter="scene" data-val="track">📊 赛道工作</button>
+  </div>
+  <div class="filter-row">
+    <span class="filter-label">角色</span>
+    <button class="filter-btn active" data-filter="role" data-val="all">全部</button>
+    <button class="filter-btn" data-filter="role" data-val="sales">💼 销售</button>
+    <button class="filter-btn" data-filter="role" data-val="ops">📊 运营</button>
+    <button class="filter-btn" data-filter="role" data-val="planner">💡 策划</button>
+    <button class="filter-btn" data-filter="role" data-val="manager">👔 管理者</button>
+  </div>
+  <div class="filter-row">
     <span class="filter-label">优先级</span>
     <button class="filter-btn active" data-filter="p" data-val="all">全部</button>
     <button class="filter-btn" data-filter="p" data-val="p0">🟢 P0</button>
@@ -288,21 +303,6 @@ footer { text-align:center; margin-top:40px; font-size:12px; color:#bbb; padding
     <button class="filter-btn" data-filter="status" data-val="doing">🔄 推进中</button>
     <button class="filter-btn" data-filter="status" data-val="pending">⏳ 待开启</button>
     <button class="filter-btn" data-filter="status" data-val="done">✅ 已完成</button>
-  </div>
-  <div class="filter-row">
-    <span class="filter-label">场景</span>
-    <button class="filter-btn active" data-filter="scene" data-val="all">全部</button>
-    <button class="filter-btn" data-filter="scene" data-val="work">💼 个人工作</button>
-    <button class="filter-btn" data-filter="scene" data-val="life">🌱 个人生活</button>
-    <button class="filter-btn" data-filter="scene" data-val="track">📊 赛道工作</button>
-  </div>
-  <div class="filter-row">
-    <span class="filter-label">角色</span>
-    <button class="filter-btn active" data-filter="role" data-val="all">全部</button>
-    <button class="filter-btn" data-filter="role" data-val="sales">💼 销售</button>
-    <button class="filter-btn" data-filter="role" data-val="ops">📊 运营</button>
-    <button class="filter-btn" data-filter="role" data-val="planner">💡 策划</button>
-    <button class="filter-btn" data-filter="role" data-val="manager">👔 管理者</button>
   </div>
 </div>
 
