@@ -35,7 +35,7 @@
 html, body { height:100%; }
 body {
   font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
-  background:#f0f2f5; display:flex; flex-direction:column; min-height:100vh;
+  background:#f0f2f5; color:#1a1a2e; min-height:100vh;
 }
 
 /* ── Global Nav ── */
@@ -49,29 +49,6 @@ body {
   letter-spacing:.5px; margin-right:24px; white-space:nowrap;
 }
 .nav-title span { color:white; }
-.nav-tab {
-  display:flex; align-items:center; gap:7px;
-  height:50px; padding:0 20px; border:none; background:transparent;
-  color:rgba(255,255,255,0.5); font-size:14px; font-weight:600;
-  cursor:pointer; border-bottom:3px solid transparent;
-  transition:all .15s; font-family:inherit; white-space:nowrap;
-}
-.nav-tab:hover { color:rgba(255,255,255,.85); }
-.nav-tab.active { color:white; border-bottom-color:#5dade2; background:rgba(255,255,255,.07); }
-
-/* ── Tab panels ── */
-.tab-panel { display:none; flex:1; }
-.tab-panel.active { display:block; }
-
-/* ══ Priorities styles ══ */
-
-* { margin:0; padding:0; box-sizing:border-box; }
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
-  background:#f0f2f5; color:#1a1a2e; padding:32px;
-}
-.header { text-align:center; margin-bottom:28px; }
-.header h1 { font-size:26px; font-weight:700; color:#1a1a2e; letter-spacing:1px; }
 
 /* ── 筛选器 ── */
 .filter-bar {
@@ -80,29 +57,43 @@ body {
   display:flex; flex-direction:column; gap:12px;
 }
 .filter-row { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
-.filter-label { font-size:13px; font-weight:600; color:#888; white-space:nowrap; min-width:48px; }
+.filter-label { font-size:13px; font-weight:600; color:#888; white-space:nowrap; min-width:56px; }
 .filter-btn {
   cursor:pointer; border:1.5px solid #dde1e7; background:white;
   border-radius:20px; padding:5px 14px; font-size:13px; font-weight:600;
   color:#555; transition:all 0.15s; white-space:nowrap;
 }
 .filter-btn:hover { border-color:#aaa; color:#1a1a2e; }
-.active-all     { background:#1a1a2e!important; color:white!important; border-color:#1a1a2e!important; }
-.active-p0      { background:#27ae60!important; color:white!important; border-color:#27ae60!important; }
-.active-p1      { background:#e67e22!important; color:white!important; border-color:#e67e22!important; }
-.active-p2      { background:#3498db!important; color:white!important; border-color:#3498db!important; }
-.active-cat     { background:#1a1a2e!important; color:white!important; border-color:#1a1a2e!important; }
-.active-owner-product  { background:#8e44ad!important; color:white!important; border-color:#8e44ad!important; }
-.active-owner-strategy { background:#16a085!important; color:white!important; border-color:#16a085!important; }
-.active-status-doing   { background:#e67e22!important; color:white!important; border-color:#e67e22!important; }
-.active-status-pending { background:#95a5a6!important; color:white!important; border-color:#95a5a6!important; }
-.active-status-done    { background:#27ae60!important; color:white!important; border-color:#27ae60!important; }
+.filter-btn.active { background:#1a1a2e!important; color:white!important; border-color:#1a1a2e!important; }
+.filter-btn.active-p0 { background:#27ae60!important; color:white!important; border-color:#27ae60!important; }
+.filter-btn.active-p1 { background:#e67e22!important; color:white!important; border-color:#e67e22!important; }
+.filter-btn.active-p2 { background:#3498db!important; color:white!important; border-color:#3498db!important; }
+.filter-btn.active-owner-product  { background:#8e44ad!important; color:white!important; border-color:#8e44ad!important; }
+.filter-btn.active-owner-strategy { background:#16a085!important; color:white!important; border-color:#16a085!important; }
+.filter-btn.active-status-doing   { background:#e67e22!important; color:white!important; border-color:#e67e22!important; }
+.filter-btn.active-status-pending { background:#95a5a6!important; color:white!important; border-color:#95a5a6!important; }
+.filter-btn.active-status-done    { background:#27ae60!important; color:white!important; border-color:#27ae60!important; }
+/* 场景标签颜色 */
+.filter-btn.active-scene-work     { background:#2980b9!important; color:white!important; border-color:#2980b9!important; }
+.filter-btn.active-scene-life     { background:#16a085!important; color:white!important; border-color:#16a085!important; }
+.filter-btn.active-scene-track    { background:#8e44ad!important; color:white!important; border-color:#8e44ad!important; }
+/* 角色颜色 */
+.filter-btn.active-role-sales    { background:#e74c3c!important; color:white!important; border-color:#e74c3c!important; }
+.filter-btn.active-role-ops      { background:#2980b9!important; color:white!important; border-color:#2980b9!important; }
+.filter-btn.active-role-planner  { background:#8e44ad!important; color:white!important; border-color:#8e44ad!important; }
+.filter-btn.active-role-manager  { background:#d35400!important; color:white!important; border-color:#d35400!important; }
 
 /* 状态标签 */
 .status-badge { display:inline-flex; align-items:center; gap:4px; font-size:11px; font-weight:700; padding:2px 9px; border-radius:20px; }
 .status-badge.doing   { background:#fef3e2; color:#e67e22; }
 .status-badge.pending { background:#f0f0f0; color:#95a5a6; }
 .status-badge.done    { background:#eafaf1; color:#27ae60; }
+
+/* 场景标签 */
+.scene-badge { display:inline-flex; align-items:center; gap:4px; font-size:11px; font-weight:700; padding:2px 9px; border-radius:20px; }
+.scene-badge.work  { background:#e8f4fd; color:#2980b9; }
+.scene-badge.life  { background:#e0f5f1; color:#16a085; }
+.scene-badge.track { background:#f3e8ff; color:#8e44ad; }
 
 /* ── 统计卡 ── */
 .summary-row { display:flex; gap:16px; margin-bottom:32px; justify-content:center; flex-wrap:wrap; }
@@ -127,7 +118,6 @@ body {
 .matrix-legend { display:flex; gap:14px; }
 .matrix-legend-item { display:flex; align-items:center; gap:5px; font-size:12px; color:#555; }
 .matrix-legend-dot { width:10px; height:10px; border-radius:3px; }
-
 .matrix-outer { display:flex; gap:0; align-items:stretch; }
 .matrix-y-label {
   transform:rotate(-90deg);
@@ -136,28 +126,6 @@ body {
   width:20px; align-self:center; margin-right:8px; flex-shrink:0;
 }
 .matrix-inner { flex:1; display:flex; flex-direction:column; gap:0; }
-
-.matrix-row { display:flex; align-items:stretch; }
-.matrix-row-label {
-  font-size:11px; font-weight:700; color:#aaa;
-  text-align:right; white-space:nowrap; flex-shrink:0;
-}
-
-.matrix-grid { flex:1; display:grid; grid-template-columns:repeat(3,1fr); }
-
-.matrix-cell {
-  border:1px solid #eef0f3; padding:10px 8px; min-height:90px;
-  display:flex; flex-direction:column; gap:5px; position:relative;
-  background:#fafbfc;
-}
-/* 高影响·低难度 = 右上角 3列×高行 */
-.matrix-cell.highlight-qw { background:#f0faf5; }
-.matrix-cell.highlight-bet { background:#fffbf0; }
-
-.matrix-x-labels {
-  display:flex; margin-left:36px;
-  border-top:1px solid #eef0f3;
-}
 .matrix-x-label {
   flex:1; text-align:center; font-size:11px; font-weight:700;
   color:#bbb; padding:6px 0; letter-spacing:0.5px;
@@ -166,7 +134,6 @@ body {
   text-align:center; font-size:11px; font-weight:600;
   color:#aaa; margin-top:4px; letter-spacing:1px;
 }
-
 .mbox {
   display:inline-block; font-size:10.5px; font-weight:600;
   padding:3px 7px; border-radius:5px; line-height:1.4;
@@ -202,15 +169,10 @@ body {
 .item-card.p2 { border-left-color:#3498db; }
 .item-card.hidden { display:none; }
 
-/* 编辑/删除按钮 */
-.card-actions {
-  position:absolute; top:12px; right:12px;
-  display:none; gap:6px;
-}
+.card-actions { position:absolute; top:12px; right:12px; display:none; gap:6px; }
 .item-card:hover .card-actions { display:flex; }
 .btn-edit, .btn-delete {
-  border:none; border-radius:6px; padding:3px 8px; font-size:11px;
-  cursor:pointer; font-weight:600;
+  border:none; border-radius:6px; padding:3px 8px; font-size:11px; cursor:pointer; font-weight:600;
 }
 .btn-edit   { background:#f0f4ff; color:#3498db; }
 .btn-delete { background:#fdecea; color:#e74c3c; }
@@ -233,7 +195,7 @@ body {
 .meta-row { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px; }
 .meta-chip { display:flex; align-items:center; gap:4px; font-size:12px; color:#555; background:#f5f6f8; padding:3px 9px; border-radius:8px; }
 
-.indicator-row { display:flex; gap:10px; margin-bottom:10px; flex-wrap:wrap; }
+.indicator-row { display:flex; gap:10px; margin-bottom:10px; flex-wrap:wrap; align-items:center; }
 .indicator { display:flex; align-items:center; gap:5px; font-size:12px; }
 .indicator-label { color:#888; }
 .dot { width:8px; height:8px; border-radius:50%; display:inline-block; }
@@ -245,7 +207,6 @@ body {
 .capability.partial { background:#fff8e1; color:#e67e22; }
 .capability.none    { background:#fdecea; color:#e74c3c; }
 
-/* ── 新增按钮 ── */
 .add-card-btn {
   display:flex; align-items:center; justify-content:center; gap:8px;
   border:2px dashed #dde1e7; border-radius:12px; padding:20px;
@@ -270,12 +231,9 @@ body {
 .form-group label { display:block; font-size:13px; font-weight:600; color:#555; margin-bottom:6px; }
 .form-group input, .form-group select, .form-group textarea {
   width:100%; border:1.5px solid #dde1e7; border-radius:8px; padding:9px 12px;
-  font-size:14px; color:#1a1a2e; outline:none; font-family:inherit;
-  transition:border-color 0.15s;
+  font-size:14px; color:#1a1a2e; outline:none; font-family:inherit; transition:border-color 0.15s;
 }
-.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-  border-color:#3498db;
-}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color:#3498db; }
 .form-group textarea { resize:vertical; min-height:70px; }
 .form-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
 .modal-actions { display:flex; gap:10px; justify-content:flex-end; margin-top:20px; }
@@ -286,153 +244,33 @@ body {
 
 .empty-state { display:none; text-align:center; padding:48px 0; color:#bbb; font-size:15px; }
 .empty-state.visible { display:block; }
-footer { text-align:center; margin-top:40px; font-size:12px; color:#bbb; }
-
-
-/* ══ Workflow styles ══ */
-
-* { margin:0; padding:0; box-sizing:border-box; }
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
-  background:#f0f2f5; color:#1a1a2e; padding:32px;
-}
-
-.header { text-align:center; margin-bottom:28px; }
-.header h1 { font-size:26px; font-weight:800; color:#1a1a2e; }
-.header p  { margin-top:8px; font-size:14px; color:#888; }
-
-/* ── 筛选器 ── */
-.filter-bar {
-  background:white; border-radius:14px; padding:16px 24px;
-  box-shadow:0 2px 10px rgba(0,0,0,0.07); margin-bottom:28px;
-  display:flex; flex-direction:column; gap:12px;
-}
-.filter-row { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
-.filter-label { font-size:13px; font-weight:600; color:#888; min-width:52px; }
-.ftab {
-  cursor:pointer; border:1.5px solid #dde1e7; background:white;
-  border-radius:20px; padding:5px 14px; font-size:13px; font-weight:600;
-  color:#555; transition:all 0.15s; white-space:nowrap;
-}
-.ftab:hover { border-color:#aaa; }
-.ftab.on { color:white!important; border-color:transparent!important; }
-.ftab[data-role="all"].on    { background:#1a1a2e; }
-.ftab[data-role="sales"].on  { background:#e74c3c; }
-.ftab[data-role="ops"].on    { background:#2980b9; }
-.ftab[data-role="planner"].on{ background:#8e44ad; }
-.ftab[data-ai="all"].on  { background:#1a1a2e; }
-.ftab[data-ai="high"].on { background:#e74c3c; }
-.ftab[data-ai="mid"].on  { background:#f39c12; }
-.ftab[data-ai="low"].on  { background:#27ae60; }
-.ftab[data-wcat].on      { background:#1a1a2e; }
-
-/* ── 图例 ── */
-.legend {
-  display:flex; gap:16px; flex-wrap:wrap; margin-bottom:24px;
-  padding:10px 16px; background:white; border-radius:10px;
-  font-size:12px; align-items:center; box-shadow:0 1px 6px rgba(0,0,0,0.05);
-}
-.legend-item { display:flex; align-items:center; gap:5px; color:#555; }
-.ldot { width:9px; height:9px; border-radius:50%; }
-
-/* ── 角色块 ── */
-.role-sections { display:flex; flex-direction:column; gap:24px; }
-.role-block { background:white; border-radius:16px; box-shadow:0 2px 12px rgba(0,0,0,0.07); overflow:hidden; }
-.role-block.hidden { display:none; }
-
-.role-header {
-  display:flex; align-items:center; gap:14px;
-  padding:18px 28px; color:white;
-}
-.role-header.sales   { background:linear-gradient(135deg,#e74c3c,#c0392b); }
-.role-header.ops     { background:linear-gradient(135deg,#2980b9,#1a5276); }
-.role-header.planner { background:linear-gradient(135deg,#8e44ad,#6c3483); }
-
-.role-icon { font-size:28px; }
-.role-info h2 { font-size:17px; font-weight:800; }
-.role-info p  { font-size:12px; opacity:.85; margin-top:2px; }
-.role-stats { margin-left:auto; display:flex; gap:14px; }
-.role-stat { text-align:center; }
-.role-stat .n  { font-size:20px; font-weight:800; }
-.role-stat .lb { font-size:10px; opacity:.8; }
-
-/* ── 工作类别分组 ── */
-.role-body { padding:20px 24px; }
-.wcat-section { margin-bottom:20px; }
-.wcat-section.hidden { display:none; }
-.wcat-header {
-  display:flex; align-items:center; gap:8px; margin-bottom:10px;
-}
-.wcat-tag {
-  font-size:12px; font-weight:700; padding:3px 12px; border-radius:20px;
-  background:#f0f2f5; color:#555;
-}
-.wcat-line { flex:1; height:1px; background:#eef0f3; }
-.wcat-count { font-size:11px; color:#aaa; font-weight:600; }
-
-/* ── 任务卡片 ── */
-.tasks-grid {
-  display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:10px;
-}
-.task-card {
-  border-radius:10px; padding:13px 14px;
-  border:1.5px solid #eef0f3; background:#fafbfc;
-  transition:transform .15s, box-shadow .15s;
-}
-.task-card:hover { transform:translateY(-2px); box-shadow:0 4px 14px rgba(0,0,0,0.09); }
-.task-card.hidden { display:none; }
-
-.task-top { display:flex; align-items:flex-start; justify-content:space-between; gap:8px; margin-bottom:7px; }
-.task-name { font-size:13.5px; font-weight:700; color:#1a1a2e; line-height:1.4; flex:1; }
-.ai-badge { font-size:10px; font-weight:700; padding:2px 7px; border-radius:10px; white-space:nowrap; flex-shrink:0; }
-.ai-badge.high { background:#fdecea; color:#e74c3c; }
-.ai-badge.mid  { background:#fef9e7; color:#f39c12; }
-.ai-badge.low  { background:#eafaf1; color:#27ae60; }
-
-.task-meta { display:flex; flex-wrap:wrap; gap:5px; margin-bottom:7px; }
-.tag { font-size:11px; padding:2px 7px; border-radius:6px; background:#f0f2f5; color:#666; }
-.tag.freq { background:#e8f4fd; color:#2980b9; }
-.tag.time { background:#fef9e7; color:#e67e22; }
-.tag.pain { background:#fdecea; color:#e74c3c; }
-
-.task-ai-desc {
-  font-size:11.5px; color:#555; background:#f5f0ff;
-  border-radius:6px; padding:6px 9px; line-height:1.5;
-  border-left:3px solid #8e44ad;
-}
-.task-ai-desc::before { content:'🤖 '; }
-
-footer { text-align:center; margin-top:40px; font-size:12px; color:#bbb; }
-
+footer { text-align:center; margin-top:40px; font-size:12px; color:#bbb; padding-bottom:32px; }
 </style>
 </head>
 <body>
 
 <nav class="global-nav">
-  <div class="nav-title">🤖 <span>快消 AI 专项</span></div>
-  <button class="nav-tab active" data-tab="priorities">📋 Priorities 总览</button>
-  <button class="nav-tab"        data-tab="workflow">🗺️ AI 提效地图</button>
+  <div class="nav-title">🤖 <span>快消 AI 专项 · Priorities 总览</span></div>
   <div style="margin-left:auto;display:flex;align-items:center;gap:7px;font-size:12px;color:rgba(255,255,255,0.5);">
     <div id="sync-dot" style="width:8px;height:8px;border-radius:50%;background:#e67e22;transition:background 0.5s;"></div>
     <span id="sync-text">连接中…</span>
   </div>
 </nav>
 
-<div class="tab-panel active" id="tab-priorities">
+<div style="padding:32px;">
 
-
-<div class="header">
-  <h1>🤖 快消AI专项项目 Priorities 总览</h1>
+<div style="text-align:center;margin-bottom:28px;">
+  <h1 style="font-size:26px;font-weight:700;color:#1a1a2e;letter-spacing:1px;">🤖 快消AI专项项目 Priorities 总览</h1>
 </div>
 
 <!-- 筛选器 -->
-<div class="filter-bar">
+<div class="filter-bar" id="filter-bar">
   <div class="filter-row">
     <span class="filter-label">优先级</span>
-    <button class="filter-btn active-all" data-p="all">全部</button>
-    <button class="filter-btn" data-p="p0">🟢 P0</button>
-    <button class="filter-btn" data-p="p1">🟠 P1</button>
-    <button class="filter-btn" data-p="p2">🔵 P2</button>
+    <button class="filter-btn active" data-filter="p" data-val="all">全部</button>
+    <button class="filter-btn" data-filter="p" data-val="p0">🟢 P0</button>
+    <button class="filter-btn" data-filter="p" data-val="p1">🟠 P1</button>
+    <button class="filter-btn" data-filter="p" data-val="p2">🔵 P2</button>
   </div>
   <div class="filter-row" id="cat-filter-row">
     <span class="filter-label">大类</span>
@@ -440,16 +278,31 @@ footer { text-align:center; margin-top:40px; font-size:12px; color:#bbb; }
   </div>
   <div class="filter-row">
     <span class="filter-label">Owner</span>
-    <button class="filter-btn active-all" data-owner="all">全部</button>
-    <button class="filter-btn" data-owner="strategy">🏗 行策自建</button>
-    <button class="filter-btn" data-owner="product">🤝 产品共建</button>
+    <button class="filter-btn active" data-filter="owner" data-val="all">全部</button>
+    <button class="filter-btn" data-filter="owner" data-val="strategy">🏗 行策自建</button>
+    <button class="filter-btn" data-filter="owner" data-val="product">🤝 产品共建</button>
   </div>
   <div class="filter-row">
     <span class="filter-label">状态</span>
-    <button class="filter-btn active-all" data-status="all">全部</button>
-    <button class="filter-btn" data-status="doing">🔄 推进中</button>
-    <button class="filter-btn" data-status="pending">⏳ 待开启</button>
-    <button class="filter-btn" data-status="done">✅ 已完成</button>
+    <button class="filter-btn active" data-filter="status" data-val="all">全部</button>
+    <button class="filter-btn" data-filter="status" data-val="doing">🔄 推进中</button>
+    <button class="filter-btn" data-filter="status" data-val="pending">⏳ 待开启</button>
+    <button class="filter-btn" data-filter="status" data-val="done">✅ 已完成</button>
+  </div>
+  <div class="filter-row">
+    <span class="filter-label">场景</span>
+    <button class="filter-btn active" data-filter="scene" data-val="all">全部</button>
+    <button class="filter-btn" data-filter="scene" data-val="work">💼 个人工作</button>
+    <button class="filter-btn" data-filter="scene" data-val="life">🌱 个人生活</button>
+    <button class="filter-btn" data-filter="scene" data-val="track">📊 赛道工作</button>
+  </div>
+  <div class="filter-row">
+    <span class="filter-label">角色</span>
+    <button class="filter-btn active" data-filter="role" data-val="all">全部</button>
+    <button class="filter-btn" data-filter="role" data-val="sales">💼 销售</button>
+    <button class="filter-btn" data-filter="role" data-val="ops">📊 运营</button>
+    <button class="filter-btn" data-filter="role" data-val="planner">💡 策划</button>
+    <button class="filter-btn" data-filter="role" data-val="manager">👔 管理者</button>
   </div>
 </div>
 
@@ -473,9 +326,7 @@ footer { text-align:center; margin-top:40px; font-size:12px; color:#bbb; }
   <div class="matrix-outer">
     <div class="matrix-y-label">↑ 业务影响力</div>
     <div class="matrix-inner">
-      <!-- grid = 4列：行标签 + 高难度 + 中难度 + 低难度 -->
       <div id="matrix-grid" style="display:grid;grid-template-columns:56px 1fr 1fr 1fr;"></div>
-      <!-- X轴标签，对齐grid后三列 -->
       <div style="display:grid;grid-template-columns:56px 1fr 1fr 1fr;border-top:2px solid #dde1e7;margin-top:0;">
         <div></div>
         <div class="matrix-x-label">高难度</div>
@@ -492,6 +343,8 @@ footer { text-align:center; margin-top:40px; font-size:12px; color:#bbb; }
 
 <div class="empty-state" id="empty-state">😶 没有符合条件的事项</div>
 <footer>快消AI专项项目 Priorities 总览 · 数据截至 2026-03</footer>
+
+</div>
 
 <!-- 新建大类 Modal -->
 <div class="modal-overlay" id="cat-modal">
@@ -533,13 +386,7 @@ footer { text-align:center; margin-top:40px; font-size:12px; color:#bbb; }
       </div>
       <div class="form-group">
         <label>大类 *</label>
-        <select id="f-cat">
-          <option value="内容">📝 内容</option>
-          <option value="分析复盘">📊 分析/复盘</option>
-          <option value="搜索">🔍 搜索</option>
-          <option value="月报周报">📅 月报/周报</option>
-          <option value="洞察">💡 洞察</option>
-        </select>
+        <select id="f-cat"></select>
       </div>
     </div>
     <div class="form-row">
@@ -577,9 +424,30 @@ footer { text-align:center; margin-top:40px; font-size:12px; color:#bbb; }
         </select>
       </div>
     </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>适用角色</label>
+        <select id="f-role-tag">
+          <option value="">不限</option>
+          <option value="sales">💼 销售</option>
+          <option value="ops">📊 运营</option>
+          <option value="planner">💡 策划</option>
+          <option value="manager">👔 管理者</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>场景</label>
+        <select id="f-scene">
+          <option value="">不限</option>
+          <option value="work">💼 个人工作</option>
+          <option value="life">🌱 个人生活</option>
+          <option value="track">📊 赛道工作</option>
+        </select>
+      </div>
+    </div>
     <div class="form-group">
-      <label>适用角色</label>
-      <input type="text" id="f-role" placeholder="例：销售/策划/运营">
+      <label>Owner 备注</label>
+      <input type="text" id="f-owner-name" placeholder="例：灵犀产品：娜赛">
     </div>
     <div class="form-row">
       <div class="form-group">
@@ -590,10 +458,6 @@ footer { text-align:center; margin-top:40px; font-size:12px; color:#bbb; }
         <label>时间成本</label>
         <input type="text" id="f-time" placeholder="例：1-2天/人天">
       </div>
-    </div>
-    <div class="form-group">
-      <label>Owner 备注</label>
-      <input type="text" id="f-owner-name" placeholder="例：灵犀产品：娜赛">
     </div>
     <div class="form-group">
       <label>项目状态</label>
@@ -625,8 +489,7 @@ const DEFAULT_CATS = [
   { key:'月报周报', icon:'📅', label:'月报/周报' },
   { key:'洞察',    icon:'💡', label:'洞察类' },
 ];
-// ── Firebase 实时同步 ──
-// CATS 和 DATA 改为从 Firebase 读写，localStorage 仅作本地 fallback
+
 let _fbInitialized = false;
 
 function loadCats() {
@@ -642,38 +505,33 @@ function saveCats() {
 let CATS = loadCats();
 
 const DEFAULT_DATA = [
-  // 内容
-  { id:'c1', name:'AIGC笔记生产【大健康+食饮攻坚】', p:'p0', cat:'内容', impact:'high', difficulty:'high', owner:'strategy', ownerName:'悟天 / 聚光 / 千帆 / 审核 / 行策', cap:'partial', role:'客户', freq:'每天', time:'2-3小时/人天', note:'', status:'doing' },
-  { id:'c2', name:'内容分析：【母婴赛道攻坚】',       p:'p0', cat:'内容', impact:'high', difficulty:'low',  owner:'product',  ownerName:'灵犀产品：周鹃、娜赛', cap:'partial', role:'运营', freq:'每周', time:'半天/人天', note:'内容打标需求推进中，需行业知识图谱（母婴-爱妮），产品用claw做', status:'doing' },
-  { id:'c3', name:'内容分析：【大健康赛道攻坚】',     p:'p0', cat:'内容', impact:'high', difficulty:'low',  owner:'strategy', ownerName:'行策', cap:'partial', role:'运营', freq:'每周', time:'半天/人天', note:'内容打标需求推进中，需行业知识图谱（大健康-西泽），产品用claw做', status:'doing' },
-  // 分析/复盘
-  { id:'a1', name:'品牌形象分析',    p:'p0', cat:'分析复盘', impact:'high', difficulty:'mid', owner:'strategy', ownerName:'行策 + 营销实验室（柃子）', cap:'none',    role:'销售/策划/运营',   freq:'每周', time:'1-2天/人天', note:'', status:'pending' },
-  { id:'a2', name:'情绪浓度分析',    p:'p0', cat:'分析复盘', impact:'high', difficulty:'mid', owner:'strategy', ownerName:'行策 + 营销实验室（巴库）', cap:'none',    role:'销售/策划/运营',   freq:'每周', time:'1-2天/人天', note:'', status:'pending' },
-  { id:'a3', name:'品牌营销复盘助手 - AURA', p:'p2', cat:'分析复盘', impact:'low', difficulty:'mid', owner:'strategy', ownerName:'营销中心', cap:'partial', role:'平台专家/IP策划', freq:'每月', time:'2-3天/人天', note:'', status:'pending' },
-  { id:'a4', name:'一方工具升级',    p:'p2', cat:'分析复盘', impact:'high', difficulty:'mid', owner:'product',  ownerName:'一方产品：白州、叶言', cap:'has',     role:'运营', freq:'每季度', time:'1-2天/人天', note:'', status:'pending' },
-  { id:'a5', name:'投放复盘',        p:'p2', cat:'分析复盘', impact:'mid',  difficulty:'mid', owner:'strategy', ownerName:'行策', cap:'has', role:'运营', freq:'每周', time:'1-2天/人天', note:'', status:'pending' },
-  // 搜索
-  { id:'s1', name:'搜索推词工具',         p:'p1', cat:'搜索', impact:'mid', difficulty:'mid', owner:'product',  ownerName:'建议和搜索产品共建', cap:'none', role:'运营', freq:'每周', time:'1-2天/人天', note:'', status:'pending' },
-  { id:'s2', name:'拆分为搜索词打标+取数', p:'p1', cat:'搜索', impact:'mid', difficulty:'mid', owner:'product',  ownerName:'灵犀产品：宁姚', cap:'none', role:'运营', freq:'每周', time:'1-2天/人天', note:'', status:'pending' },
-  // 月报/周报
-  { id:'r1', name:'行业周报 one page 自动生成（对客）', p:'p0', cat:'月报周报', impact:'high', difficulty:'mid', owner:'strategy', ownerName:'行策', cap:'has',  role:'销售/策划/运营', freq:'每周', time:'1-2天/人天', note:'', status:'doing' },
-  { id:'r2', name:'行业周报 one page 自动生成（对内）', p:'p0', cat:'月报周报', impact:'high', difficulty:'mid', owner:'strategy', ownerName:'行策 + insight', cap:'none', role:'', freq:'每周', time:'', note:'', status:'pending' },
-  { id:'r3', name:'头客月报', p:'p1', cat:'月报周报', impact:'high', difficulty:'mid', owner:'product', ownerName:'灵犀产品：娜赛', cap:'partial', role:'销售/策划/运营', freq:'每月', time:'1-2天/人天', note:'优先尝试通过灵犀已有人群能力来提效', status:'pending' },
-  // 洞察
-  { id:'i1', name:'站内舆情风险提示',          p:'p0', cat:'洞察', impact:'high', difficulty:'mid', owner:'strategy', ownerName:'行策 + 灵犀（榴莲）', cap:'none', role:'销售/运营', freq:'每天', time:'1-2小时/人天', note:'', status:'pending' },
-  { id:'i2', name:'行业 & 竞品洞察',           p:'p1', cat:'洞察', impact:'mid',  difficulty:'mid', owner:'strategy', ownerName:'行策', cap:'partial', role:'销售/策划', freq:'每周', time:'2-3小时/人天', note:'', status:'pending' },
-  { id:'i3', name:'Campaign Idea',             p:'p2', cat:'洞察', impact:'mid',  difficulty:'mid', owner:'strategy', ownerName:'行策', cap:'none', role:'销售/运营', freq:'每周', time:'2-3小时/人天', note:'', status:'pending' },
-  { id:'i4', name:'潮玩IP维度分析（如宝可梦IP热度）', p:'p2', cat:'洞察', impact:'low', difficulty:'mid', owner:'product', ownerName:'灵犀产品：娜赛', cap:'none', role:'销售/策划', freq:'每季?', time:'1-2天?/人天', note:'受限于基建，建议轻量工具实现主题词打标与简单统计，暂无法支持数据生产', status:'pending' },
+  { id:'c1', name:'AIGC笔记生产【大健康+食饮攻坚】', p:'p0', cat:'内容', impact:'high', difficulty:'high', owner:'strategy', ownerName:'悟天 / 聚光 / 千帆 / 审核 / 行策', cap:'partial', roleTag:'ops', scene:'track', freq:'每天', time:'2-3小时/人天', note:'', status:'doing' },
+  { id:'c2', name:'内容分析：【母婴赛道攻坚】',       p:'p0', cat:'内容', impact:'high', difficulty:'low',  owner:'product',  ownerName:'灵犀产品：周鹃、娜赛', cap:'partial', roleTag:'ops', scene:'track', freq:'每周', time:'半天/人天', note:'内容打标需求推进中，需行业知识图谱（母婴-爱妮），产品用claw做', status:'doing' },
+  { id:'c3', name:'内容分析：【大健康赛道攻坚】',     p:'p0', cat:'内容', impact:'high', difficulty:'low',  owner:'strategy', ownerName:'行策', cap:'partial', roleTag:'ops', scene:'track', freq:'每周', time:'半天/人天', note:'内容打标需求推进中，需行业知识图谱（大健康-西泽），产品用claw做', status:'doing' },
+  { id:'a1', name:'品牌形象分析',    p:'p0', cat:'分析复盘', impact:'high', difficulty:'mid', owner:'strategy', ownerName:'行策 + 营销实验室（柃子）', cap:'none', roleTag:'planner', scene:'track', freq:'每周', time:'1-2天/人天', note:'', status:'pending' },
+  { id:'a2', name:'情绪浓度分析',    p:'p0', cat:'分析复盘', impact:'high', difficulty:'mid', owner:'strategy', ownerName:'行策 + 营销实验室（巴库）', cap:'none', roleTag:'planner', scene:'track', freq:'每周', time:'1-2天/人天', note:'', status:'pending' },
+  { id:'a3', name:'品牌营销复盘助手 - AURA', p:'p2', cat:'分析复盘', impact:'low', difficulty:'mid', owner:'strategy', ownerName:'营销中心', cap:'partial', roleTag:'planner', scene:'track', freq:'每月', time:'2-3天/人天', note:'', status:'pending' },
+  { id:'a4', name:'一方工具升级',    p:'p2', cat:'分析复盘', impact:'high', difficulty:'mid', owner:'product',  ownerName:'一方产品：白州、叶言', cap:'has', roleTag:'ops', scene:'track', freq:'每季度', time:'1-2天/人天', note:'', status:'pending' },
+  { id:'a5', name:'投放复盘',        p:'p2', cat:'分析复盘', impact:'mid',  difficulty:'mid', owner:'strategy', ownerName:'行策', cap:'has', roleTag:'ops', scene:'work', freq:'每周', time:'1-2天/人天', note:'', status:'pending' },
+  { id:'s1', name:'搜索推词工具',         p:'p1', cat:'搜索', impact:'mid', difficulty:'mid', owner:'product',  ownerName:'建议和搜索产品共建', cap:'none', roleTag:'ops', scene:'track', freq:'每周', time:'1-2天/人天', note:'', status:'pending' },
+  { id:'s2', name:'拆分为搜索词打标+取数', p:'p1', cat:'搜索', impact:'mid', difficulty:'mid', owner:'product',  ownerName:'灵犀产品：宁姚', cap:'none', roleTag:'ops', scene:'track', freq:'每周', time:'1-2天/人天', note:'', status:'pending' },
+  { id:'r1', name:'行业周报 one page 自动生成（对客）', p:'p0', cat:'月报周报', impact:'high', difficulty:'mid', owner:'strategy', ownerName:'行策', cap:'has', roleTag:'sales', scene:'work', freq:'每周', time:'1-2天/人天', note:'', status:'doing' },
+  { id:'r2', name:'行业周报 one page 自动生成（对内）', p:'p0', cat:'月报周报', impact:'high', difficulty:'mid', owner:'strategy', ownerName:'行策 + insight', cap:'none', roleTag:'manager', scene:'track', freq:'每周', time:'', note:'', status:'pending' },
+  { id:'r3', name:'头客月报', p:'p1', cat:'月报周报', impact:'high', difficulty:'mid', owner:'product', ownerName:'灵犀产品：娜赛', cap:'partial', roleTag:'sales', scene:'work', freq:'每月', time:'1-2天/人天', note:'优先尝试通过灵犀已有人群能力来提效', status:'pending' },
+  { id:'i1', name:'站内舆情风险提示',          p:'p0', cat:'洞察', impact:'high', difficulty:'mid', owner:'strategy', ownerName:'行策 + 灵犀（榴莲）', cap:'none', roleTag:'manager', scene:'track', freq:'每天', time:'1-2小时/人天', note:'', status:'pending' },
+  { id:'i2', name:'行业 & 竞品洞察',           p:'p1', cat:'洞察', impact:'mid',  difficulty:'mid', owner:'strategy', ownerName:'行策', cap:'partial', roleTag:'planner', scene:'track', freq:'每周', time:'2-3小时/人天', note:'', status:'pending' },
+  { id:'i3', name:'Campaign Idea',             p:'p2', cat:'洞察', impact:'mid',  difficulty:'mid', owner:'strategy', ownerName:'行策', cap:'none', roleTag:'planner', scene:'work', freq:'每周', time:'2-3小时/人天', note:'', status:'pending' },
+  { id:'i4', name:'潮玩IP维度分析（如宝可梦IP热度）', p:'p2', cat:'洞察', impact:'low', difficulty:'mid', owner:'product', ownerName:'灵犀产品：娜赛', cap:'none', roleTag:'planner', scene:'track', freq:'每季?', time:'1-2天?/人天', note:'受限于基建，建议轻量工具实现主题词打标与简单统计，暂无法支持数据生产', status:'pending' },
 ];
 
 function loadData() {
   try {
-    const s = localStorage.getItem('ai-priorities-v2');
+    const s = localStorage.getItem('ai-priorities-v3');
     return s ? JSON.parse(s) : JSON.parse(JSON.stringify(DEFAULT_DATA));
   } catch(e) { return JSON.parse(JSON.stringify(DEFAULT_DATA)); }
 }
 function saveData() {
-  localStorage.setItem('ai-priorities-v2', JSON.stringify(DATA));
+  localStorage.setItem('ai-priorities-v3', JSON.stringify(DATA));
   if (window._fbReady) {
     window._fbSet(window._fbRef(window._fbDb, 'data'), DATA).catch(e => console.warn('Firebase saveData:', e));
   }
@@ -681,25 +539,87 @@ function saveData() {
 let DATA = loadData();
 
 // ═══════════════════════════════════════════════════════
-// 渲染
+// 常量
 // ═══════════════════════════════════════════════════════
-const capLabel = { has:'✓ 已有能力', partial:'⚡ 有部分能力', none:'✗ 无现有能力' };
+const capLabel   = { has:'✓ 已有能力', partial:'⚡ 有部分能力', none:'✗ 无现有能力' };
 const levelLabel = { high:'高', mid:'中', low:'低' };
 const ownerMeta  = { strategy:{ label:'🏗 行策自建', cls:'strategy' }, product:{ label:'🤝 产品共建', cls:'product' } };
-const pLabel = { p0:'P0', p1:'P1', p2:'P2' };
-
+const pLabel     = { p0:'P0', p1:'P1', p2:'P2' };
 const statusMeta = {
   doing:   { label:'🔄 推进中', cls:'doing'   },
   pending: { label:'⏳ 待开启', cls:'pending' },
   done:    { label:'✅ 已完成', cls:'done'    },
 };
+const sceneMeta = {
+  work:  { label:'💼 个人工作', cls:'work'  },
+  life:  { label:'🌱 个人生活', cls:'life'  },
+  track: { label:'📊 赛道工作', cls:'track' },
+};
+const roleTagMeta = {
+  sales:   { label:'💼 销售' },
+  ops:     { label:'📊 运营' },
+  planner: { label:'💡 策划' },
+  manager: { label:'👔 管理者' },
+};
 
+// ═══════════════════════════════════════════════════════
+// 筛选状态 — 统一管理
+// ═══════════════════════════════════════════════════════
+const filters = { p:'all', cat:'all', owner:'all', status:'all', scene:'all', role:'all' };
+
+// ═══════════════════════════════════════════════════════
+// 筛选器事件（统一委托）
+// ═══════════════════════════════════════════════════════
+document.getElementById('filter-bar').addEventListener('click', e => {
+  const btn = e.target.closest('[data-filter]');
+  if (!btn) return;
+  const filterKey = btn.dataset.filter;
+  const val = btn.dataset.val;
+  filters[filterKey] = val;
+
+  // 更新同组按钮高亮
+  document.querySelectorAll(`[data-filter="${filterKey}"]`).forEach(b => {
+    b.className = 'filter-btn';
+    if (b.dataset.val === val) {
+      if (val === 'all') {
+        b.classList.add('active');
+      } else if (filterKey === 'p') {
+        b.classList.add(`active-${val}`);
+      } else if (filterKey === 'owner') {
+        b.classList.add(`active-owner-${val}`);
+      } else if (filterKey === 'status') {
+        b.classList.add(`active-status-${val}`);
+      } else if (filterKey === 'scene') {
+        b.classList.add(`active-scene-${val}`);
+      } else if (filterKey === 'role') {
+        b.classList.add(`active-role-${val}`);
+      } else {
+        b.classList.add('active');
+      }
+    }
+  });
+
+  applyFilters();
+});
+
+// ═══════════════════════════════════════════════════════
+// 渲染卡片
+// ═══════════════════════════════════════════════════════
 function buildCard(item) {
   const om = ownerMeta[item.owner] || ownerMeta.strategy;
   const sm = statusMeta[item.status] || statusMeta.pending;
-  const capCls = item.cap;
+  const sc = item.scene ? sceneMeta[item.scene] : null;
+  const rt = item.roleTag ? roleTagMeta[item.roleTag] : null;
+
   return `
-  <div class="item-card ${item.p}" data-id="${item.id}" data-p="${item.p}" data-cat="${item.cat}" data-owner="${item.owner}" data-status="${item.status||'pending'}">
+  <div class="item-card ${item.p}"
+    data-id="${item.id}"
+    data-p="${item.p}"
+    data-cat="${item.cat}"
+    data-owner="${item.owner}"
+    data-status="${item.status || 'pending'}"
+    data-scene="${item.scene || ''}"
+    data-roletag="${item.roleTag || ''}">
     <div class="card-actions">
       <button class="btn-edit"   onclick="openEdit('${item.id}')">✏️ 编辑</button>
       <button class="btn-delete" onclick="deleteItem('${item.id}')">✕ 删除</button>
@@ -712,45 +632,47 @@ function buildCard(item) {
       <span class="owner-badge ${om.cls}">${om.label}</span>
       ${item.ownerName ? `<span class="owner-name">${item.ownerName}</span>` : ''}
       <span class="status-badge ${sm.cls}">${sm.label}</span>
+      ${sc ? `<span class="scene-badge ${sc.cls}">${sc.label}</span>` : ''}
+      ${rt ? `<span class="meta-chip">${rt.label}</span>` : ''}
     </div>
     <div class="meta-row">
-      ${item.role ? `<span class="meta-chip">👥 ${item.role}</span>` : ''}
       ${item.freq ? `<span class="meta-chip">🔄 ${item.freq}</span>` : ''}
       ${item.time ? `<span class="meta-chip">⏱ ${item.time}</span>` : ''}
     </div>
     <div class="indicator-row">
-      ${item.impact ? `<div class="indicator"><span class="indicator-label">影响力</span><span class="dot ${item.impact}"></span><span style="font-size:12px">${levelLabel[item.impact]}</span></div>` : ''}
+      ${item.impact     ? `<div class="indicator"><span class="indicator-label">影响力</span><span class="dot ${item.impact}"></span><span style="font-size:12px">${levelLabel[item.impact]}</span></div>` : ''}
       ${item.difficulty ? `<div class="indicator"><span class="indicator-label">难易度</span><span class="dot ${item.difficulty}"></span><span style="font-size:12px">${levelLabel[item.difficulty]}</span></div>` : ''}
-      <span class="capability ${capCls}">${capLabel[item.cap]}</span>
+      <span class="capability ${item.cap}">${capLabel[item.cap] || ''}</span>
     </div>
     ${item.note ? `<div class="note">${item.note}</div>` : ''}
   </div>`;
 }
 
-// 动态渲染大类筛选器按钮
+// ═══════════════════════════════════════════════════════
+// 大类筛选器（动态渲染）
+// ═══════════════════════════════════════════════════════
 function renderCatFilter() {
   const row = document.getElementById('cat-filter-row');
   row.innerHTML = `<span class="filter-label">大类</span>`;
 
-  // 全部按钮
   const allBtn = document.createElement('button');
-  allBtn.className = 'filter-btn' + (activeCat === 'all' ? ' active-all' : '');
-  allBtn.dataset.cat = 'all';
+  allBtn.className = 'filter-btn' + (filters.cat === 'all' ? ' active' : '');
+  allBtn.dataset.filter = 'cat';
+  allBtn.dataset.val = 'all';
   allBtn.textContent = '全部';
   row.appendChild(allBtn);
 
-  // 各大类按钮
   CATS.forEach(cat => {
     const wrap = document.createElement('span');
     wrap.style.cssText = 'display:inline-flex;align-items:center;gap:2px;';
 
     const btn = document.createElement('button');
-    btn.className = 'filter-btn' + (activeCat === cat.key ? ' active-cat' : '');
-    btn.dataset.cat = cat.key;
+    btn.className = 'filter-btn' + (filters.cat === cat.key ? ' active' : '');
+    btn.dataset.filter = 'cat';
+    btn.dataset.val = cat.key;
     btn.textContent = `${cat.icon} ${cat.label}`;
     wrap.appendChild(btn);
 
-    // 删除大类按钮（自定义大类才显示）
     const isDefault = DEFAULT_CATS.some(d => d.key === cat.key);
     if (!isDefault) {
       const del = document.createElement('button');
@@ -763,25 +685,14 @@ function renderCatFilter() {
     row.appendChild(wrap);
   });
 
-  // ＋ 新建大类
   const addBtn = document.createElement('button');
   addBtn.className = 'filter-btn';
   addBtn.style.cssText = 'border-style:dashed;color:#aaa;';
   addBtn.textContent = '＋ 新建大类';
   addBtn.onclick = () => openCatModal();
   row.appendChild(addBtn);
-
-  // 重新绑定事件
-  row.querySelectorAll('button[data-cat]').forEach(b => {
-    b.addEventListener('click', () => {
-      activeCat = b.dataset.cat;
-      renderCatFilter();
-      applyFilters();
-    });
-  });
 }
 
-// 动态更新 Modal 里的大类 select
 function updateCatSelect() {
   const sel = document.getElementById('f-cat');
   if (!sel) return;
@@ -797,10 +708,13 @@ function deleteCat(key) {
   CATS = CATS.filter(c => c.key !== key);
   DATA = DATA.filter(d => d.cat !== key);
   saveCats(); saveData();
-  if (activeCat === key) activeCat = 'all';
+  if (filters.cat === key) filters.cat = 'all';
   render();
 }
 
+// ═══════════════════════════════════════════════════════
+// 主渲染
+// ═══════════════════════════════════════════════════════
 function render() {
   const container = document.getElementById('sections-container');
   container.innerHTML = '';
@@ -812,7 +726,7 @@ function render() {
       <div class="category-header">
         <span class="category-tag">${cat.icon} ${cat.label}</span>
         <div class="category-line"></div>
-        <div class="cat-stats" data-stats="${cat.key}"></div>
+        <div class="cat-stats" id="stats-${cat.key}"></div>
       </div>
       <div class="cards-grid" id="grid-${cat.key}">
         ${DATA.filter(d => d.cat === cat.key).map(buildCard).join('')}
@@ -826,24 +740,25 @@ function render() {
 }
 
 // ═══════════════════════════════════════════════════════
-// 筛选
+// 筛选逻辑
 // ═══════════════════════════════════════════════════════
-let activeP = 'all', activeCat = 'all', activeOwner = 'all', activeStatus = 'all';
-
 function applyFilters() {
   let total = 0, p0 = 0, p1 = 0, p2 = 0;
   const visibleIds = new Set();
 
   document.querySelectorAll('.category-section').forEach(sec => {
-    const catMatch = activeCat === 'all' || sec.dataset.cat === activeCat;
+    const catMatch = filters.cat === 'all' || sec.dataset.cat === filters.cat;
     if (!catMatch) { sec.classList.add('hidden'); return; }
+    sec.classList.remove('hidden');
 
     let catTotal = 0, catP0 = 0, catP1 = 0, catP2 = 0;
     sec.querySelectorAll('.item-card').forEach(card => {
-      const pMatch = activeP === 'all' || card.dataset.p === activeP;
-      const oMatch = activeOwner === 'all' || card.dataset.owner === activeOwner;
-      const sMatch = activeStatus === 'all' || card.dataset.status === activeStatus;
-      const show = pMatch && oMatch && sMatch;
+      const pMatch     = filters.p      === 'all' || card.dataset.p       === filters.p;
+      const oMatch     = filters.owner  === 'all' || card.dataset.owner   === filters.owner;
+      const sMatch     = filters.status === 'all' || card.dataset.status  === filters.status;
+      const sceneMatch = filters.scene  === 'all' || card.dataset.scene   === filters.scene;
+      const roleMatch  = filters.role   === 'all' || card.dataset.roletag === filters.role;
+      const show = pMatch && oMatch && sMatch && sceneMatch && roleMatch;
       card.classList.toggle('hidden', !show);
       if (show) {
         visibleIds.add(card.dataset.id);
@@ -853,8 +768,9 @@ function applyFilters() {
         if (card.dataset.p==='p2'){catP2++;p2++;}
       }
     });
+
     sec.classList.toggle('hidden', catTotal === 0);
-    const st = sec.querySelector('.cat-stats');
+    const st = document.getElementById(`stats-${sec.dataset.cat}`);
     if (st) {
       st.innerHTML = `<span class="cat-stat-total">共 ${catTotal} 项</span>`
         + (catP0 ? `<span class="cat-stat-chip p0">P0 × ${catP0}</span>` : '')
@@ -862,6 +778,7 @@ function applyFilters() {
         + (catP2 ? `<span class="cat-stat-chip p2">P2 × ${catP2}</span>` : '');
     }
   });
+
   document.getElementById('cnt-total').textContent = total;
   document.getElementById('cnt-p0').textContent = p0;
   document.getElementById('cnt-p1').textContent = p1;
@@ -871,40 +788,27 @@ function applyFilters() {
 }
 
 // ═══════════════════════════════════════════════════════
-// 3×3 矩阵渲染
+// 3×3 矩阵
 // ═══════════════════════════════════════════════════════
-// 列：难易度 high→mid→low（左到右）
-// 行：影响力 high→mid→low（上到下，视觉上 high 在上）
-const DIFF_COLS  = ['high','mid','low'];   // x轴：高难度→低难度
-const IMPACT_ROWS = ['high','mid','low'];  // y轴：高影响在上
-
+const DIFF_COLS   = ['high','mid','low'];
+const IMPACT_ROWS = ['high','mid','low'];
 const CELL_BG = {
-  // [impactRow][diffCol] → 高影响低难度=右上角=best
-  'high-low':  '#f0faf5',  // Quick Win
-  'high-mid':  '#f5fbf8',
-  'high-high': '#fffbf0',  // 大赌注
-  'mid-low':   '#f9fafb',
-  'mid-mid':   '#f9fafb',
-  'mid-high':  '#fafafa',
-  'low-low':   '#fafafa',
-  'low-mid':   '#fafafa',
-  'low-high':  '#fafafa',
+  'high-low':'#f0faf5','high-mid':'#f5fbf8','high-high':'#fffbf0',
+  'mid-low':'#f9fafb','mid-mid':'#f9fafb','mid-high':'#fafafa',
+  'low-low':'#fafafa','low-mid':'#fafafa','low-high':'#fafafa',
 };
 const CELL_CORNER = {
-  'high-high': '🎯 大赌注',       // 左上：高影响·高难度
-  'high-low':  '⭐ Quick Win · 立刻开干', // 右上：高影响·低难度
-  'low-high':  '😮‍💨 省省吧别做了', // 左下：低影响·高难度
-  'low-low':   '🤷 做不做都行',    // 右下：低影响·低难度
+  'high-high':'🎯 大赌注',
+  'high-low' :'⭐ Quick Win · 立刻开干',
+  'low-high' :'😮‍💨 省省吧别做了',
+  'low-low'  :'🤷 做不做都行',
 };
-
 const CAT_SHORT = { '内容':'内容','分析复盘':'复盘','搜索':'搜索','月报周报':'报告','洞察':'洞察' };
-const P_LABEL   = { p0:'P0', p1:'P1', p2:'P2' };
 const ROW_LABEL = { high:'高影响力', mid:'中影响力', low:'低影响力' };
 
 function renderMatrix(visibleIds) {
   const grid = document.getElementById('matrix-grid');
   if (!grid) return;
-
   const cells = {};
   IMPACT_ROWS.forEach(imp => DIFF_COLS.forEach(diff => { cells[`${imp}-${diff}`] = []; }));
   DATA.forEach(item => {
@@ -915,85 +819,29 @@ function renderMatrix(visibleIds) {
 
   const ROW_MIN_H = 90;
   let html = '';
-
   IMPACT_ROWS.forEach((imp, ri) => {
-    const bRowTop    = ri === 0 ? '2px solid #dde1e7' : '1px solid #eef0f3';
-    const bRowBottom = ri === 2 ? '2px solid #dde1e7' : 'none';
-
-    // 列0：行标签，同行高
-    html += `<div style="
-      display:flex; align-items:center; justify-content:flex-end;
-      padding-right:10px; min-height:${ROW_MIN_H}px;
-      font-size:11px; font-weight:700; color:#aaa; white-space:nowrap;
-      border-top:${bRowTop}; border-bottom:${bRowBottom};
-      border-right:2px solid #dde1e7;
-    ">${ROW_LABEL[imp]}</div>`;
-
-    // 列1-3：内容格子
+    const bTop    = ri === 0 ? '2px solid #dde1e7' : '1px solid #eef0f3';
+    const bBottom = ri === 2 ? '2px solid #dde1e7' : 'none';
+    html += `<div style="display:flex;align-items:center;justify-content:flex-end;padding-right:10px;min-height:${ROW_MIN_H}px;font-size:11px;font-weight:700;color:#aaa;white-space:nowrap;border-top:${bTop};border-bottom:${bBottom};border-right:2px solid #dde1e7;">${ROW_LABEL[imp]}</div>`;
     DIFF_COLS.forEach((diff, ci) => {
-      const key = `${imp}-${diff}`;
-      const bg = CELL_BG[key] || '#fafafa';
+      const key    = `${imp}-${diff}`;
+      const bg     = CELL_BG[key] || '#fafafa';
       const corner = CELL_CORNER[key] || '';
-      const items = cells[key];
-      const bLeft   = ci === 0 ? 'none' : '1px solid #eef0f3';
-      const bRight  = ci === 2 ? '2px solid #dde1e7' : '1px solid #eef0f3';
-
-      html += `<div style="background:${bg}; padding:8px; min-height:${ROW_MIN_H}px;
-        display:flex; flex-direction:column; gap:5px; position:relative;
-        border-top:${bRowTop}; border-bottom:${bRowBottom};
-        border-left:${bLeft}; border-right:${bRight};">
+      const items  = cells[key];
+      const bLeft  = ci === 0 ? 'none' : '1px solid #eef0f3';
+      const bRight = ci === 2 ? '2px solid #dde1e7' : '1px solid #eef0f3';
+      html += `<div style="background:${bg};padding:8px;min-height:${ROW_MIN_H}px;display:flex;flex-direction:column;gap:5px;position:relative;border-top:${bTop};border-bottom:${bBottom};border-left:${bLeft};border-right:${bRight};">
         ${corner ? `<div style="position:absolute;top:4px;right:5px;font-size:9px;color:#bbb;font-weight:600;pointer-events:none;white-space:nowrap;">${corner}</div>` : ''}
         ${items.map(it => {
           const catS = CAT_SHORT[it.cat] || it.cat;
-          return `<div class="mbox ${it.owner} ${it.p}" title="${it.name}">
-            <span style="opacity:0.75;font-weight:800">${P_LABEL[it.p]}</span>
-            <span style="opacity:0.4;margin:0 2px">·</span>
-            <span style="opacity:0.7">${catS}</span>
-            <span style="opacity:0.4;margin:0 2px">·</span>${it.name}
-          </div>`;
+          return `<div class="mbox ${it.owner} ${it.p}" title="${it.name}"><span style="opacity:0.75;font-weight:800">${pLabel[it.p]}</span><span style="opacity:0.4;margin:0 2px">·</span><span style="opacity:0.7">${catS}</span><span style="opacity:0.4;margin:0 2px">·</span>${it.name}</div>`;
         }).join('')}
         ${items.length === 0 ? `<div style="color:#ddd;font-size:13px;margin:auto;">—</div>` : ''}
       </div>`;
     });
   });
-
   grid.innerHTML = html;
 }
-
-document.querySelectorAll('button[data-p]').forEach(btn => {
-  btn.addEventListener('click', () => {
-    activeP = btn.dataset.p;
-    document.querySelectorAll('button[data-p]').forEach(b => {
-      b.className = 'filter-btn';
-      if (b.dataset.p === activeP) b.classList.add(activeP==='all'?'active-all':`active-${activeP}`);
-    });
-    applyFilters();
-  });
-});
-document.querySelectorAll('button[data-cat]').forEach(btn => {
-  btn.addEventListener('click', () => {
-    activeCat = btn.dataset.cat;
-    document.querySelectorAll('button[data-cat]').forEach(b => {
-      b.className = 'filter-btn';
-      if (b.dataset.cat === activeCat) b.classList.add(activeCat==='all'?'active-all':'active-cat');
-    });
-    applyFilters();
-  });
-});
-document.querySelectorAll('button[data-owner]').forEach(btn => {
-  btn.addEventListener('click', () => {
-    activeOwner = btn.dataset.owner;
-    document.querySelectorAll('button[data-owner]').forEach(b => {
-      b.className = 'filter-btn';
-      if (b.dataset.owner === activeOwner) {
-        if (activeOwner==='all') b.classList.add('active-all');
-        else if (activeOwner==='product') b.classList.add('active-owner-product');
-        else b.classList.add('active-owner-strategy');
-      }
-    });
-    applyFilters();
-  });
-});
 
 // ═══════════════════════════════════════════════════════
 // Modal 逻辑
@@ -1003,19 +851,20 @@ let editingId = null;
 function openAdd(cat) {
   editingId = null;
   document.getElementById('modal-title').textContent = '新增项目';
-  document.getElementById('f-name').value = '';
-  document.getElementById('f-priority').value = 'p0';
-  document.getElementById('f-cat').value = cat;
-  document.getElementById('f-impact').value = 'mid';
+  document.getElementById('f-name').value       = '';
+  document.getElementById('f-priority').value   = 'p0';
+  document.getElementById('f-cat').value        = cat;
+  document.getElementById('f-impact').value     = 'mid';
   document.getElementById('f-difficulty').value = 'mid';
-  document.getElementById('f-owner').value = 'strategy';
-  document.getElementById('f-cap').value = 'none';
-  document.getElementById('f-role').value = '';
-  document.getElementById('f-freq').value = '';
-  document.getElementById('f-time').value = '';
+  document.getElementById('f-owner').value      = 'strategy';
+  document.getElementById('f-cap').value        = 'none';
+  document.getElementById('f-role-tag').value   = '';
+  document.getElementById('f-scene').value      = '';
+  document.getElementById('f-freq').value       = '';
+  document.getElementById('f-time').value       = '';
   document.getElementById('f-owner-name').value = '';
-  document.getElementById('f-status').value = 'pending';
-  document.getElementById('f-note').value = '';
+  document.getElementById('f-status').value     = 'pending';
+  document.getElementById('f-note').value       = '';
   document.getElementById('modal').classList.add('open');
 }
 
@@ -1031,7 +880,8 @@ function openEdit(id) {
   document.getElementById('f-difficulty').value = item.difficulty || 'mid';
   document.getElementById('f-owner').value      = item.owner;
   document.getElementById('f-cap').value        = item.cap;
-  document.getElementById('f-role').value       = item.role || '';
+  document.getElementById('f-role-tag').value   = item.roleTag || '';
+  document.getElementById('f-scene').value      = item.scene || '';
   document.getElementById('f-freq').value       = item.freq || '';
   document.getElementById('f-time').value       = item.time || '';
   document.getElementById('f-owner-name').value = item.ownerName || '';
@@ -1040,9 +890,7 @@ function openEdit(id) {
   document.getElementById('modal').classList.add('open');
 }
 
-function closeModal() {
-  document.getElementById('modal').classList.remove('open');
-}
+function closeModal() { document.getElementById('modal').classList.remove('open'); }
 
 document.getElementById('modal-cancel').addEventListener('click', closeModal);
 document.getElementById('modal').addEventListener('click', e => {
@@ -1052,7 +900,6 @@ document.getElementById('modal').addEventListener('click', e => {
 document.getElementById('modal-save').addEventListener('click', () => {
   const name = document.getElementById('f-name').value.trim();
   if (!name) { alert('请填写项目名称'); return; }
-
   const item = {
     id:         editingId || ('u' + Date.now()),
     name,
@@ -1062,47 +909,28 @@ document.getElementById('modal-save').addEventListener('click', () => {
     difficulty: document.getElementById('f-difficulty').value,
     owner:      document.getElementById('f-owner').value,
     cap:        document.getElementById('f-cap').value,
-    role:       document.getElementById('f-role').value.trim(),
+    roleTag:    document.getElementById('f-role-tag').value,
+    scene:      document.getElementById('f-scene').value,
     freq:       document.getElementById('f-freq').value.trim(),
     time:       document.getElementById('f-time').value.trim(),
     ownerName:  document.getElementById('f-owner-name').value.trim(),
     status:     document.getElementById('f-status').value,
     note:       document.getElementById('f-note').value.trim(),
   };
-
   if (editingId) {
     const idx = DATA.findIndex(d => d.id === editingId);
     if (idx !== -1) DATA[idx] = item;
   } else {
     DATA.push(item);
   }
-
-  saveData();
-  closeModal();
-  render();
+  saveData(); closeModal(); render();
 });
 
 function deleteItem(id) {
   if (!confirm('确认删除这个项目？')) return;
   DATA = DATA.filter(d => d.id !== id);
-  saveData();
-  render();
+  saveData(); render();
 }
-
-// 状态筛选
-document.querySelectorAll('button[data-status]').forEach(btn => {
-  btn.addEventListener('click', () => {
-    activeStatus = btn.dataset.status;
-    document.querySelectorAll('button[data-status]').forEach(b => {
-      b.className = 'filter-btn';
-      if (b.dataset.status === activeStatus) {
-        if (activeStatus === 'all') b.classList.add('active-all');
-        else b.classList.add(`active-status-${activeStatus}`);
-      }
-    });
-    applyFilters();
-  });
-});
 
 // 新建大类 Modal
 function openCatModal() {
@@ -1111,9 +939,7 @@ function openCatModal() {
   document.getElementById('cat-modal').classList.add('open');
   setTimeout(() => document.getElementById('fc-icon').focus(), 100);
 }
-function closeCatModal() {
-  document.getElementById('cat-modal').classList.remove('open');
-}
+function closeCatModal() { document.getElementById('cat-modal').classList.remove('open'); }
 document.getElementById('cat-modal-cancel').addEventListener('click', closeCatModal);
 document.getElementById('cat-modal').addEventListener('click', e => {
   if (e.target === document.getElementById('cat-modal')) closeCatModal();
@@ -1124,40 +950,34 @@ document.getElementById('cat-modal-save').addEventListener('click', () => {
   if (!name) { alert('请填写大类名称'); return; }
   if (CATS.some(c => c.key === name)) { alert('该大类名称已存在'); return; }
   CATS.push({ key: name, icon, label: name });
-  saveCats();
-  closeCatModal();
-  render();
+  saveCats(); closeCatModal(); render();
 });
 
 // ═══════════════════════════════════════════════════════
-// Firebase 实时同步初始化
+// Firebase 实时同步
 // ═══════════════════════════════════════════════════════
 function initFirebase() {
   const db = window._fbDb;
   const fbRef = window._fbRef;
   const onValue = window._fbOnValue;
-
-  // 显示同步状态
-  const syncDot = document.getElementById('sync-dot');
+  const syncDot  = document.getElementById('sync-dot');
   const syncText = document.getElementById('sync-text');
 
-  // 监听 data 节点
   onValue(fbRef(db, 'data'), (snapshot) => {
     const val = snapshot.val();
     if (val && Array.isArray(val)) {
       DATA = val;
-      localStorage.setItem('ai-priorities-v2', JSON.stringify(DATA));
+      localStorage.setItem('ai-priorities-v3', JSON.stringify(DATA));
       render();
     }
-    if (syncDot) { syncDot.style.background = '#27ae60'; }
-    if (syncText) { syncText.textContent = '已同步'; }
+    if (syncDot)  syncDot.style.background  = '#27ae60';
+    if (syncText) syncText.textContent = '已同步';
   }, (err) => {
-    console.warn('Firebase onValue data error:', err);
-    if (syncDot) { syncDot.style.background = '#e74c3c'; }
-    if (syncText) { syncText.textContent = '离线模式'; }
+    console.warn('Firebase data error:', err);
+    if (syncDot)  syncDot.style.background  = '#e74c3c';
+    if (syncText) syncText.textContent = '离线模式';
   });
 
-  // 监听 cats 节点
   onValue(fbRef(db, 'cats'), (snapshot) => {
     const val = snapshot.val();
     if (val && Array.isArray(val)) {
@@ -1165,417 +985,26 @@ function initFirebase() {
       localStorage.setItem('ai-cats-v1', JSON.stringify(CATS));
       render();
     }
-  }, (err) => { console.warn('Firebase onValue cats error:', err); });
+  }, (err) => { console.warn('Firebase cats error:', err); });
 
   _fbInitialized = true;
 }
 
-// 初始化
 if (window._fbReady) {
   initFirebase();
 } else {
   document.addEventListener('firebase-ready', () => initFirebase(), { once: true });
-  // Firebase 加载超时（5秒）则降级为本地模式
   setTimeout(() => {
     if (!_fbInitialized) {
-      console.warn('Firebase 未在5秒内就绪，使用本地模式');
-      const syncDot = document.getElementById('sync-dot');
+      const syncDot  = document.getElementById('sync-dot');
       const syncText = document.getElementById('sync-text');
-      if (syncDot) syncDot.style.background = '#e67e22';
+      if (syncDot)  syncDot.style.background  = '#e67e22';
       if (syncText) syncText.textContent = '本地模式';
       render();
     }
   }, 5000);
 }
-render(); // 先用本地数据渲染，Firebase 数据到来后自动更新
-</script>
-
-</div>
-
-<div class="tab-panel" id="tab-workflow">
-
-
-<div class="header">
-  <h1>🗺️ 小红书广告团队 AI 提效地图</h1>
-  <p>销售 · 运营 · 策划 — 工作类别拆解 × AI 可提效空间</p>
-</div>
-
-<!-- 筛选器 -->
-<div class="filter-bar">
-  <div class="filter-row">
-    <span class="filter-label">角色</span>
-    <button class="ftab on" data-role="all">全部</button>
-    <button class="ftab" data-role="sales">💼 销售</button>
-    <button class="ftab" data-role="ops">📊 运营</button>
-    <button class="ftab" data-role="planner">💡 策划</button>
-  </div>
-  <div class="filter-row">
-    <span class="filter-label">工作类别</span>
-    <button class="ftab on" data-wcat="all">全部</button>
-    <button class="ftab" data-wcat="洞察研究">🔍 洞察研究</button>
-    <button class="ftab" data-wcat="客情管理">🤝 客情管理</button>
-    <button class="ftab" data-wcat="提案材料">📄 提案材料</button>
-    <button class="ftab" data-wcat="数据分析">📈 数据分析</button>
-    <button class="ftab" data-wcat="内容生产">✍️ 内容生产</button>
-    <button class="ftab" data-wcat="复盘报告">📋 复盘报告</button>
-    <button class="ftab" data-wcat="内部协作">🔗 内部协作</button>
-  </div>
-  <div class="filter-row">
-    <span class="filter-label">AI提效</span>
-    <button class="ftab on" data-ai="all">全部</button>
-    <button class="ftab" data-ai="high">🔴 高</button>
-    <button class="ftab" data-ai="mid">🟠 中</button>
-    <button class="ftab" data-ai="low">🟢 低</button>
-  </div>
-</div>
-
-<div class="legend">
-  <strong style="color:#888">AI提效：</strong>
-  <div class="legend-item"><div class="ldot" style="background:#e74c3c"></div>高 — 重复度高、规则强，AI可大幅替代</div>
-  <div class="legend-item"><div class="ldot" style="background:#f39c12"></div>中 — AI辅助提速，仍需人工判断</div>
-  <div class="legend-item"><div class="ldot" style="background:#27ae60"></div>低 — 强依赖关系/创意/决策，AI辅助有限</div>
-</div>
-
-<div class="role-sections" id="role-sections"></div>
-
-<footer>小红书广告团队 AI 提效地图 · 2026-03</footer>
-
-<script>
-// ═══════════════════════════════════════
-// 数据
-// ═══════════════════════════════════════
-const ROLES = [
-  { key:'sales',   icon:'💼', label:'广告销售',   sub:'客户建联 · Leads转化 · 需求梳理 · 提案配合 · 续签维护', cls:'sales' },
-  { key:'ops',     icon:'📊', label:'广告运营',   sub:'数据分析 · 投放复盘 · 报表制作 · 行业周报 · 内容打标', cls:'ops' },
-  { key:'planner', icon:'💡', label:'营销策划',   sub:'行业洞察 · 营销提案 · Campaign创意 · 内容策略 · 竞品研究', cls:'planner' },
-];
-
-const TASKS = [
-
-  // ══════════ 销售 ══════════
-
-  // 洞察研究
-  { role:'sales', wcat:'洞察研究', ai:'high',
-    name:'客户背景调研 & 行业梳理',
-    freq:'每次见客前', time:'1-3小时', pain:true,
-    desc:'自动抓取客户官网/财报/小红书笔记，生成品牌一页纸摘要；关联行业趋势数据，10分钟出报告' },
-  { role:'sales', wcat:'洞察研究', ai:'high',
-    name:'竞品投放分析',
-    freq:'每周', time:'2-4小时', pain:true,
-    desc:'自动抓取竞品在小红书的内容声量、投放关键词、爆文风格，结构化输出竞品对比表' },
-  { role:'sales', wcat:'洞察研究', ai:'high',
-    name:'行业 / 品牌舆情监控',
-    freq:'每天', time:'30-60分钟', pain:false,
-    desc:'自动监控客户品牌舆情变化和风险信号，日报推送，销售第一时间掌握客户动态' },
-
-  // 客情管理
-  { role:'sales', wcat:'客情管理', ai:'high',
-    name:'会后跟进邮件 / 微信总结',
-    freq:'每次会议后', time:'30-60分钟', pain:true,
-    desc:'基于会议纪要自动生成跟进邮件/微信消息，含核心共识、待办、下次沟通节点' },
-  { role:'sales', wcat:'客情管理', ai:'mid',
-    name:'Leads 优先级判断 & 分配',
-    freq:'每天', time:'30分钟', pain:false,
-    desc:'基于历史转化数据给 Leads 打分排序，推荐优先跟进顺序；最终决策仍需销售判断' },
-  { role:'sales', wcat:'客情管理', ai:'low',
-    name:'客情关系维护（饭局/微信维系）',
-    freq:'持续', time:'—', pain:false,
-    desc:'AI可提示客户生日/重要节点发关怀，但核心是人际信任，AI辅助有限' },
-  { role:'sales', wcat:'客情管理', ai:'mid',
-    name:'季度客户健康度回顾',
-    freq:'每季度', time:'半天', pain:false,
-    desc:'自动汇总客户跟进频率、满意度信号、续约风险，生成客户健康度 Dashboard' },
-
-  // 提案材料
-  { role:'sales', wcat:'提案材料', ai:'high',
-    name:'拜访前资料准备（One Pager）',
-    freq:'每次拜访', time:'2-4小时', pain:true,
-    desc:'基于客户背景+行业数据自动生成拜访材料草稿，销售只需微调，节省80%制作时间' },
-  { role:'sales', wcat:'提案材料', ai:'high',
-    name:'客户需求整理 & 转化内部 Brief',
-    freq:'每次需求对接', time:'1-2小时', pain:true,
-    desc:'客户口头需求 → 结构化 Brief（目标人群/预算/KPI/时间节点），自动同步给策划和运营' },
-
-  // 内部协作
-  { role:'sales', wcat:'内部协作', ai:'mid',
-    name:'合同 / 排期表填写',
-    freq:'成单时', time:'30-60分钟', pain:false,
-    desc:'自动从 Brief 提取关键信息填入合同/排期模板，减少手动录入和漏项风险' },
-  { role:'sales', wcat:'内部协作', ai:'mid',
-    name:'销售 KPI 追踪 & 漏斗分析',
-    freq:'每周/每月', time:'1-2小时', pain:false,
-    desc:'自动汇总各客户跟进状态、转化漏斗数据，生成个人 Dashboard，识别停滞原因' },
-  { role:'sales', wcat:'内部协作', ai:'low',
-    name:'跨部门资源协调 & 争取',
-    freq:'持续', time:'—', pain:false,
-    desc:'跨部门协调依赖关系网络和话语权，AI无法替代' },
-
-  // ══════════ 运营 ══════════
-
-  // 数据分析
-  { role:'ops', wcat:'数据分析', ai:'high',
-    name:'每日数据拉取 & 报表制作',
-    freq:'每天', time:'1-2小时', pain:true,
-    desc:'自动从 BI/灵犀/聚光 拉取数据，生成标准报表，异常数据自动标红预警' },
-  { role:'ops', wcat:'数据分析', ai:'mid',
-    name:'投放策略调整 & 出价优化',
-    freq:'每天', time:'1-2小时', pain:false,
-    desc:'AI推荐出价区间和定向调整方案，但最终策略决策需结合客户目标判断' },
-  { role:'ops', wcat:'数据分析', ai:'mid',
-    name:'跨平台数据整合',
-    freq:'每月', time:'1天', pain:false,
-    desc:'自动汇总小红书+抖音+天猫等多平台数据，生成统一视图；口径对齐仍需人工确认' },
-  { role:'ops', wcat:'数据分析', ai:'high',
-    name:'搜索词分析 & 推词',
-    freq:'每周', time:'半天-1天', pain:true,
-    desc:'自动分析搜索词热度/竞争度/转化率，生成推词建议列表，减少人工逐条分析' },
-
-  // 复盘报告
-  { role:'ops', wcat:'复盘报告', ai:'high',
-    name:'客户月报 / 周报撰写',
-    freq:'每月/每周', time:'1-2天', pain:true,
-    desc:'基于数据自动生成报告框架+图表解读，运营只需审核结论和补充背景，节省70%时间' },
-  { role:'ops', wcat:'复盘报告', ai:'high',
-    name:'投放复盘报告',
-    freq:'每周/每Campaign', time:'半天-1天', pain:true,
-    desc:'自动对比实际vs目标，识别超/低效素材，生成优化建议列表，结构化输出复盘结论' },
-  { role:'ops', wcat:'复盘报告', ai:'high',
-    name:'行业周报（对客/对内）',
-    freq:'每周', time:'1-2天', pain:true,
-    desc:'自动抓取行业数据+热点+竞品动态，生成 one-page 行业周报，运营只需最终审核' },
-
-  // 内容生产
-  { role:'ops', wcat:'内容生产', ai:'high',
-    name:'内容打标 & 分类',
-    freq:'持续', time:'数小时/批次', pain:true,
-    desc:'AI批量对笔记/素材进行行业/场景/情绪/卖点多维打标，人工只需抽检验收' },
-
-  // 洞察研究
-  { role:'ops', wcat:'洞察研究', ai:'mid',
-    name:'品牌情感 / 舆情分析',
-    freq:'每月/专项', time:'半天', pain:false,
-    desc:'AI自动对评论/笔记进行情感分类、关键词提取，识别风险舆情；结论解读需人工' },
-
-  // 客情管理
-  { role:'ops', wcat:'客情管理', ai:'low',
-    name:'客户需求深度沟通',
-    freq:'持续', time:'—', pain:false,
-    desc:'理解客户真实诉求需要大量上下文和信任关系，AI可记录整理，但不能替代沟通本身' },
-
-  // ══════════ 策划 ══════════
-
-  // 洞察研究
-  { role:'planner', wcat:'洞察研究', ai:'high',
-    name:'行业洞察报告撰写',
-    freq:'每月/专项', time:'2-3天', pain:true,
-    desc:'自动整合灵犀数据+行业报告+小红书趋势，生成洞察框架；策划专注于解读和创意延伸' },
-  { role:'planner', wcat:'洞察研究', ai:'high',
-    name:'竞品内容策略分析',
-    freq:'每次提案前', time:'半天-1天', pain:true,
-    desc:'自动抓取竞品爆文规律、内容公式、达人矩阵，输出竞品内容地图' },
-  { role:'planner', wcat:'洞察研究', ai:'high',
-    name:'人群画像 & 消费者洞察',
-    freq:'每次提案', time:'1天', pain:true,
-    desc:'基于灵犀人群数据自动生成目标人群画像（兴趣/场景/消费习惯），替代人工逐条分析' },
-  { role:'planner', wcat:'洞察研究', ai:'high',
-    name:'品牌形象 & 情绪浓度分析',
-    freq:'每次提案/复盘', time:'1-2天', pain:true,
-    desc:'AI批量分析品牌相关笔记的情感倾向、核心词云、用户评价聚类，替代人工阅读数千条内容' },
-  { role:'planner', wcat:'洞察研究', ai:'high',
-    name:'爆文 / 内容公式拆解',
-    freq:'每次内容策略', time:'半天', pain:true,
-    desc:'自动分析行业 Top 爆文的标题公式、封面规律、内容结构，生成可复用内容模板' },
-
-  // 提案材料
-  { role:'planner', wcat:'提案材料', ai:'high',
-    name:'提案 PPT 数据填充',
-    freq:'每次提案', time:'半天', pain:true,
-    desc:'自动从灵犀/BI拉取行业数据填入PPT模板（人群规模/声量趋势/行业增速），10分钟完成' },
-  { role:'planner', wcat:'提案材料', ai:'mid',
-    name:'达人 / KOL 推荐筛选',
-    freq:'每次合作前', time:'半天', pain:false,
-    desc:'AI按受众重合度/内容风格/历史数据筛选候选达人名单，策划确认调性匹配后决策' },
-  { role:'planner', wcat:'提案材料', ai:'low',
-    name:'客户提案现场演讲',
-    freq:'每次提案', time:'—', pain:false,
-    desc:'现场临机应变、读懂客户反应、建立信任感是核心，AI无法替代' },
-
-  // 内容生产
-  { role:'planner', wcat:'内容生产', ai:'mid',
-    name:'AIGC 笔记内容生产',
-    freq:'持续', time:'数小时/批次', pain:false,
-    desc:'AI基于内容公式批量生成笔记初稿，策划审核品牌调性和合规性后输出，提速60-80%' },
-  { role:'planner', wcat:'内容生产', ai:'mid',
-    name:'Campaign 方向 & 主题策划',
-    freq:'每次Campaign', time:'1-2天', pain:false,
-    desc:'AI可基于趋势数据生成多个Campaign方向备选，但核心创意洞察仍依赖策划判断' },
-
-  // 复盘报告
-  { role:'planner', wcat:'复盘报告', ai:'mid',
-    name:'营销复盘 & 效果归因',
-    freq:'每次Campaign后', time:'1-2天', pain:false,
-    desc:'AI自动汇总各渠道数据、归因分析，策划专注于策略解读和下次方向建议' },
-
-  // 内部协作
-  { role:'planner', wcat:'内部协作', ai:'low',
-    name:'Big Idea 创意发想',
-    freq:'每次大Campaign', time:'—', pain:false,
-    desc:'AI可提供发散参考，但打动人的核心创意洞察源于对人性和文化的深刻理解，不可替代' },
-];
-
-// ═══════════════════════════════════════
-// 渲染
-// ═══════════════════════════════════════
-const WCATS = ['洞察研究','客情管理','提案材料','数据分析','内容生产','复盘报告','内部协作'];
-const WCAT_ICON = { '洞察研究':'🔍','客情管理':'🤝','提案材料':'📄','数据分析':'📈','内容生产':'✍️','复盘报告':'📋','内部协作':'🔗' };
-const AI_LABEL = { high:'🔴 高', mid:'🟠 中', low:'🟢 低' };
-
-function render() {
-  const container = document.getElementById('role-sections');
-  container.innerHTML = '';
-
-  ROLES.forEach(role => {
-    const roleTasks = TASKS.filter(t => t.role === role.key);
-    const high = roleTasks.filter(t=>t.ai==='high').length;
-    const mid  = roleTasks.filter(t=>t.ai==='mid').length;
-    const low  = roleTasks.filter(t=>t.ai==='low').length;
-
-    // 按 wcat 分组
-    const wcatGroups = {};
-    WCATS.forEach(wc => {
-      const items = roleTasks.filter(t => t.wcat === wc);
-      if (items.length) wcatGroups[wc] = items;
-    });
-
-    const block = document.createElement('div');
-    block.className = 'role-block';
-    block.dataset.role = role.key;
-
-    block.innerHTML = `
-      <div class="role-header ${role.cls}">
-        <div class="role-icon">${role.icon}</div>
-        <div class="role-info">
-          <h2>${role.label}</h2>
-          <p>${role.sub}</p>
-        </div>
-        <div class="role-stats">
-          <div class="role-stat"><div class="n">${high}</div><div class="lb">高提效</div></div>
-          <div class="role-stat"><div class="n">${mid}</div><div class="lb">中提效</div></div>
-          <div class="role-stat"><div class="n">${low}</div><div class="lb">低提效</div></div>
-        </div>
-      </div>
-      <div class="role-body">
-        ${Object.entries(wcatGroups).map(([wc, items]) => `
-          <div class="wcat-section" data-wcat="${wc}">
-            <div class="wcat-header">
-              <span class="wcat-tag">${WCAT_ICON[wc]} ${wc}</span>
-              <div class="wcat-line"></div>
-              <span class="wcat-count">${items.length} 项</span>
-            </div>
-            <div class="tasks-grid">
-              ${items.map(t => `
-                <div class="task-card" data-role="${t.role}" data-ai="${t.ai}" data-wcat="${t.wcat}">
-                  <div class="task-top">
-                    <div class="task-name">${t.name}</div>
-                    <span class="ai-badge ${t.ai}">${AI_LABEL[t.ai]}</span>
-                  </div>
-                  <div class="task-meta">
-                    ${t.freq ? `<span class="tag freq">🔄 ${t.freq}</span>` : ''}
-                    ${t.time && t.time!=='—' ? `<span class="tag time">⏱ ${t.time}</span>` : ''}
-                    ${t.pain ? `<span class="tag pain">🔥 高耗时</span>` : ''}
-                  </div>
-                  <div class="task-ai-desc">${t.desc}</div>
-                </div>
-              `).join('')}
-            </div>
-          </div>
-        `).join('')}
-      </div>`;
-    container.appendChild(block);
-  });
-
-  applyFilters();
-}
-
-// ═══════════════════════════════════════
-// 筛选
-// ═══════════════════════════════════════
-let activeRole = 'all', activeAI = 'all', activeWcat = 'all';
-
-function applyFilters() {
-  document.querySelectorAll('.role-block').forEach(block => {
-    const rMatch = activeRole === 'all' || block.dataset.role === activeRole;
-    block.classList.toggle('hidden', !rMatch);
-  });
-
-  document.querySelectorAll('.wcat-section').forEach(sec => {
-    // 若父级 role-block 已被角色筛选隐藏，子级也跟着隐藏，不再单独处理
-    const parentBlock = sec.closest('.role-block');
-    if (parentBlock && parentBlock.classList.contains('hidden')) {
-      sec.classList.add('hidden');
-      return;
-    }
-
-    const wMatch = activeWcat === 'all' || sec.dataset.wcat === activeWcat;
-    // 还需检查 section 内是否有可见卡片
-    const hasVisible = wMatch && [...sec.querySelectorAll('.task-card')].some(c => {
-      const aMatch = activeAI === 'all' || c.dataset.ai === activeAI;
-      return aMatch;
-    });
-    sec.classList.toggle('hidden', !hasVisible);
-    if (!sec.classList.contains('hidden')) {
-      sec.querySelectorAll('.task-card').forEach(card => {
-        const aMatch = activeAI === 'all' || card.dataset.ai === activeAI;
-        card.classList.toggle('hidden', !aMatch);
-      });
-    }
-  });
-}
-
-document.querySelectorAll('.ftab[data-role]').forEach(btn => {
-  btn.addEventListener('click', () => {
-    activeRole = btn.dataset.role;
-    document.querySelectorAll('.ftab[data-role]').forEach(b => b.classList.remove('on'));
-    btn.classList.add('on');
-    applyFilters();
-  });
-});
-document.querySelectorAll('.ftab[data-wcat]').forEach(btn => {
-  btn.addEventListener('click', () => {
-    activeWcat = btn.dataset.wcat;
-    document.querySelectorAll('.ftab[data-wcat]').forEach(b => b.classList.remove('on'));
-    btn.classList.add('on');
-    applyFilters();
-  });
-});
-document.querySelectorAll('.ftab[data-ai]').forEach(btn => {
-  btn.addEventListener('click', () => {
-    activeAI = btn.dataset.ai;
-    document.querySelectorAll('.ftab[data-ai]').forEach(b => b.classList.remove('on'));
-    btn.classList.add('on');
-    applyFilters();
-  });
-});
-
 render();
-</script>
-
-</div>
-
-<script>
-document.querySelectorAll('.nav-tab').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
-    // workflow tab 需要触发初始化渲染（如果还没 render）
-    if (btn.dataset.tab === 'workflow' && !window._workflowRendered) {
-      window._workflowRendered = true;
-      if (typeof render === 'function') render();
-    }
-  });
-});
 </script>
 </body>
 </html>
