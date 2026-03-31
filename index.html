@@ -1509,6 +1509,13 @@ function applyFilters() {
   });
 
   document.querySelectorAll('.wcat-section').forEach(sec => {
+    // 若父级 role-block 已被角色筛选隐藏，子级也跟着隐藏，不再单独处理
+    const parentBlock = sec.closest('.role-block');
+    if (parentBlock && parentBlock.classList.contains('hidden')) {
+      sec.classList.add('hidden');
+      return;
+    }
+
     const wMatch = activeWcat === 'all' || sec.dataset.wcat === activeWcat;
     // 还需检查 section 内是否有可见卡片
     const hasVisible = wMatch && [...sec.querySelectorAll('.task-card')].some(c => {
